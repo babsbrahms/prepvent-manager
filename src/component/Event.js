@@ -37,27 +37,36 @@ const style = StyleSheet.create({
 
 
 export default class Event extends Component {
-    state = {
-        showDate: false,
-        showPoll: false,
-        pollIndex: -1,
-        showDeadline: false,
-        data: {
-            poster: null,
-            date: new Date(),
-            location: "",
-            state: "",
-            country: "",
-            budget: "",
-            invitation: "",
-            host: "",
-            polls: [],
-            contact: "",
-            checkin: false,
-            checkinRule: 'accepted',
-            tableChartRule: 'accepted'
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            showDate: false,
+            showPoll: false,
+            showAdvance: false,
+            data: {
+                poster: null,
+                date: new Date(),
+                location: "",
+                state: "",
+                country: "",
+                budget: "",
+                invitation: "",
+                host: "",
+                polls: [
+                    {"options": ["By"], "question": "Testing", "title": "Testing"},
+                    {"options": ["By 0"], "question": "Testing 2", "title": "Testing 2"}
+                ],
+                contact: "",
+                checkin: false,
+                checkinRule: 'accepted',
+                tableChartRule: 'accepted'
+            }
         }
+
+        this.scroll = React.createRef()
     }
+
 
     changeCheckIn = () => this.setState({ data: { ...this.state.data, checkin: !this.state.data.checkin }})
 
@@ -110,38 +119,12 @@ export default class Event extends Component {
         }  
     }
 
-    cancelPoll = () => this.setState({ showPoll: false, pollIndex: -1 })
-
-    savePoll = (poll) => {
-        const { data, pollIndex } = this.state;
-        const polls = data.polls;
-        if (pollIndex === -1) {
-            polls.push(poll);
-        } else {
-            polls[pollIndex] = poll;
-        }
-        console.log(polls);
-        
-        
-        this.setState({ showPoll: false, pollIndex: -1, data: {...this.state.data, polls: [ ...polls ]} })
-    }
-
-    deletePoll = (index) => {
-        const { data } = this.state;
-
-        data.polls.splice(index, 1);
-
-        this.setState({ showPoll: false, pollIndex: -1, data: data })
-    }
-
-    editPoll = (index) => this.setState({ showPoll: true, pollIndex: index })
-
     render() {
         const { navigation } = this.props;
-        const  { data, showDate, showPoll, showDeadline, pollIndex } = this.state
+        const  { data, showDate, showPoll, showAdvance } = this.state
 
         return (
-            <ScrollView>
+            <ScrollView ref={x => this.scroll = x}>
                 <View style={style.container}>
                     <View style={styles.between}>
                         <Text style={style.title}>Poster</Text>
@@ -279,27 +262,17 @@ export default class Event extends Component {
                     <View style={styles.between}>
                         <Text style={style.title}>Poll</Text>
 
-                        <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true, pollIndex: -1 })}>
+                        <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                             <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                         </TouchableOpacity>
                         
                     </View>
 
-                    <View style={{ flex: 1}}>
-                    {data.polls.map((poll, index) => {
-                        <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
-                            <TouchableOpacity style={styles.icon} onPress={() => this.deletePoll(index)}>
-                                <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
-                            </TouchableOpacity>
-                            
-                            <TouchableOpacity onPress={() => this.editPoll(index)}>
-                                <Text style={style.to}>POLL TITLE</Text>
-                            </TouchableOpacity>  
-                        </View>
-                    })}
-                    </View>
-
-                    {(!!showPoll) &&(<Poll selectedIndex={pollIndex} selectedData={data.polls[pollIndex]} save={(poll) => this.savePoll(poll)} cancel={() => this.cancelPoll()} />)}
+                    <Poll 
+                        polls={data.polls} 
+                        show={showPoll}
+                        updatePoll={(polls) => this.setState({ ...this.state.data, polls })} 
+                    />
                 </View>
 
 
@@ -312,29 +285,31 @@ export default class Event extends Component {
                 <View style={styles.between}>
                     <Text style={style.title}>Advance Option</Text>
 
-                    <TouchableOpacity style={styles.icon}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ showAdvance: !this.state.showAdvance })}>
                         <Ionicons name={'ios-arrow-forward'} size={30} color={"#FFFFFF"}/>
                     </TouchableOpacity>
                     
                 </View>
 
                 <View style={style.container}>
+                    {(!!showAdvance) && (
                     <Segment color='#E4E4E4'>
-                        <Text style={[style.title, { color: '#000000'}]}>Acceptance Deadline</Text>
-                        
-                            
+                        <View>
+                            <Text style={[style.title, { color: '#000000'}]}>Acceptance Deadline</Text>
+                                
                             <TouchableOpacity style={style.deadline}>
                                 <Text style={[style.to, { color: '#707070'}]}>none</Text>
                                 <Ionicons name={'ios-arrow-forward'} size={30} color={'#707070'}/>
                             </TouchableOpacity>
-            
-                        <View>
-                            <Rules key="check" title={'Check In Rules'} value={data.checkinRule} selectRule={(value) => this.setState({ data: { ...this.state.data, checkinRule: value}})}/>
                         </View>
-                    </Segment>
-                    <View style={[styles.segment, { backgroundColor: '#E4E4E4'}]}>
-                        <Rules key='table' title={'Table Chart Rules'} value={data.tableChartRule} selectRule={(value) => this.setState({ data: { ...this.state.data, tableChartRule: value}})}/>
-                    </View>
+            
+                        <Rules 
+                            selectCheckIn={(value) => this.setState({ data: { ...this.state.data, checkinRule: value}})} 
+                            checkIn={data.checkinRule} 
+                            selectTable={(value) => this.setState({ data: { ...this.state.data, tableChartRule: value}})} 
+                            tableChart={data.tableChartRule}
+                        />
+                    </Segment>)}
                 </View>
                
 

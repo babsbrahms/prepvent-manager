@@ -43,7 +43,6 @@ export default class Communication extends Component {
         sideBarOpen: false,
         optionOpen: false,
         showPoll: false,
-        pollIndex: -1,
         data: {
             to: [],
             subject: "",
@@ -51,7 +50,10 @@ export default class Communication extends Component {
             host: "",
             contact: '',
             image: null,
-            polls: []
+            polls: [
+                {"options": ["By"], "question": "Testing", "title": "Testing"},
+                {"options": ["By 0"], "question": "Testing 2", "title": "Testing 2"}
+            ]
         }
     }
 
@@ -110,34 +112,11 @@ export default class Communication extends Component {
         });
     }
 
-    cancelPoll = () => this.setState({ showPoll: false, pollIndex: -1 })
-
-    savePoll = (poll) => {
-        const { data, pollIndex } = this.state;
-        const polls = data.polls;
-        if (pollIndex === -1) {
-            polls.push(poll);
-        } else {
-            polls[pollIndex] = poll;
-        }
-        
-        this.setState({ showPoll: false, pollIndex: -1, data: {...this.state.data, polls: [ ...polls ]} })
-    }
-
-    deletePoll = (index) => {
-        const { data } = this.state;
-
-        data.polls.splice(index, 1);
-
-        this.setState({ showPoll: false, pollIndex: -1, data: data })
-    }
-
-    editPoll = (index) => this.setState({ showPoll: true, pollIndex: index })
-
     render() {
         const { navigation } = this.props;
-        const { sideBarOpen, optionOpen, data, showPoll, pollIndex } = this.state;
-
+        const { sideBarOpen, optionOpen, data, showPoll } = this.state;
+        console.log(data.polls);
+        
         return (
             <View style={styles.container}>
                 <View style={styles.between}>
@@ -183,7 +162,8 @@ export default class Communication extends Component {
                     <View style={style.container}>
                         <Text style={style.title}>Body</Text>
                         <View style={styles.textInput}>
-                            <TextInput 
+                            <TextInput
+                                key={"message"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Add message body"} 
                                 placeholderTextColor="#0E0C20" 
@@ -193,6 +173,7 @@ export default class Communication extends Component {
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, message: e.nativeEvent.text } })}
                             />
                             <TextInput 
+                                key={"host"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Host Name"} 
                                 placeholderTextColor="#0E0C20" 
@@ -201,6 +182,7 @@ export default class Communication extends Component {
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
                             />
                             <TextInput 
+                                key={"contact"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Organizer's contact"} 
                                 placeholderTextColor="#0E0C20" 
@@ -229,24 +211,18 @@ export default class Communication extends Component {
                         <View style={styles.between}>
                             <Text style={style.title}>Poll</Text>
 
-                            <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true, pollIndex: -1 })}>
+                            <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                                 <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                             </TouchableOpacity>
                         </View>
 
-                        {data.polls.map((poll, index) => {
-                            <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
-                                <TouchableOpacity style={styles.icon} onPress={() => this.deletePoll(index)}>
-                                    <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
-                                </TouchableOpacity>
-                                
-                                <TouchableOpacity onPress={() => this.editPoll(index)}>
-                                    <Text style={style.to}>POLL TITLE</Text>
-                                </TouchableOpacity>  
-                            </View>
-                        })}
 
-                        {(!!showPoll) &&(<Poll selectedIndex={pollIndex} selectedData={data.polls[pollIndex]} save={(poll) => this.savePoll(poll)} cancel={() => this.cancelPoll()} />)}
+                        
+                        <Poll 
+                            polls={data.polls} 
+                            show={showPoll}
+                            updatePoll={(polls) => this.setState({ ...this.state.data, polls })} 
+                        />
                     </View>
 
 

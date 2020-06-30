@@ -1,4 +1,4 @@
-package com.prepvent_manager;
+package com.prepvent.manager;
 
 import android.app.Application;
 import android.content.Context;

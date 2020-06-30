@@ -5,14 +5,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const style = StyleSheet.create({
     title: {
-        color: '#FFFFFF',
         fontWeight: "bold",
-        fontSize: 25
+        fontSize: 25,
+        color: '#000000', 
+        marginTop: 9
     },
     to: {
-        color: '#FFFFFF',
         fontSize: 24,
-        marginBottom: 9  
+        marginBottom: 9,
+        color: '#707070'
     },
     link: {
         color: '#707070',
@@ -20,26 +21,48 @@ const style = StyleSheet.create({
     }
 });
 
-export const Rules = ({ title, selectRule, value }) => {
+export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
     return (
-    <View>
-        <Text style={[style.title, { color: '#000000', marginTop: 9 }]}>{title}</Text>
-        
-        <View style={{ width: '70%', height: '100%', color: "#707070"}}>
-            <View style={styles.row}>                           
-                <TouchableOpacity style={styles.icon} onPress={() => selectRule('invite')}>
-                    <Ionicons name={value === 'invite'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={value === 'invite'? '#2DF19C' :'#707070'}/>
-                </TouchableOpacity>
+    <View style={{ flex: 1 }}>
+        <View>  
+            <Text style={style.title}>Check In Rules</Text>
+            
+            <View>
+                <View style={styles.row}>                           
+                    <TouchableOpacity style={styles.icon} onPress={() => selectCheckIn('invite')}>
+                        <Ionicons name={checkIn === 'invite'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={checkIn === 'invite'? '#2DF19C' :'#707070'}/>
+                    </TouchableOpacity>
 
-                <Text  style={[style.to, { color: '#707070'}]}>All guest invited</Text>
+                    <Text  style={style.to}>All guest invited</Text>
+                </View>
+
+                <View style={styles.row}>                           
+                    <TouchableOpacity style={styles.icon} onPress={() => selectCheckIn('accepted')}>
+                        <Ionicons name={checkIn === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={checkIn === 'accepted'? '#2DF19C' :'#707070'}/>
+                    </TouchableOpacity>
+
+                    <Text  style={style.to}>Only guest that accepted invitation</Text>
+                </View>
             </View>
+   
+            <Text style={style.title}>Table Chart Rules</Text>
+            
+            <View>
+                <View style={styles.row}>                           
+                    <TouchableOpacity style={styles.icon} onPress={() => selectTable('invite')}>
+                        <Ionicons name={tableChart === 'invite'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={tableChart === 'invite'? '#2DF19C' :'#707070'}/>
+                    </TouchableOpacity>
 
-            <View style={styles.row}>                           
-                <TouchableOpacity style={styles.icon} onPress={() => selectRule('accepted')}>
-                    <Ionicons name={value === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={value === 'accepted'? '#2DF19C' :'#707070'}/>
-                </TouchableOpacity>
+                    <Text  style={style.to}>All guest invited</Text>
+                </View>
 
-                <Text  style={[style.to, { color: '#707070'}]}>Only guest that accepted invitation</Text>
+                <View style={styles.row}>                           
+                    <TouchableOpacity style={styles.icon} onPress={() => selectTable('accepted')}>
+                        <Ionicons name={tableChart === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={tableChart === 'accepted'? '#2DF19C' :'#707070'}/>
+                    </TouchableOpacity>
+
+                    <Text  style={style.to}>Only guest that accepted invitation</Text>
+                </View>
             </View>
         </View>
     </View>

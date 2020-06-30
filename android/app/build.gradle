@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.prepvent_manager"
+        applicationId "com.prepvent.manager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

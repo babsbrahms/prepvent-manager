@@ -1,4 +1,4 @@
-package com.prepvent_manager;
+package com.prepvent.manager;
 
 import com.facebook.react.ReactActivity;
 
