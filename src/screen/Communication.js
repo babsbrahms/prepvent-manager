@@ -50,10 +50,7 @@ export default class Communication extends Component {
             host: "",
             contact: '',
             image: null,
-            polls: [
-                {"options": ["By"], "question": "Testing", "title": "Testing"},
-                {"options": ["By 0"], "question": "Testing 2", "title": "Testing 2"}
-            ]
+            polls: []
         }
     }
 

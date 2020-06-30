@@ -53,10 +53,7 @@ export default class Event extends Component {
                 budget: "",
                 invitation: "",
                 host: "",
-                polls: [
-                    {"options": ["By"], "question": "Testing", "title": "Testing"},
-                    {"options": ["By 0"], "question": "Testing 2", "title": "Testing 2"}
-                ],
+                polls: [],
                 contact: "",
                 checkin: false,
                 checkinRule: 'accepted',

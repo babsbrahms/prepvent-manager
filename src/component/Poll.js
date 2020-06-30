@@ -16,6 +16,12 @@ const style = StyleSheet.create({
     todoAction: {
         fontSize: 24,
         fontWeight: 'bold',
+    },
+    polls: { 
+        borderRadius: 20, 
+        backgroundColor: '#0E0C20', 
+        padding: 0, 
+        margin: 3 
     }
 });
 
@@ -87,21 +93,20 @@ export default class Poll extends Component {
 
         return (
         <View style={{ borderRadius: 20, marginTop: 0, marginBottom: 9, width: '100%', minHeight: 100, backgroundColor: '#E4E4E4', padding: 5, flex: 1 }}>
-            <View>
-            {polls.map((poll, index) => {
-                <View key={index} style={{ flex: 1 }}>
-                    <TouchableOpacity style={styles.icon} onPress={() => this.deletePoll(index)}>
-                        <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={() => this.editPoll(index)}>
-                    <Text style={style.to}>{poll.title}</Text>
-                    </TouchableOpacity>  
-                </View>
-            })}
-            </View> 
 
-
+            <ScrollView style={style.polls}>
+                {polls.map((poll, index) => (
+                    <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
+                        <TouchableOpacity style={styles.icon} onPress={() => this.deletePoll(index)}>
+                            <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity onPress={() => this.editPoll(index)}>
+                            <Text style={styles.title}>{poll.title}</Text>
+                        </TouchableOpacity>
+                    </View>
+                ))}
+            </ScrollView>
             <View style={{ flex: 1}}>
                 <Text style={style.title}>Title</Text>
                 <TextInput 
