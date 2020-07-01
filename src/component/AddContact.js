@@ -56,7 +56,6 @@ export default class AddContact extends PureComponent {
         super(props);
 
         this.state = {
-            selection: props.selection,
             search: '',
             refreshing: true,
             contacts: [],
@@ -80,17 +79,17 @@ export default class AddContact extends PureComponent {
               // error
               this.setState({ contacts: [], refreshing: false })
             } else {
-                // console.log(contacts);
+            
+            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
                 
-              let format = contacts.map(contact => ({
-                  recordId: contact.recordID,
-                  name: `${contact.givenName} ${contact.middleName} ${contact.familyName}`,
-                  phoneNumber: contact.phoneNumbers.length > 0 ? `${contact.phoneNumbers[0].number}` : '',
-                  email: contact.emailAddresses.length > 0 ? `${contact.emailAddresses[0].email}` : '',
-                  selected: false
-              }))
-
-              this.setState({ contacts: format, refreshing: false })
+            // let format = contacts.map(contact => ({
+            //     recordId: contact.recordID,
+            //     name: `${contact.givenName} ${contact.middleName} ${contact.familyName}`,
+            //     phoneNumber: contact.phoneNumbers.length > 0 ? `${contact.phoneNumbers[0].number}` : '',
+            //     email: contact.emailAddresses.length > 0 ? `${contact.emailAddresses[0].email}` : '',
+            //     selected: false
+            // }))
+              this.setState({ contacts: contacts, refreshing: false })
             }
         })
     }
@@ -108,19 +107,35 @@ export default class AddContact extends PureComponent {
         })
     }
 
-    searchGuest = () => {
+    searchGuest = (text) => {
 
+        
+        const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
+        if (text === "" || text === null) {
+            loadContacts();
+        } else if (phoneNumberRegex.test(text)) {
+            Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
+            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+            this.setState({ contacts: contacts })
+            // console.log('contacts', contacts);
+            });
+        } else {
+            Contacts.getContactsMatchingString(text, (err, contacts) => {
+            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+            this.setState({ contacts: contacts })
+            // console.log('contacts', contacts);
+            });
+        }
+       
     }
 
     select = (contact, index) => {
-        const { addContact } = this.props;
-        const { selection } = this.state;
+        const { addContact, selection } = this.props;
         
         if (selection === 'single') {
             this.setState({ loading: true }, () => {
-                addContact(contact)
-            })
-            
+                // addContact(contact)
+            })    
         } else {
 
         }
@@ -161,9 +176,9 @@ export default class AddContact extends PureComponent {
                     initialNumToRender={12}
                     renderItem={({ item, index }) => 
                         (<TouchableOpacity onPress={() => this.select(item, index)}> 
-                            <Text style={style.todo}>{item.name}</Text>                       
-                            {(!!item.phoneNumber) && (<Text style={style.todoTable}>{item.phoneNumber}</Text>)}
-                            {(!!item.email) && (<Text style={style.todoTable}>{item.email}</Text>)}
+                            <Text style={style.todo}>{`${item.givenName} ${item.middleName} ${item.familyName}`}</Text>                       
+                            {/* {(!!item.phoneNumber) && (<Text style={style.todoTable}>{item.phoneNumber}</Text>)}
+                            {(!!item.email) && (<Text style={style.todoTable}>{item.email}</Text>)} */}
                             <View style={styles.hairLine} />
                         
                         </TouchableOpacity>) 

@@ -114,6 +114,10 @@ const styles = {
         flexDirection: "row",
         justifyContent: "space-between", 
         paddingTop: 4
+    },
+    error: {
+        color: '#EC3636',
+        fontSize: 16
     }
 }
 
