@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
 import { ScrollView } from 'react-native-gesture-handler';
+import { RNCamera } from 'react-native-camera';
 
 
 const style = StyleSheet.create({
@@ -129,6 +130,35 @@ export default class CheckIn extends Component {
                 </View>
                 
                 {(active === 'scan') && (<View style={styles.segment}>
+                    <RNCamera
+                        ref={(ref) => {
+                            this.camera = ref;
+                        }}
+                        style={{ flex: 1, width: '100%'}}
+                        // type={RNCamera.Constants.Type.back}
+                        // flashMode={RNCamera.Constants.FlashMode.on}
+                        androidCameraPermissionOptions={{
+                            title: 'Permission to use camera',
+                            message: 'We need your permission to use your camera',
+                            buttonPositive: 'Ok',
+                            buttonNegative: 'Cancel',
+                        }}
+                        // androidRecordAudioPermissionOptions={{
+                        //     title: 'Permission to use audio recording',
+                        //     message: 'We need your permission to use your audio',
+                        //     buttonPositive: 'Ok',
+                        //     buttonNegative: 'Cancel',
+                        // }}
+
+                        // onGoogleVisionBarcodesDetected={({ barcodes }) => {
+                        //      console.log(barcodes);
+                        // }}
+                        onBarCodeRead={(e) => {
+                            console.log(e);
+                            
+                        }}
+                    />
+
 
                 </View>)}
                 {(active === 'phone') && (<TextInput 

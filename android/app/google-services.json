@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "107859733985",
+    "firebase_url": "https://prepvent-management.firebaseio.com",
+    "project_id": "prepvent-management",
+    "storage_bucket": "prepvent-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107859733985:android:97f9a0da30d66da39636a0",
+        "android_client_info": {
+          "package_name": "com.prepvent.manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107859733985-hg9ccjiud0h5jh9o8rsk5qc6qp2ic5au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByf064cX0vw8S0OziqDp6HHya8zk1ztRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107859733985-hg9ccjiud0h5jh9o8rsk5qc6qp2ic5au.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

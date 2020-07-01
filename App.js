@@ -24,7 +24,7 @@ const App = () => {
   return (
     <View style={{ width: '100%', height: '100%'}}>
       {/* <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} /> */}
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor={"#0E0C20"} />
         <Manager />
     </View>
   );
