@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import validator from 'validator'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
-
+import styles from '../styles';
 
 const style = StyleSheet.create({
     text: {
@@ -64,9 +64,8 @@ const style = StyleSheet.create({
 
 export default class CheckIn extends Component {
     state = {
-        active : 'scan',
-        phone: "",
-        email: '',
+        active: '',
+        inputValue: '',
         data: {
             name: "Olayinka Ibrahim",
             email: "ib@gmail.com",
@@ -76,7 +75,9 @@ export default class CheckIn extends Component {
             checkedIn: false,
             table: "table 3",
             vip: true
-        }
+        },
+        loading: false,
+        processing: false
     }
 
     findEmail = () => {
@@ -87,9 +88,18 @@ export default class CheckIn extends Component {
         
     }
 
+    processBarCode = (barcode) => {
+        if (barcode[0].type !== "UNKNOWN_FORMAT") {
+            console.log(barcode[0].data);
+            this.setState({ processing: false, loading: true, inputValue: barcode[0].data })
+        }
+    }
+
+    selectMethod = (method) => this.setState({ active: method, processing: true, inputValue: '' })
+
     render() {
         const { close } = this.props;
-        const  { active, data, phone, email } = this.state;
+        const  { active, data, processing, loading, inputValue } = this.state;
         return (
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} />
@@ -108,66 +118,39 @@ export default class CheckIn extends Component {
 
                 <View style={[styles.row, { marginBottom: 9 }]}>
                     <TouchableOpacity 
+                        disabled={loading}
                         style={[style.link, { borderBottomColor: active === 'scan'? '#2DF19C' : '#E4E4E4'}]}
-                        onPress={() => this.setState({ active: 'scan'})}
+                        onPress={() => this.selectMethod('scan')}
                     >
                         <Text style={style.text}>Scan</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                        disabled={loading}
                         style={[style.link, { borderBottomColor: active === 'phone'? '#2DF19C' : '#E4E4E4'}]}
-                        onPress={() => this.setState({ active: 'phone'})}
+                        onPress={() => this.selectMethod('phone')}
                     >
                         <Text style={style.text}>Phone</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                        disabled={loading}
                         style={[style.link, { borderBottomColor: active === 'email'? '#2DF19C' : '#E4E4E4'}]}
-                        onPress={() => this.setState({ active: 'email'})}
+                        onPress={() => this.selectMethod('email')}
                     >
                         <Text style={style.text}>Email</Text>
                     </TouchableOpacity>
                 </View>
-                
-                {(active === 'scan') && (<View style={styles.segment}>
-                    <RNCamera
-                        ref={(ref) => {
-                            this.camera = ref;
-                        }}
-                        style={{ flex: 1, width: '100%'}}
-                        // type={RNCamera.Constants.Type.back}
-                        // flashMode={RNCamera.Constants.FlashMode.on}
-                        androidCameraPermissionOptions={{
-                            title: 'Permission to use camera',
-                            message: 'We need your permission to use your camera',
-                            buttonPositive: 'Ok',
-                            buttonNegative: 'Cancel',
-                        }}
-                        // androidRecordAudioPermissionOptions={{
-                        //     title: 'Permission to use audio recording',
-                        //     message: 'We need your permission to use your audio',
-                        //     buttonPositive: 'Ok',
-                        //     buttonNegative: 'Cancel',
-                        // }}
-
-                        // onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                        //      console.log(barcodes);
-                        // }}
-                        onBarCodeRead={(e) => {
-                            console.log(e);
-                            
-                        }}
-                    />
 
 
-                </View>)}
                 {(active === 'phone') && (<TextInput 
                     style={styles.textInput} 
                     placeholder={"Enter guest phone number"} 
                     placeholderTextColor="#0E0C20" 
-                    value={phone}
+                    value={inputValue}
+                    editable={processing}
                     keyboardType={"phone-pad"}
-                    onChange={(e) => this.setState({ phone: e.nativeEvent.text })}
+                    onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}
                     onSubmitEditing={(e) => this.findPhone()}
                 />)}
 
@@ -175,16 +158,33 @@ export default class CheckIn extends Component {
                     style={styles.textInput} 
                     placeholder={"Enter guest email"} 
                     placeholderTextColor="#0E0C20"
-                    value={email}
+                    value={inputValue}
+                    editable={processing}
                     keyboardType={"email-address"}
-                    onChange={(e) => this.setState({ email: e.nativeEvent.text })}
+                    onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}
                     onSubmitEditing={(e) => this.findEmail()}
                 />)}
 
                 <Text style={styles.title}>Details</Text>
 
-                <Segment color={'#E4E4E4'}>
-                    <View style={style.details}>
+                <Segment color={'#E4E4E4'} loading={loading}>
+                    {(active === 'scan') && (processing) && (
+                        <RNCamera
+                            style={{ width: '100%', height: '100%'}}
+                            androidCameraPermissionOptions={{
+                                title: 'Permission to use camera',
+                                message: 'We need your permission to use your camera',
+                                buttonPositive: 'Ok',
+                                buttonNegative: 'Cancel',
+                            }}
+                            captureAudio={false}
+                            onGoogleVisionBarcodesDetected={({ barcodes }) => this.processBarCode(barcodes)}
+                            // onBarCodeRead={(e) => {
+                            //     console.log(e);
+                            // }}
+                        />
+                    )}
+                    {(!processing) &&(<View style={style.details}>
                         <ScrollView>
                             {Object.keys(data).map(key => {
                                 <View style={style.todoDetailIndex}>
@@ -198,7 +198,7 @@ export default class CheckIn extends Component {
                         <TouchableOpacity style={style.button}>
                                 <Text style={style.btnText}>Check In</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View>)}
                 </Segment>
             </View>
         )

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
-
+import styles from '../styles';
 
 const contactFilter = [
     { name: 'Any', options: true },

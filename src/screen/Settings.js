@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Event from '../component/Event';
-
+import styles from '../styles';
 
 export default class Settings extends Component {
     state = {

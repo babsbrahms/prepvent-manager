@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, Switch } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styles from '../styles';
 
 const style = StyleSheet.create({
     title: {

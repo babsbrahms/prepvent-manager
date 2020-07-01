@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styles from '../styles';
 
 const style = StyleSheet.create({
     name: {

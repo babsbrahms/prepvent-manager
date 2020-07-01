@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Segment from '../component/Segment';
 import { Budget } from '../component/Budget';
+import styles from '../styles';
 
 const style = StyleSheet.create({
     top: {

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker'
 import Segment from '../component/Segment';
 import Option from './Option';
-
+import styles from '../styles';
 
 const style = StyleSheet.create({
 

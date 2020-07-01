@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Segment from '../component/Segment';
 import TableChart from '../component/TableChartScreen';
@@ -9,7 +8,7 @@ import AddGuest from '../component/AddGuestScreen';
 import CheckIn from '../component/CheckInScreen';
 import SideBar from '../component/SideBar';
 import { Chart } from '../component/Chart'
-
+import styles from '../styles';
 
 const style = StyleSheet.create({
     row: {

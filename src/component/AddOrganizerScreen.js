@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from './Segment';
 import Option from './Option';
 import SideBar from "./SideBar";
 import AddContact from "./AddContact";
+import styles from '../styles';
 
 
 const style = StyleSheet.create({

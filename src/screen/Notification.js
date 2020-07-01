@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import styles from '../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Segment from '../component/Segment';
+import styles from '../styles';
 
 export default class Notification extends Component {
     state = {
