@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import validator from 'validator'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
-import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import styles from '../styles';
+import Message from "./Message"
 
 const style = StyleSheet.create({
     text: {
@@ -77,15 +77,28 @@ export default class CheckIn extends Component {
             vip: true
         },
         loading: false,
-        processing: false
+        processing: false,
+        error: ""
     }
 
     findEmail = () => {
+        const { inputValue } = this.state;
 
+        if (validator.isEmail(inputValue)) {
+            this.setState({ processing: false, loading: true, error: "" })
+        } else {
+            this.setState({ error: "Enter a valid email address"})
+        }
     }
 
     findPhone = () => {
-        
+        const { inputValue } = this.state;
+
+        if (validator.isMobilePhone(inputValue, "any", { strictMode: true })) {
+            this.setState({ processing: false, loading: true, error: "" })
+        } else {
+            this.setState({ error: "Enter a valid phone number with country code"})
+        }
     }
 
     processBarCode = (barcode) => {
@@ -95,14 +108,14 @@ export default class CheckIn extends Component {
         }
     }
 
-    selectMethod = (method) => this.setState({ active: method, processing: true, inputValue: '' })
+    selectMethod = (method) => this.setState({ active: method, processing: true, inputValue: '', error: "" })
 
     render() {
         const { close } = this.props;
-        const  { active, data, processing, loading, inputValue } = this.state;
+        const  { active, data, processing, loading, inputValue, error } = this.state;
         return (
             <View style={styles.container}>
-                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} />
+                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => close()}>
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
@@ -200,6 +213,7 @@ export default class CheckIn extends Component {
                         </TouchableOpacity>
                     </View>)}
                 </Segment>
+                <Message msg={error} close={() => this.setState({ error: "" })} />
             </View>
         )
     }

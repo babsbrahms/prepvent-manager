@@ -23,7 +23,7 @@ import Manager from './src/navigation';
 const App = () => {
   return (
     <View style={{ width: '100%', height: '100%'}}>
-      {/* <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} /> */}
+      <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
       <StatusBar barStyle="light-content" backgroundColor={"#0E0C20"} />
         <Manager />
     </View>

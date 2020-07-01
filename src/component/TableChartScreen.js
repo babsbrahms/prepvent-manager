@@ -134,7 +134,7 @@ export default class TableChart extends Component {
 
         return (
             <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
-                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} />
+                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => close()}>
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>

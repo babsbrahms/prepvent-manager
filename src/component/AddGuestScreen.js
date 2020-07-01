@@ -95,35 +95,27 @@ export default class AddGuest extends Component {
             },
             phoneNumber: {
                 type: "string"
-            },
-            invitedBy: {
-                type: "string"
-            },
-            invited: {
-                type: "boolean"
-            },
-            Accepted: {
-                type: "boolean"
-            },
-            table: {
-                type: "string"
-            },
-            vip: {
-                type: "boolean"
-            },
+            }
         },
         data: {
-            name: "olayinka ibrahim",
-            email: "olayinka@gmail.com",
-            phoneNumber: "+2348142319913",
-            invitedBy: "teslim",
-            invited: true,
-            Accepted: true,
-            table: "table 1",
-            vip: true
+            name: "",
+            email: "",
+            phoneNumber: "",
         }
     }
 
+    componentDidMount() {
+        const { guestId } = this.props;
+
+        if (guestId) {
+            this.fetchGuest(guestId)
+        }
+    }
+
+    fetchGuest = () => {
+
+    }
+    
     openSideBar = () => this.setState({ sideBarOpen: true })
 
     closeSideBar = () => this.setState({ sideBarOpen: false })
@@ -164,12 +156,12 @@ export default class AddGuest extends Component {
     }
 
     render() {
-        const { refreshing, active, optionOpen, sideBarOpen, inputValue } = this.state;
+        const { refreshing, active, optionOpen, sideBarOpen, inputValue, data } = this.state;
         
         const { close, guestId } = this.props
         return (
             <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
-                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight()}} />
+                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => close()}>
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
@@ -241,70 +233,18 @@ export default class AddGuest extends Component {
                 <Segment color={'#E4E4E4'}>
                     <View style={styles.details}>
                         <ScrollView>
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Name</Text>
 
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>Olayinka</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
+                            {Object.keys(data).map(key => (
+                                <View key={key} style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>{key}</Text>
 
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Email</Text>
+                                    <TouchableOpacity style={style.action}>
+                                        <Text style={style.todoDetailValue}>{data[key]? data[key] : "none"}</Text>
+                                        <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
 
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>ib@gmail.com</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Phone Number</Text>
-
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>+2348142319913</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Invite</Text>
-
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>true</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
-
-
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Accepted</Text>
-
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>true</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Table</Text>
-
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>table 1</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
-
-
-                            <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>VIP</Text>
-
-                                <TouchableOpacity style={style.action}>
-                                    <Text style={style.todoDetailValue}>true</Text>
-                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                </TouchableOpacity>
-                            </View>
                         </ScrollView>
 
                         <View style={styles.detailsRow}>
