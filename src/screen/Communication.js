@@ -112,7 +112,7 @@ export default class Communication extends Component {
     render() {
         const { navigation } = this.props;
         const { sideBarOpen, optionOpen, data, showPoll } = this.state;
-        console.log(data.polls);
+        console.log("COMMS POLL",data.polls);
         
         return (
             <View style={styles.container}>
@@ -215,11 +215,10 @@ export default class Communication extends Component {
 
 
                         
-                        <Poll 
+                        {(!!showPoll) && (<Poll 
                             polls={data.polls} 
-                            show={showPoll}
                             updatePoll={(polls) => this.setState({ ...this.state.data, polls })} 
-                        />
+                        />)}
                     </View>
 
 

@@ -46,13 +46,26 @@ export default class Poll extends Component {
         }
     }
 
-    cancelPoll = () => this.setState({ showPoll: false, currentIndex: -1, current: { title: "", question: "", options: []} })
+    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: []} })
 
     validate = (poll) => {
         let errors = {};
-        if (!poll.title) errors.title;
-        if (!poll.question) errors.question;
-        if (poll.options.length < 2) errors.options;
+        let count = 0;
+        if (!poll.title) errors.title = "Title is required";
+        if (!poll.question) errors.question = "Question is required";
+        if (poll.options.length < 2) {
+            errors.options = "Minimum of two options are required";
+        } else {
+            //MAKE SURE OPTIONS ARE UNIQUE
+            // poll.options.forEach((element, index) => {
+            //     poll.options.forEach((e, i) => {
+            //         if (element === e ) {
+            //             count += 1
+            //         }
+            //     });
+            //     count
+            // });
+        }
         
         return errors;
     }
@@ -61,23 +74,22 @@ export default class Poll extends Component {
         const { polls, currentIndex, current } = this.state;
         const { updatePoll } = this.props;
 
-        this.setState({ errors: {} }, () => {
-            let errors = this.validate(current);
-
-            if (Object.keys(errors).length === 0) {
-                if (currentIndex === -1) {
-                    polls.push(current);
-                } else {
-                    polls[currentIndex] = current;
-                }
-                
-                this.setState({ showPoll: false, currentIndex: -1, polls: polls, current: { title: "", question: "", options: []} }, () => {
-                    updatePoll(this.state.polls)
-                })
+        let errors = this.validate(current);
+        
+        if (Object.keys(errors).length === 0) {
+            if (currentIndex === -1) {
+                polls.push(current);
             } else {
-                this.setState({ errors })
+                polls[currentIndex] = current;
             }
-        })
+            
+            this.setState({ currentIndex: -1, polls: polls, current: { title: "", question: "", options: []}, errors: {} }, () => {
+                updatePoll(this.state.polls)
+            })
+        } else {
+            this.setState({ errors })
+        }
+     
     }
 
     deletePoll = (index) => {
@@ -86,7 +98,7 @@ export default class Poll extends Component {
 
         polls.splice(index, 1);
 
-        this.setState({ showPoll: false, currentIndex: -1, polls: polls }, () => {
+        this.setState({ currentIndex: -1, polls: polls }, () => {
             updatePoll(this.state.polls)
         })
     }
@@ -94,7 +106,7 @@ export default class Poll extends Component {
     editPoll = (index) => {
         const { polls } = this.state;
 
-        this.setState({ showPoll: true, currentIndex: index, current: polls[index] })
+        this.setState({ currentIndex: index, current: polls[index] })
     }
 
     deleteOption = (index) => {
@@ -106,7 +118,6 @@ export default class Poll extends Component {
     }
 
     render() {
-        const {  } = this.props;
         const { options, inputValue, title, question, polls, current, errors } = this.state;
 
         return (
@@ -135,7 +146,7 @@ export default class Poll extends Component {
                     onChange={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
                     onSubmitEditing={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
                 />
-                {(!!errors.title) && (<Text style={styles.error}>Title is required</Text>)}
+                {(!!errors.title) && (<Text style={styles.error}>{errors.title}</Text>)}
                 
                 
                 <Text style={style.title}>Question</Text>
@@ -148,7 +159,7 @@ export default class Poll extends Component {
                     onSubmitEditing={(e) => this.setState({ current: {...this.state.current, question: e.nativeEvent.text } })}
 
                 />
-                {(!!errors.question) && (<Text style={styles.error}>Question is required</Text>)}
+                {(!!errors.question) && (<Text style={styles.error}>{errors.question}</Text>)}
         
                 <Text style={style.title}>Options</Text>
                 <ScrollView>
@@ -162,7 +173,7 @@ export default class Poll extends Component {
                         </View>
                     ))}
                 </ScrollView>
-                {(!!errors.options) && (<Text style={styles.error}>Options are required</Text>)}
+                    
                 <View style={[styles.detailsRow, { alignItems: "center"}]}>
                     <TextInput 
                         style={styles.detailsInput} 
@@ -178,6 +189,7 @@ export default class Poll extends Component {
                         <Ionicons name={'ios-send'} size={30} color={'#707070'}/>
                     </TouchableOpacity>
                 </View>
+                {(!!errors.options) && (<Text style={styles.error}>{errors.options}</Text>)}
         
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => this.savePoll()}>

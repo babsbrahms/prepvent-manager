@@ -108,25 +108,24 @@ export default class AddContact extends PureComponent {
     }
 
     searchGuest = (text) => {
-
-        
-        const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
-        if (text === "" || text === null) {
-            loadContacts();
-        } else if (phoneNumberRegex.test(text)) {
-            Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
-            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-            this.setState({ contacts: contacts })
-            // console.log('contacts', contacts);
-            });
-        } else {
-            Contacts.getContactsMatchingString(text, (err, contacts) => {
-            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-            this.setState({ contacts: contacts })
-            // console.log('contacts', contacts);
-            });
-        }
-       
+        this.setState({ refreshing: true }, () => {
+            const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
+            if (text === "" || text === null) {
+                return
+            } else if (phoneNumberRegex.test(text)) {
+                Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
+                    contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+                    this.setState({ contacts: contacts, refreshing: false })
+                    // console.log('contacts', contacts);
+                });
+            } else {
+                Contacts.getContactsMatchingString(text, (err, contacts) => {
+                    contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+                    this.setState({ contacts: contacts, refreshing: false })
+                    // console.log('contacts', contacts);
+                });
+            }
+        })  
     }
 
     select = (contact, index) => {
@@ -161,9 +160,9 @@ export default class AddContact extends PureComponent {
                         placeholderTextColor="#707070" 
                         value={search}
                         onChange={(e) => this.setState({ search: e.nativeEvent.text })}
-                        onSubmitEditing={(e) => this.searchGuest()}
+                        onSubmitEditing={(e) => this.searchGuest(e.nativeEvent.text)}
                     />
-                    <TouchableOpacity style={styles.icon} onPress={() => this.searchGuest()}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.searchGuest(search)}>
                         <Ionicons name={'ios-arrow-forward'} color={'white'} size={30}/>
                     </TouchableOpacity>
                 </View>

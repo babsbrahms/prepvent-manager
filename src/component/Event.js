@@ -265,11 +265,11 @@ export default class Event extends Component {
                         
                     </View>
 
+                    {(!!showPoll) && (
                     <Poll 
                         polls={data.polls} 
-                        show={showPoll}
                         updatePoll={(polls) => this.setState({ ...this.state.data, polls })} 
-                    />
+                    />)}
                 </View>
 
 
