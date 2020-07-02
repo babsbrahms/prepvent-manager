@@ -1,1 +1,5 @@
-[] remove bar height in modals
+[] add date to event
+[] add event title/name
+[] finish poll validation
+[] make message ZIndex very high
+[] convert phoneNumber to international format

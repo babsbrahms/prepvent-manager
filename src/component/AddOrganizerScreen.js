@@ -182,7 +182,7 @@ export default class AddOrganizer extends Component {
         const { optionOpen, guild, data, selected, inputValue, sideBarOpen, loading } = this.state;
 
         return (
-            <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
+            <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => close()}>
@@ -249,7 +249,7 @@ export default class AddOrganizer extends Component {
                         addContact={(contact) => this.addContact(contact)} 
                     />
                 </SideBar>
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 }

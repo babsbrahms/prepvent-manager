@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Communications from 'react-native-communications';
 import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
@@ -92,6 +93,7 @@ export default class TableChart extends Component {
     state = {
         sideBarOpen: false,
         refreshing: false,
+        loading: false,
         filterParams: 'invited',
         searchParams: 'name',
         optionOpen: false,
@@ -101,7 +103,87 @@ export default class TableChart extends Component {
         selectedTable: '',
         tables: ['Table 1', 'Bride Table', "Childre's Table"],
         newTableName: "",
-        search: ""
+        search: "",
+        guests: [
+            {
+                name: 'biola',
+                table: "table 2",
+                uid: '12weq1e3'  
+            },
+            {
+                name: 'Olayinka',
+                table: "table 1",
+                uid: '1weqw1e'  
+            },
+            {
+                name: 'Zharadeen',
+                table: "table 1",
+                uid: '1weq431e3'  
+            },
+            {
+                name: 'Najeeb',
+                table: "table 2",
+                uid: '12weqw3433'  
+            },            
+            {
+                name: 'Teslim',
+                table: "table 1",
+                uid: '12eqw431e3'  
+            },
+            {
+                name: 'Rukayat',
+                uid: '12we3431e3'  
+            }
+        ],
+        data: [
+            {
+                name: 'biola',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12weq1e3'  
+            },
+            {
+                name: 'Olayinka',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '1weqw1e'  
+            },
+            {
+                name: 'Zharadeen',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '1weq431e3'  
+            },
+            {
+                name: 'Najeeb',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12weqw3433'  
+            },            
+            {
+                name: 'Teslim',
+                email: 'tessy@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12eqw431e3'  
+            },
+            {
+                name: 'Rukayat',
+                email: 'ruka@gmail.com',
+                VIP: true,
+                accpted: true,
+                uid: '12we3431e3'  
+            }
+        ]
     }
 
     openSideBar = () => this.setState({ sideBarOpen: true })
@@ -127,13 +209,40 @@ export default class TableChart extends Component {
         this.setState({ searchParams: contact.name, option: '' })
     }
 
+    addTable = () => {
+        const { newTableName, tables} = this.state;
+         
+
+        let index = tables.indexOf()
+        if ((index < 0) && (newTableName !== "")) {
+            this.setState({ table: [ ...tables, newTableName], newTableName: "" })
+        } else {
+
+        }  
+    }
+
+    deleteTable = (table) => {
+        Alert.alert('Warning', `Are you sure you want to delete ${table}`, [
+            { text: "Yes", onPress: () => this.confirmDeleteTable(table)},
+            {text: "Cancel", onPress: () => null }
+        ], { cancelable: true })
+    }
+
+    confirmDeleteTable = (table) => {
+
+    }
+
+    selectTable = (table) => {
+        this.setState({ selectedTable: table })
+    }
+
     render() {
         const { close, editGuest } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, tables, selected, newTableName, search } = this.state;
+            selectedTable, tables, selected, newTableName, search, data, guests, loading } = this.state;
 
         return (
-            <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
+            <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
                     <TouchableOpacity style={styles.icon} onPress={() => close()}>
@@ -157,15 +266,15 @@ export default class TableChart extends Component {
                 </View>)}
 
                 <View style={{ width: '100%', height: "100%", flex: 1 }}>
-                    <Segment color="#E4E4E4" marginTop={2}>
+                    <Segment disabled={loading} color="#E4E4E4" marginTop={2}>
                         <FlatList 
                         onRefresh={() => {}}
                         refreshing={refreshing}
-                        data={[1, 2, 3, 4, 5]}
+                        data={data}
                         renderItem={({ item, index }) => 
                             (<View> 
                                 <View style={[styles.between, { alignItems: "center"}]}>
-                                    <Text style={style.todo}>Olayinka Ibrahim</Text>  
+                                <Text style={style.todo}>{item.name}</Text>  
                                 </View>
                                                        
                                 <View style={styles.between}>
@@ -173,12 +282,13 @@ export default class TableChart extends Component {
                                         <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
                                             <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                                        {(!!item.email) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.email([`${item.email}`],null,null,'','')}>
                                             <Ionicons name={'ios-mail'} color={'#707070'} size={30}/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                                        </TouchableOpacity>)}
+
+                                        {(!!item.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.phonecall(item.phoneNumber, false)}>
                                             <Ionicons name={'ios-call'} color={'#707070'} size={30}/>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity>)}
                                     </View>
 
                                     
@@ -188,49 +298,12 @@ export default class TableChart extends Component {
                                 </View>
                                 {(selectedIndex === index) && (<View style={style.todoDetail}>
                                     <View>
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Name</Text>
+                                        {Object.keys(item).map(key =>(
+                                        <View key={key} style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>{key}</Text>
 
-                                            <Text style={style.todoDetailValue}>Olayinka Ibrahim</Text>
-                                        </View>
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Email</Text>
-
-                                            <Text style={style.todoDetailValue}>ib@gmail.com</Text>
-                                        </View>
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Phone Number</Text>
-
-                                            <Text style={style.todoDetailValue}>+2348142319913</Text>
-                                        </View>
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Invite</Text>
-
-                                            <Text style={style.todoDetailValue}>true</Text>
-                                        </View>
-
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Checked In</Text>
-
-                                            <Text style={style.todoDetailValue}>deny</Text>
-                                        </View>
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Table Chart</Text>
-
-                                            <Text style={style.todoDetailValue}>table 1</Text>
-                                        </View>
-
-
-                                        <View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>Accepted</Text>
-
-                                            <Text style={style.todoDetailValue}>true</Text>
-                                        </View>
+                                            <Text style={style.todoDetailValue}>{String(item[key])}</Text>
+                                        </View>))}
                                     </View>
                                     <View style={styles.between}>                                        
                                         <TouchableOpacity style={styles.icon} onPress={() =>  editGuest(selected.uid)}>
@@ -261,12 +334,12 @@ export default class TableChart extends Component {
                                     placeholderTextColor="#0E0C20"
                                     value={newTableName}
                                     onChange={(e) => this.setState({ newTableName: e.nativeEvent.text })}
-                                    onSubmitEditing={(e) => this.setState({ newTableName: e.nativeEvent.text })}
+                                    onSubmitEditing={(e) => this.addTable()}
                                 />
 
                             </ScrollView>
                             <View>
-                                <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                                <TouchableOpacity style={styles.icon} onPress={() => this.addTable()}>
                                     <Ionicons name={'md-add-circle'} size={35} color={'#2DF19C'}/>
                                 </TouchableOpacity>
                             </View>
@@ -280,7 +353,7 @@ export default class TableChart extends Component {
                                         <TouchableOpacity
                                             key={table}
                                             style={[style.link, { borderBottomColor: selectedTable === table? '#2DF19C' : '#0E0C20'}]}
-                                            onPress={() => this.setState({ selectedTable: table })}
+                                            onPress={() => this.selectTable(table)}
                                         >
                                             <Text style={style.text}>{table}</Text>
                                         </TouchableOpacity>
@@ -290,7 +363,7 @@ export default class TableChart extends Component {
 
                             </ScrollView>
                             <View>
-                                <TouchableOpacity disabled={!selectedTable} style={styles.icon} onPress={() => {}}>
+                                <TouchableOpacity disabled={!selectedTable} style={styles.icon} onPress={() => this.deleteTable(selectedTable)}>
                                     <Ionicons name={'md-remove-circle'} size={35} color={'#EC3636'}/>
                                 </TouchableOpacity>
                             </View>
@@ -334,16 +407,16 @@ export default class TableChart extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        <Segment color="#E4E4E4">
+                        <Segment loading={loading} color="#E4E4E4">
                             <FlatList 
                             onRefresh={() => {}}
                             refreshing={refreshing}
-                            data={[1, 2, 3, 4, 5]}
+                            data={guests}
                             renderItem={({ item, index }) => 
                                 (<TouchableOpacity> 
-                                    <Text style={style.todo}>Olayinka Ibrahim</Text>                       
+                                    <Text style={style.todo}>{item.name}</Text>                       
                                     <View style={[styles.row, { justifyContent: 'flex-end' }]}>
-                                        <Text style={style.todoTable}>Table 1</Text>
+                                    <Text style={[style.todoTable, { color: item.table? '#0E0C20' : '#EC3636'}]}>{item.table || "no table"}</Text>
                                     </View>
 
                                     <View style={styles.hairLine} />
@@ -377,7 +450,7 @@ export default class TableChart extends Component {
                         </Option>
                     </View>
                 </SideBar>
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 }

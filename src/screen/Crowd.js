@@ -5,6 +5,7 @@ import Segment from '../component/Segment';
 import TableChart from '../component/TableChartScreen';
 import Guest from '../component/GuestScreen';
 import AddGuest from '../component/AddGuestScreen';
+import EditGuest from '../component/EditGuestScreen';
 import CheckIn from '../component/CheckInScreen';
 import SideBar from '../component/SideBar';
 import { Chart } from '../component/Chart'
@@ -102,12 +103,13 @@ export default class Crowd extends Component {
 
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
                     {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} />)}
-                    {(modalType === "Guest") && (<AddGuest guestId={guestId} close={() => this.closeModal()} />)}
-                    {(modalType === "TableChart") && (<TableChart editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('Guest'))} close={() => this.closeModal()} />)}
+                    {(modalType === "Guest") && (<AddGuest close={() => this.closeModal()} />)}
+                    {(modalType === 'EditGuest') && (<EditGuest guestId={guestId} close={() => this.closeModal()} />)}
+                    {(modalType === "TableChart") && (<TableChart editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <Guest editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('Guest'))} close={() => this.closeSideBar()}/>
+                    <Guest editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
                 </SideBar>                
             </View>
         )

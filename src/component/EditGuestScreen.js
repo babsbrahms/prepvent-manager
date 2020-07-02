@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import DocumentPicker from 'react-native-document-picker';
 import Segment from '../component/Segment';
 import styles from '../styles';
 import Option from './Option'
 import SideBar from "./SideBar";
-import AddContact from "./AddContact"
 
 
 const style = StyleSheet.create({
@@ -79,7 +77,7 @@ const style = StyleSheet.create({
 });
 
 
-export default class AddGuest extends Component {
+export default class EditGuest extends Component {
     state = { 
         refreshing: false,
         active: 'phone',
@@ -103,6 +101,18 @@ export default class AddGuest extends Component {
             phoneNumber: "",
         }
     }
+
+    componentDidMount() {
+        const { guestId } = this.props;
+
+        if (guestId) {
+            this.fetchGuest(guestId)
+        }
+    }
+
+    fetchGuest = () => {
+
+    }
     
     openSideBar = () => this.setState({ sideBarOpen: true })
 
@@ -113,40 +123,11 @@ export default class AddGuest extends Component {
 
     closeOption = () => this.setState({ optionOpen: false })
 
-    selectMethod = (method) => this.setState({ active: method })
-
-    addPhone = () => {
-
-    }
-
-    addInput = () => {
-
-    }
-
-    addCsv = async () => {
-        try {
-            const res = await DocumentPicker.pick({
-              type: [DocumentPicker.types.csv],
-            });
-            console.log(
-              res.uri,
-              res.type, // mime type
-              res.name,
-              res.size
-            );
-        } catch (err) {
-            if (DocumentPicker.isCancel(err)) {
-              // User cancelled the picker, exit any dialogs or menus and move on
-            } else {
-              throw err;
-            }
-        }
-    }
 
     render() {
         const { refreshing, active, optionOpen, sideBarOpen, inputValue, data } = this.state;
         
-        const { close } = this.props
+        const { close, guestId } = this.props
         return (
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
@@ -160,52 +141,13 @@ export default class AddGuest extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.Header}>ADD GUEST</Text>
-
+                <Text style={styles.Header}>EDIT GUEST</Text>
                 <View>
-                    <Text style={styles.title}>Add guest using:</Text>
+                    <Text style={styles.title}>Guest</Text>
 
-                    <View style={[styles.row, { marginBottom: 9 }]}>
-                        <TouchableOpacity 
-                            style={[style.link, { borderBottomColor: active === 'phone'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.selectMethod('phone')}
-                        >
-                            <Text style={style.text}>Phone Number</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[style.link, { borderBottomColor: active === 'csv'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.selectMethod('csv')}
-                        >
-                            <Text style={style.text}>CSV file</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[style.link, { borderBottomColor: active === 'input'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.selectMethod('input')}
-                        >
-                            <Text style={style.text}>Form</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        {(active === 'phone') && (
-                        <TouchableOpacity style={style.button} onPress={() => this.openSideBar()}>
-                            <Text style={style.btnText}>Import contact</Text>
-                        </TouchableOpacity>)}
-
-                        
-                        {(active === 'csv') && (
-                        <TouchableOpacity style={style.button} onPress={() => this.addCsv()}>
-                            <Text style={style.btnText}>Import CSV</Text>
-                        </TouchableOpacity>)}
-
-                        {(active === 'input') && (
-                        <TouchableOpacity style={style.button}>
-                            <Text style={style.btnText}>Fill guest form</Text>
-                        </TouchableOpacity>)}
-                    </View>
+                    <Text style={style.to}>Olayinka Ibrahim</Text>
                 </View>
+
 
 
                 <Text style={styles.title}>Details</Text>
@@ -246,7 +188,7 @@ export default class AddGuest extends Component {
                 </Option>
                 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AddContact selection="multiple" addContact={() => {}} />
+                   
                 </SideBar>
             </View>
         )

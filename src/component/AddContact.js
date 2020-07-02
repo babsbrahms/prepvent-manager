@@ -7,46 +7,24 @@ import styles from '../styles';
 
 
 const style = StyleSheet.create({
-    todo: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#000000'
-    },
-    todoTable: {
-        fontSize: 18,
-        color: '#0E0C20'
-    },
-    todoDetail: {
-        backgroundColor: '#707070',
-        padding: 3,
-    },
-    todoDetailIndex: {
+    container: {
+        padding: 5,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: 'center',
-        marginBottom: 5,
-        padding: 3
+        flex: 1,
+        width: "100%",
+
     },
-    todoDetailKey: {
-        // alignSelf: "flex-start",
+    contact: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#FFFFFF'
+        color: '#000000',
+        flexWrap: "wrap",
+        flex: 1,
     },
-    todoDetailValue: {
-        // alignSelf: "flex-end",
-        fontSize: 14,
-        color: '#E4E4E4'
-    }, 
-    todoAction: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    params: {
-        color: '#E4E4E4',
-        fontSize: 20,
-        textAlign: 'center'
+    icon: {
+        padding: 7
     }
 
 });
@@ -59,7 +37,7 @@ export default class AddContact extends PureComponent {
             search: '',
             refreshing: true,
             contacts: [],
-            loading: false
+            loading: false,
         }
     }
     
@@ -76,20 +54,13 @@ export default class AddContact extends PureComponent {
         
         Contacts.getAllWithoutPhotos((err, contacts) => {
             if (err === 'denied'){
-              // error
-              this.setState({ contacts: [], refreshing: false })
+                // error
+                this.setState({ contacts: [], refreshing: false })
             } else {
             
-            contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+                contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
                 
-            // let format = contacts.map(contact => ({
-            //     recordId: contact.recordID,
-            //     name: `${contact.givenName} ${contact.middleName} ${contact.familyName}`,
-            //     phoneNumber: contact.phoneNumbers.length > 0 ? `${contact.phoneNumbers[0].number}` : '',
-            //     email: contact.emailAddresses.length > 0 ? `${contact.emailAddresses[0].email}` : '',
-            //     selected: false
-            // }))
-              this.setState({ contacts: contacts, refreshing: false })
+                this.setState({ contacts: contacts, refreshing: false })
             }
         })
     }
@@ -107,50 +78,88 @@ export default class AddContact extends PureComponent {
         })
     }
 
-    searchGuest = (text) => {
-        this.setState({ refreshing: true }, () => {
-            const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
-            if (text === "" || text === null) {
-                return
-            } else if (phoneNumberRegex.test(text)) {
-                Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
-                    contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-                    this.setState({ contacts: contacts, refreshing: false })
-                    // console.log('contacts', contacts);
-                });
-            } else {
-                Contacts.getContactsMatchingString(text, (err, contacts) => {
-                    contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-                    this.setState({ contacts: contacts, refreshing: false })
-                    // console.log('contacts', contacts);
-                });
-            }
-        })  
-    }
+    // searchGuest = (text) => {
+    //     this.setState({ refreshing: true }, () => {
+    //         const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
+    //         if (text === "" || text === null) {
+    //             return
+    //         } else if (phoneNumberRegex.test(text)) {
+    //             Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
+    //                 contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+    //                 this.setState({ contacts: contacts, refreshing: false })
+    //                 // console.log('contacts', contacts);
+    //             });
+    //         } else {
+    //             Contacts.getContactsMatchingString(text, (err, contacts) => {
+    //                 contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
+    //                 this.setState({ contacts: contacts, refreshing: false })
+    //                 // console.log('contacts', contacts);
+    //             });
+    //         }
+    //     })  
+    // }
 
     select = (contact, index) => {
         const { addContact, selection } = this.props;
         
         if (selection === 'single') {
             this.setState({ loading: true }, () => {
-                // addContact(contact)
+                addContact({
+                    name: contact.displayName,
+                    phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
+                    email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                })
             })    
         } else {
+            const { contacts } = this.state;
+            
+            let index = contacts.findIndex(x => x.recordID === contact.recordID);
+            
+            if (!!contact.selected) {
+                contacts[index] = {...contact, selected: false }
+            } else {
+                contacts[index] = {...contact, selected: true }
+            }  
+            
+            this.setState({ contacts: [...contacts] })
+        }
+    }
 
+
+    saveContact = () => {
+        const { addContact, selection, close } = this.props;
+
+        if (selection === 'single') {
+            close()
+        } else {
+            const { contacts } = this.state;
+
+            const list = contacts.map(contact => {
+                if (!!contact.selected) {
+                    return {
+                        name: contact.displayName,
+                        phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
+                        email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                    }
+                }
+            })
+
+            console.log(list);
+            
+            addContact(list)
         }
     }
 
     render() {
         const { refreshing, search, contacts, loading } = this.state;
-        const { close } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={styles.between}>
                     <Text style={styles.Header}>CONTACT</Text>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => close()}>
-                        <Ionicons name={'ios-close'} color={'white'} size={30}/>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.saveContact()}>
+                        <Ionicons name={'ios-checkmark'} color={'white'} size={30}/>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.row, { alignItems: 'center'}]}>
@@ -160,27 +169,32 @@ export default class AddContact extends PureComponent {
                         placeholderTextColor="#707070" 
                         value={search}
                         onChange={(e) => this.setState({ search: e.nativeEvent.text })}
-                        onSubmitEditing={(e) => this.searchGuest(e.nativeEvent.text)}
+                        onSubmitEditing={(e) => this.setState({ search: e.nativeEvent.text })}
                     />
-                    <TouchableOpacity style={styles.icon} onPress={() => this.searchGuest(search)}>
+                    {/* <TouchableOpacity style={styles.icon} onPress={() => this.searchGuest(search)}>
                         <Ionicons name={'ios-arrow-forward'} color={'white'} size={30}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 <Segment color="#E4E4E4" loading={loading}>
                     <FlatList 
                     onRefresh={() => this.getAll()}
                     refreshing={refreshing}
-                    data={contacts}
+                    data={contacts.filter(x => x.displayName.toLowerCase().includes(search.toLowerCase()))}
                     initialNumToRender={12}
                     renderItem={({ item, index }) => 
-                        (<TouchableOpacity onPress={() => this.select(item, index)}> 
-                            <Text style={style.todo}>{`${item.givenName} ${item.middleName} ${item.familyName}`}</Text>                       
-                            {/* {(!!item.phoneNumber) && (<Text style={style.todoTable}>{item.phoneNumber}</Text>)}
-                            {(!!item.email) && (<Text style={style.todoTable}>{item.email}</Text>)} */}
+                        (<View style={{ width: '100%', flex: 1}}> 
+                            <View style={style.container}>
+                                
+                                <Text numberOfLines={2} style={style.contact}>{item.displayName}</Text>                           
+
+                                <TouchableOpacity style={style.icon} onPress={() => this.select(item, index)}>
+                                    <Ionicons name={item.selected? 'ios-radio-button-on' : 'ios-radio-button-off'} color={'black'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.hairLine} />
                         
-                        </TouchableOpacity>) 
+                        </View>) 
                     }
                     keyExtractor={(item,index) => index.toString()}
                     />

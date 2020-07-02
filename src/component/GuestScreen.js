@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Communications from 'react-native-communications';
 import Segment from '../component/Segment';
 import Option from './Option';
 import styles from '../styles';
@@ -79,7 +80,56 @@ export default class Guest extends Component {
         searchParams: 'name',
         optionOpen: false,
         option: '',
-        search: ""
+        search: "",
+        data: [
+            {
+                name: 'biola',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12weq1e3'  
+            },
+            {
+                name: 'Olayinka',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '1weqw1e'  
+            },
+            {
+                name: 'Zharadeen',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '1weq431e3'  
+            },
+            {
+                name: 'Najeeb',
+                email: 'yeancahBrahms7@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12weqw3433'  
+            },            
+            {
+                name: 'Teslim',
+                email: 'tessy@gmail.com',
+                phoneNumber: "+3248142319913",
+                VIP: true,
+                accpted: true,
+                uid: '12eqw431e3'  
+            },
+            {
+                name: 'Rukayat',
+                email: 'ruka@gmail.com',
+                VIP: true,
+                accpted: true,
+                uid: '12we3431e3'  
+            }
+        ]
     }
 
     openOption = (option) => this.setState({ optionOpen: true, option })
@@ -106,7 +156,7 @@ export default class Guest extends Component {
     }
 
     render() {
-        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, selected, search } = this.state;
+        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, selected, search, data } = this.state;
         
         const { close, editGuest } = this.props
         return (
@@ -148,69 +198,34 @@ export default class Guest extends Component {
                     <FlatList 
                     onRefresh={() => {}}
                     refreshing={refreshing}
-                    data={[1, 2, 3, 4, 5]}
+                    data={data}
                     renderItem={({ item, index }) => 
                         (<View> 
-                            <Text style={style.todo}>Olayinka Ibrahim</Text>                       
+                            <Text style={style.todo}>{item.name}</Text>                       
                             <View style={styles.between}>
                                 <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
                                     <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
 
                                 <View style={styles.row}>
-                                    <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                                    {(!!item.email) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.email([`${item.email}`],null,null,'','')}>
                                         <Ionicons name={'ios-mail'} color={'#707070'} size={30}/>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                                    </TouchableOpacity>)}
+
+                                    {(!!item.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.phonecall(item.phoneNumber, false)}>
                                         <Ionicons name={'ios-call'} color={'#707070'} size={30}/>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity>)}
+
                                 </View>
                             </View>
                             {(selectedIndex === index) && (<View style={style.todoDetail}>
                                 <View>
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Name</Text>
+                                    {Object.keys(item).map(key =>(
+                                    <View key={key} style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>{key}</Text>
 
-                                        <Text style={style.todoDetailValue}>Olayinka Ibrahim</Text>
-                                    </View>
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Email</Text>
-
-                                        <Text style={style.todoDetailValue}>ib@gmail.com</Text>
-                                    </View>
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Phone Number</Text>
-
-                                        <Text style={style.todoDetailValue}>+2348142319913</Text>
-                                    </View>
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Invite</Text>
-
-                                        <Text style={style.todoDetailValue}>true</Text>
-                                    </View>
-
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Checked In</Text>
-
-                                        <Text style={style.todoDetailValue}>deny</Text>
-                                    </View>
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Table Chart</Text>
-
-                                        <Text style={style.todoDetailValue}>table 1</Text>
-                                    </View>
-
-
-                                    <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Accepted</Text>
-
-                                        <Text style={style.todoDetailValue}>true</Text>
-                                    </View>
+                                        <Text style={style.todoDetailValue}>{String(item[key])}</Text>
+                                    </View>))}
                                 </View>
                                 <View style={styles.between}>
                                     <TouchableOpacity style={styles.icon} onPress={() =>  {}}>
