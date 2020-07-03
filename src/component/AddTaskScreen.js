@@ -85,7 +85,7 @@ export default class AddTask extends Component {
             data: {
                 task: "",
                 alert : "",
-                budget: "",
+                budget: 0,
                 assign : null,
                 deadline: ""
             },
@@ -185,7 +185,7 @@ export default class AddTask extends Component {
 
                                 <TouchableOpacity onPress={() => this.selectedDetail(key, data[key.value])} style={style.action}>
                                     {(key.type === "Number") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data[key.value]): 'none'}</Text>)}
-                                    {(key.type === "DateTime") && (<Text style={style.todoDetailValue}>{!!data[key.value]?  moment.utc(data[key.value]).format("ddd do MMM YYYY"): 'none'}</Text>)}
+                                    {(key.type === "DateTime") && (<Text style={style.todoDetailValue}>{!!data[key.value]?  moment.utc(data[key.value]).format("ddd Do MMM YYYY"): 'none'}</Text>)}
                                     {(key.type === "Organizer") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data.assign.name): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -196,7 +196,7 @@ export default class AddTask extends Component {
                                 <Text style={style.todoDetailKey}>Alert</Text>
 
                                 <TouchableOpacity onPress={() => this.selectedDetail(guild[0])} style={style.action}>
-                                    {(<Text style={style.todoDetailValue}>{!!data.alert?  moment(data.alert).format("ddd do MMM YYYY"): 'none'}</Text>)}
+                                    {(<Text style={style.todoDetailValue}>{!!data.alert?  moment(data.alert).format("ddd Do MMM YYYY hh:mm a"): 'none'}</Text>)}
 
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -227,7 +227,7 @@ export default class AddTask extends Component {
                                 <Text style={style.todoDetailKey}>Deadline</Text>
 
                                 <TouchableOpacity onPress={() => this.selectedDetail(guild[3])} style={style.action}>
-                                    {(<Text style={style.todoDetailValue}>{!!data.deadline?  moment(data.deadline).format("ddd do MMM YYYY"): 'none'}</Text>)}
+                                    {(<Text style={style.todoDetailValue}>{!!data.deadline?  moment(data.deadline).format("ddd Do MMM YYYY hh:mm a"): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -241,14 +241,14 @@ export default class AddTask extends Component {
                             <View style={styles.detailsRow}>
                                 <TextInput 
                                     ref={(x) => this.input = x}
-                                    style={styles.detailsInput} 
+                                    style={styles.detailsInput}
                                     placeholder={`Enter ${selected.name}`} 
                                     placeholderTextColor="#0E0C20"
-                                    value={data[selected.name]}
+                                    value={String(data[selected.name])}
                                     autoFocus
                                     keyboardType={"phone-pad"}
-                                    onChange={(e) => this.setData(e.nativeEvent.text)}
-                                    onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
+                                    onChange={(e) => this.setData(Number(e.nativeEvent.text))}
+                                    onSubmitEditing={(e) => this.setData(Number(e.nativeEvent.text))}
                                 />
                             </View>
                             )}

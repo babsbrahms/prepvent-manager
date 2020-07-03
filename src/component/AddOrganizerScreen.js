@@ -150,12 +150,6 @@ export default class AddOrganizer extends Component {
         this.setState({ data: { ...this.state.data, [selected.name]: value } }, () => console.log(this.state.data) )
     }
 
-    addInvite = () => {
-        const { inputValue } = this.props;
-        this.setState({ data: { ...this.state.data, invite: inputValue } })
-    }
-
-
     addContact = contact => {
         this.setState({ data: { 
             ...this.state.data, 
@@ -230,11 +224,11 @@ export default class AddOrganizer extends Component {
                                         style={styles.detailsInput} 
                                         placeholder={`Enter ${selected.name}`} 
                                         placeholderTextColor="#0E0C20"
-                                        value={inputValue}
+                                        value={String(inputValue)}
                                         keyboardType={"number-pad"}
                                         autoFocus
-                                        onChange={(e) => this.setData(e.nativeEvent.text)}
-                                        onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
+                                        onChange={(e) => this.setData(Number(e.nativeEvent.text))}
+                                        onSubmitEditing={(e) => this.setData(Number(e.nativeEvent.text))}
                                     />
                                 </View>
                             )}

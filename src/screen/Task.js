@@ -179,7 +179,7 @@ class Task extends Component {
                                     <View style={style.todoDetailIndex}>
                                         <Text style={style.todoDetailKey}>Alert</Text>
 
-                                        <Text style={style.todoDetailValue}>{item.alert ? moment(item.alert).format("ddd do MMM YYYY") : "none"}</Text>
+                                        <Text style={style.todoDetailValue}>{item.alert ? moment(item.alert).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
                                     </View>
 
 
@@ -198,7 +198,7 @@ class Task extends Component {
                                     <View style={style.todoDetailIndex}>
                                         <Text style={style.todoDetailKey}>Deadline</Text>
 
-                                        <Text style={style.todoDetailValue}>{item.deadline? moment(item.deadline).format("ddd do MMM YYYY") : "none"}</Text>
+                                        <Text style={style.todoDetailValue}>{item.deadline? moment(item.deadline).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
                                     </View>
 
                                     <View style={styles.between}>

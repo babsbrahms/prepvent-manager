@@ -170,7 +170,7 @@ export default class Event extends Component {
                         </TouchableOpacity>
                         
                     </View>
-                    <Text style={style.to}>{moment(data.date).format("ddd do MMMM YYYY")}</Text>
+                    <Text style={style.to}>{moment(data.date).format("ddd Do MMMM YYYY")}</Text>
                 </View>
 
 
@@ -320,7 +320,7 @@ export default class Event extends Component {
                             <Text style={[style.title, { color: '#000000'}]}>Acceptance Deadline</Text>
                                 
                             <TouchableOpacity style={style.deadline} onPress={() => this.openOption('Acceptance Deadline')}>
-                                <Text style={[style.to, { color: '#707070'}]}>{data.acceptanceDeadline ? moment(data.acceptanceDeadline).format("ddd do MMMM YYYY") : "none"}</Text>
+                                <Text style={[style.to, { color: '#707070'}]}>{data.acceptanceDeadline ? moment(data.acceptanceDeadline).format("ddd Do MMMM YYYY hh:mm a") : "none"}</Text>
                                 <Ionicons name={'ios-arrow-forward'} size={30} color={'#707070'}/>
                             </TouchableOpacity>
                         </View>
