@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import styles from '../styles';
 
 const style = StyleSheet.create({
@@ -21,7 +23,7 @@ const style = StyleSheet.create({
     }
 });
 
-export default class Home extends Component {
+class Home extends Component {
     state = {
         refreshing: false
     }
@@ -70,3 +72,14 @@ export default class Home extends Component {
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Home);

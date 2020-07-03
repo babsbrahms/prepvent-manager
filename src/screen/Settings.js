@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import Event from '../component/Event';
 import styles from '../styles';
 
-export default class Settings extends Component {
+
+class Settings extends Component {
     state = {
         data: {
 
@@ -36,3 +39,14 @@ export default class Settings extends Component {
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Settings);

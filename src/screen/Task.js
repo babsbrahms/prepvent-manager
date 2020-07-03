@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Modal, FlatList }
 import moment from 'moment';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Communications from 'react-native-communications';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import AddTask from '../component/AddTaskScreen';
 import {Budget} from '../component/Budget';
 import styles from '../styles';
@@ -63,7 +65,7 @@ const style = StyleSheet.create({
 
 
     
-export default class Task extends Component {
+class Task extends Component {
     state = {
         modalOpen: false,
         modalType: "",
@@ -126,7 +128,7 @@ export default class Task extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, addMessage } = this.props;
         const {  modalOpen, modalType, refreshing, selectedIndex, data } = this.state;
 
         return (
@@ -225,9 +227,21 @@ export default class Task extends Component {
                     </View>
                 </View>
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
-                    <AddTask selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} />
+                    <AddTask selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />
                 </Modal>
             </View>
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Task);
+ 

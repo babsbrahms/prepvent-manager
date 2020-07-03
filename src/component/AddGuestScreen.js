@@ -7,7 +7,8 @@ import Segment from '../component/Segment';
 import styles from '../styles';
 import Option from './Option'
 import SideBar from "./SideBar";
-import AddContact from "./AddContact"
+import AddContact from "./AddContact";
+import Message from "./Message";
 
 
 const style = StyleSheet.create({
@@ -148,6 +149,7 @@ export default class AddGuest extends Component {
         
         const { close } = this.props
         return (
+        <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
@@ -249,6 +251,8 @@ export default class AddGuest extends Component {
                     <AddContact selection="multiple" addContact={() => {}} />
                 </SideBar>
             </View>
+            <Message />
+        </View>
         )
     }
 }

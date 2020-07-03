@@ -7,6 +7,7 @@ import Option from './Option';
 import SideBar from "./SideBar";
 import AddContact from "./AddContact";
 import styles from '../styles';
+import Message from "./Message"
 
 
 const style = StyleSheet.create({
@@ -182,6 +183,7 @@ export default class AddOrganizer extends Component {
         const { optionOpen, guild, data, selected, inputValue, sideBarOpen, loading } = this.state;
 
         return (
+        <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
@@ -250,6 +252,8 @@ export default class AddOrganizer extends Component {
                     />
                 </SideBar>
             </View>
+            <Message />
+        </View>
         )
     }
 }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import AddContact from '../component/AddContact';
 import Poll from '../component/Poll';
 import SideBar from '../component/SideBar';
@@ -38,7 +40,8 @@ const contactFilter = [
     { name: 'VIP', options: false },
 ]
 
-export default class Communication extends Component {
+
+class Communication extends Component {
     state = {
         sideBarOpen: false,
         optionOpen: false,
@@ -243,3 +246,14 @@ export default class Communication extends Component {
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Communication);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import Segment from '../component/Segment';
 import styles from '../styles';
 
@@ -23,7 +25,7 @@ const style = StyleSheet.create({
     }
 });
 
-export default class Subscription extends Component {
+class Subscription extends Component {
     render() {
         const { navigation } = this.props;
         return (
@@ -99,3 +101,14 @@ export default class Subscription extends Component {
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Subscription);

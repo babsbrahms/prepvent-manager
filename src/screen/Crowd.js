@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import Segment from '../component/Segment';
 import TableChart from '../component/TableChartScreen';
 import Guest from '../component/GuestScreen';
@@ -45,7 +47,8 @@ const style = StyleSheet.create({
     },
 });
 
-export default class Crowd extends Component {
+
+class Crowd extends Component {
     constructor (props) {
         super(props);
 
@@ -67,7 +70,7 @@ export default class Crowd extends Component {
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, addMessage } = this.props;
         const { modalOpen, modalType, sideBarOpen, guestId } = this.state;
 
         return (
@@ -102,10 +105,10 @@ export default class Crowd extends Component {
                 </Segment>
 
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
-                    {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} />)}
-                    {(modalType === "Guest") && (<AddGuest close={() => this.closeModal()} />)}
-                    {(modalType === 'EditGuest') && (<EditGuest guestId={guestId} close={() => this.closeModal()} />)}
-                    {(modalType === "TableChart") && (<TableChart editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} />)}
+                    {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "Guest") && (<AddGuest close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === 'EditGuest') && (<EditGuest guestId={guestId} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "TableChart") && (<TableChart editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
@@ -115,3 +118,14 @@ export default class Crowd extends Component {
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Crowd);

@@ -7,6 +7,7 @@ import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
 import styles from '../styles';
+import Message from "./Message"
 
 const contactFilter = [
     { name: 'Any', options: true },
@@ -242,6 +243,7 @@ export default class TableChart extends Component {
             selectedTable, tables, selected, newTableName, search, data, guests, loading } = this.state;
 
         return (
+        <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
@@ -451,6 +453,8 @@ export default class TableChart extends Component {
                     </View>
                 </SideBar>
             </View>
+            <Message />
+        </View>
         )
     }
 }

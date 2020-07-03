@@ -114,6 +114,7 @@ export default class CheckIn extends Component {
         const { close } = this.props;
         const  { active, data, processing, loading, inputValue, error } = this.state;
         return (
+        <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
@@ -177,6 +178,7 @@ export default class CheckIn extends Component {
                     onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}
                     onSubmitEditing={(e) => this.findEmail()}
                 />)}
+                {(!!error) && (<Text style={styles.error}>{error}</Text>)}
 
                 <Text style={styles.title}>Details</Text>
 
@@ -213,8 +215,10 @@ export default class CheckIn extends Component {
                         </TouchableOpacity>
                     </View>)}
                 </Segment>
-                <Message msg={error} close={() => this.setState({ error: "" })} />
+                
             </View>
+            <Message />
+        </View>
         )
     }
 }

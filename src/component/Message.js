@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, ScrollView } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import styles from '../styles';
+import { connect } from "react-redux";
+import { clearMessageReducer } from "../action/message"
 
 const style = StyleSheet.create({
     container: {
@@ -11,8 +11,7 @@ const style = StyleSheet.create({
         padding: 4,
         position: 'absolute',
         bottom: 0,
-        left: 8,
-        zIndex: 20,
+        zIndex: 5000,
         width: "100%"
     },
     msg: {
@@ -28,22 +27,27 @@ const style = StyleSheet.create({
 });
 
 
-const Message = ({ msg, close }) => {
+const Message = ({ message, clearMessage }) => {
     let show;
 
-    if (msg) {
-        show = <TouchableOpacity style={style.container} onPress={() => close()}>
+    if (message) {
+        show = <TouchableOpacity style={style.container} onPress={() => clearMessage()}>
                     <Text style={style.close}>press to close</Text>
-                    <Text style={style.msg}>Enter a valid phone number with country code for the field</Text>    
+                    <Text style={style.msg}>{message}</Text>    
                 </TouchableOpacity> 
     } else {
         show = null
     }
 
-
     return (
         show
-        
     )
 }
- export default Message;
+  
+const mapStateToprops = (state) => ({
+    message: state.messageReducer.message
+})
+
+
+export default connect(mapStateToprops, { clearMessage: clearMessageReducer })(Message);
+ 

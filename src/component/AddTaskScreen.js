@@ -7,6 +7,7 @@ import DatePicker from 'react-native-date-picker'
 import Segment from '../component/Segment';
 import Option from './Option';
 import styles from '../styles';
+import Message from "./Message"
 
 const style = StyleSheet.create({
 
@@ -148,6 +149,7 @@ export default class AddTask extends Component {
         const { close, selectedIndex } = this.props;
         const  { optionOpen, data, guild, selected, organizers, loading } = this.state;
         return (
+        <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
                 <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
                 <View style={styles.between}>
@@ -288,6 +290,8 @@ export default class AddTask extends Component {
                 </Option>
                 
             </View>
+            <Message />
+        </View>
         )
     }
 }

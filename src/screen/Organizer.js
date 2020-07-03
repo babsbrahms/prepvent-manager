@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Communications from 'react-native-communications';
+import { connect } from "react-redux";
+import { addMessageReducer } from '../action/message';
 import Segment from '../component/Segment';
 import AddOrganizer from '../component/AddOrganizerScreen';
 import styles from '../styles';
@@ -44,7 +46,7 @@ const style = StyleSheet.create({
 });
 
 
-export default class Organizer extends Component {
+class Organizer extends Component {
     state = {
         modalOpen: false,
         modalType: "",
@@ -121,7 +123,7 @@ export default class Organizer extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, addMessage } = this.props;
         const { refreshing, modalOpen, modalType, selectedIndex, data } = this.state;
 
         return (
@@ -230,9 +232,20 @@ export default class Organizer extends Component {
                 </Segment>
             
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
-                    <AddOrganizer selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} />
+                    <AddOrganizer selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />
                 </Modal>
             </View>
         )
     }
 }
+
+
+const mapStateToprops = (state) => ({
+    
+})
+
+const mapDisptachToprops = {
+    addMessage: addMessageReducer
+}
+
+export default connect(mapStateToprops, mapDisptachToprops)(Organizer);

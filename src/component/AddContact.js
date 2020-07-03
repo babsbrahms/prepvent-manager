@@ -133,20 +133,22 @@ export default class AddContact extends PureComponent {
             close()
         } else {
             const { contacts } = this.state;
+            this.setState({ loading: true }, () => {
 
-            const list = contacts.map(contact => {
-                if (!!contact.selected) {
-                    return {
-                        name: contact.displayName,
-                        phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
-                        email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                const list = contacts.map(contact => {
+                    if (!!contact.selected) {
+                        return {
+                            name: contact.displayName,
+                            phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
+                            email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                        }
                     }
-                }
-            })
+                })
 
-            console.log(list);
+                console.log(list);
             
-            addContact(list)
+                addContact(list)
+            })
         }
     }
 
