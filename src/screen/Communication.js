@@ -99,8 +99,7 @@ class Communication extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { sideBarOpen, optionOpen, data, showPoll, optionType } = this.state;
-        console.log("COMMS POLL",data.polls);
+        const { optionOpen, data, showPoll, optionType } = this.state;
         
         return (
             <View style={styles.container}>

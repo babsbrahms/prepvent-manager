@@ -114,7 +114,6 @@ export default class AddOrganizer extends Component {
                 organizer: false
             },
             selected: {},
-            inputValue: 0,
             sideBarOpen: false,
             loading: false
         }
@@ -174,7 +173,7 @@ export default class AddOrganizer extends Component {
 
     render() {
         const { close, selectedIndex } = this.props;
-        const { optionOpen, guild, data, selected, inputValue, sideBarOpen, loading } = this.state;
+        const { optionOpen, guild, data, selected, sideBarOpen, loading } = this.state;
 
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
@@ -224,7 +223,7 @@ export default class AddOrganizer extends Component {
                                         style={styles.detailsInput} 
                                         placeholder={`Enter ${selected.name}`} 
                                         placeholderTextColor="#0E0C20"
-                                        value={String(inputValue)}
+                                        value={String(data[selected.name])}
                                         keyboardType={"number-pad"}
                                         autoFocus
                                         onChange={(e) => this.setData(Number(e.nativeEvent.text))}
