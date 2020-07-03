@@ -135,7 +135,7 @@ export default class AddContact extends PureComponent {
             const { contacts } = this.state;
             this.setState({ loading: true }, () => {
 
-                const list = contacts.map(contact => {
+                const list = contacts.filter(contact => {
                     if (!!contact.selected) {
                         return {
                             name: contact.displayName,
@@ -161,7 +161,7 @@ export default class AddContact extends PureComponent {
                     <Text style={styles.Header}>CONTACT</Text>
 
                     <TouchableOpacity style={styles.icon} onPress={() => this.saveContact()}>
-                        <Ionicons name={'ios-checkmark'} color={'white'} size={30}/>
+                        <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.row, { alignItems: 'center'}]}>

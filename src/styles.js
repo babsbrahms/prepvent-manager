@@ -87,12 +87,13 @@ const styles = {
         borderBottomColor: '#707070',
         padding: 4,
         marginHorizontal: 3,
-        borderBottomWidth: 4,
+        borderBottomWidth: 2,
         width: '100%'
     },
     optionText: {
         color: '#707070',
         fontSize: 24,
+        fontWeight: "bold",
         textAlign: 'center',
     },
     details: {

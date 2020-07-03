@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Communications from 'react-native-communications';
@@ -7,23 +7,9 @@ import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
 import styles from '../styles';
-import Message from "./Message"
+import Message from "./Message";
+import { contactFilter, contactSearch } from "../utils/filter";
 
-const contactFilter = [
-    { name: 'Any', options: true },
-    { name: 'Invited', options: false },
-    { name: 'Accepted', options: false },
-    { name: 'Invited By', options: true },
-    { name: 'Checked In', options: false },
-    { name: 'Not Accepted', options: false },
-    { name: 'VIP', options: false },
-];
-
-const contactSearch = [
-    { name: 'Name', options: false },
-    { name: 'Phone number', options: false },
-    { name: 'Email', options: false },
-];
 
 const style = StyleSheet.create({
     controller: {
@@ -197,12 +183,12 @@ export default class TableChart extends Component {
 
     selectFilter = contact => {
         this.closeOption()
-        this.setState({ filterParams: contact.name, option: '' })
-        // if (contact.options) {
-        //     this.openSideBar()
-        // } else {
-
-        // }
+    
+        if (contact.options) {
+            this.openOption('invite')
+        } else {
+            this.setState({ filterParams: contact.name, option: '' })
+        }
     }
 
     selectSearch = contact => {
@@ -280,10 +266,12 @@ export default class TableChart extends Component {
                                 </View>
                                                        
                                 <View style={styles.between}>
+                                
+                                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
+                                        <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
+                                    </TouchableOpacity>
+                
                                     <View style={styles.row}>
-                                        <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
-                                            <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
-                                        </TouchableOpacity>
                                         {(!!item.email) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.email([`${item.email}`],null,null,'','')}>
                                             <Ionicons name={'ios-mail'} color={'#707070'} size={30}/>
                                         </TouchableOpacity>)}
@@ -291,12 +279,11 @@ export default class TableChart extends Component {
                                         {(!!item.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.phonecall(item.phoneNumber, false)}>
                                             <Ionicons name={'ios-call'} color={'#707070'} size={30}/>
                                         </TouchableOpacity>)}
-                                    </View>
 
-                                    
-                                    <TouchableOpacity style={styles.icon}>
-                                        <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
-                                    </TouchableOpacity>
+                                        <TouchableOpacity style={styles.icon}>
+                                            <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                                 {(selectedIndex === index) && (<View style={style.todoDetail}>
                                     <View>
@@ -448,6 +435,12 @@ export default class TableChart extends Component {
                                     <Text style={styles.optionText}>{contact.name}</Text>
                                 </TouchableOpacity>
                                 ))}
+                            </View>)}
+
+
+                            {(option === 'invite') && (
+                            <View>
+                                <ActivityIndicator size="small" color={'#2DF19C'} />
                             </View>)}
                         </Option>
                     </View>

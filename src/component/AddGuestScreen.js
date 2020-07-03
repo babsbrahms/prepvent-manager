@@ -102,7 +102,9 @@ export default class AddGuest extends Component {
             name: "",
             email: "",
             phoneNumber: "",
-        }
+        },
+        contacts: [],
+        contactType: ''
     }
     
     openSideBar = () => this.setState({ sideBarOpen: true })
@@ -248,7 +250,7 @@ export default class AddGuest extends Component {
                 </Option>
                 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AddContact selection="multiple" addContact={() => {}} />
+                    <AddContact selection="multiple" addContact={(contacts) => this.setState({ contacts, contactType: "phone" }, () => this.closeSideBar())} />
                 </SideBar>
             </View>
             <Message />

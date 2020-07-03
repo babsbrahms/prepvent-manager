@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Communications from 'react-native-communications';
 import Segment from '../component/Segment';
 import Option from './Option';
 import styles from '../styles';
+import { contactFilter, contactSearch } from "../utils/filter";
 
-
-const contactFilter = [
-    { name: 'Any', options: true },
-    { name: 'Invited', options: false },
-    { name: 'Accepted', options: false },
-    { name: 'Invited By', options: true },
-    { name: 'Checked In', options: false },
-    { name: 'Not Accepted', options: false },
-    { name: 'VIP', options: false },
-];
-
-const contactSearch = [
-    { name: 'Name', options: false },
-    { name: 'Phone number', options: false },
-    { name: 'Email', options: false },
-];
 
 const style = StyleSheet.create({
     todo: {
@@ -138,12 +123,12 @@ export default class Guest extends Component {
 
     selectFilter = contact => {
         this.closeOption()
-        this.setState({ filterParams: contact.name, option: '' })
-        // if (contact.options) {
-        //     this.openSideBar()
-        // } else {
-
-        // }
+        
+        if (contact.options) {
+            this.openOption('invite')
+        } else {
+            this.setState({ filterParams: contact.name, option: '' })
+        }
     }
 
     selectSearch = contact => {
@@ -268,6 +253,12 @@ export default class Guest extends Component {
                             <Text style={styles.optionText}>{contact.name}</Text>
                         </TouchableOpacity>
                         ))}
+                    </View>)}
+
+
+                    {(option === 'invite') && (
+                    <View>
+                        <ActivityIndicator size="small" color={'#2DF19C'} />
                     </View>)}
                 </Option>
             </View>

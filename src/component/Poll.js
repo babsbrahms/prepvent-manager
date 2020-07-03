@@ -34,7 +34,7 @@ export default class Poll extends Component {
             options: [],
         },
         currentIndex: -1,
-        inputValue: 1,
+        inputValue: '',
         errors: {}
     }
 
@@ -50,21 +50,20 @@ export default class Poll extends Component {
 
     validate = (poll) => {
         let errors = {};
-        let count = 0;
+
         if (!poll.title) errors.title = "Title is required";
         if (!poll.question) errors.question = "Question is required";
         if (poll.options.length < 2) {
             errors.options = "Minimum of two options are required";
         } else {
             //MAKE SURE OPTIONS ARE UNIQUE
-            // poll.options.forEach((element, index) => {
-            //     poll.options.forEach((e, i) => {
-            //         if (element === e ) {
-            //             count += 1
-            //         }
-            //     });
-            //     count
-            // });
+            poll.options.forEach((element, index) => {
+                poll.options.forEach((e, i) => {
+                    if ((element === e) && (index !== i) ) {
+                        errors.options = "Options must be unique"
+                    }
+                });
+            });
         }
         
         return errors;
@@ -125,7 +124,7 @@ export default class Poll extends Component {
 
             <ScrollView style={style.polls}>
                 {polls.map((poll, index) => (
-                    <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
+                    <View key={index.toString()} style={[styles.row, { alignItems: "center", padding: 3}]}>
                         <TouchableOpacity style={styles.icon} onPress={() => this.deletePoll(index)}>
                             <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
                         </TouchableOpacity>

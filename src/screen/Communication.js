@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
 import { addMessageReducer } from '../action/message';
-import AddContact from '../component/AddContact';
 import Poll from '../component/Poll';
-import SideBar from '../component/SideBar';
 import Option from '../component/Option';
 import styles from '../styles';
+import { contactFilter } from "../utils/filter";
 
 const style = StyleSheet.create({
     title: {
@@ -30,21 +29,11 @@ const style = StyleSheet.create({
     }
 });
 
-const contactFilter = [
-    { name: 'Any', options: true },
-    { name: 'Invited', options: false },
-    { name: 'Accepted', options: false },
-    { name: 'Invited By', options: true },
-    { name: 'Checked In', options: false },
-    { name: 'Not Accepted', options: false },
-    { name: 'VIP', options: false },
-]
-
 
 class Communication extends Component {
     state = {
-        sideBarOpen: false,
         optionOpen: false,
+        optionType: "",
         showPoll: false,
         data: {
             to: [],
@@ -57,18 +46,14 @@ class Communication extends Component {
         }
     }
 
-    openSideBar = () => this.setState({ sideBarOpen: true })
+    openOption = (option) => this.setState({ optionOpen: true, optionType: option })
 
-    closeSideBar = () => this.setState({ sideBarOpen: false })
-
-    openOption = () => this.setState({ optionOpen: true })
-
-    closeOption = () => this.setState({ optionOpen: false })
+    closeOption = () => this.setState({ optionOpen: false, optionType: "" })
 
     selectFilter = contact => {
         this.closeOption()
         if (contact.options) {
-            this.openSideBar()
+            this.openOption('invite')
         } else {
 
         }
@@ -114,7 +99,7 @@ class Communication extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { sideBarOpen, optionOpen, data, showPoll } = this.state;
+        const { sideBarOpen, optionOpen, data, showPoll, optionType } = this.state;
         console.log("COMMS POLL",data.polls);
         
         return (
@@ -136,7 +121,7 @@ class Communication extends Component {
                         <View style={styles.between}>
                             <Text style={style.title}>To</Text>
 
-                            <TouchableOpacity style={styles.icon} onPress={() => this.openOption()}>
+                            <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
                                 <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                             </TouchableOpacity>
                             
@@ -231,15 +216,18 @@ class Communication extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AddContact selection="multiple" addContact={() => {}} />
-                </SideBar>
+
                 <Option title="Message To" openModal={optionOpen} closeModal={() => this.closeOption()}>
-                    {contactFilter.map((contact) => (
+                    {(optionType === 'contact') && contactFilter.map((contact) => (
                     <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectFilter(contact)}>
                         <Text style={styles.optionText}>{contact.name}</Text>
                     </TouchableOpacity>
                     ))}
+
+                    {(optionType === 'invite') && (<View>
+                        <ActivityIndicator size="small" color={'#2DF19C'} />
+                    </View>)}
+                    
 
                 </Option>
             </View>

@@ -67,14 +67,14 @@ class Dashboard extends Component {
                 <View style={style.top}>
                     <View style={[styles.between, { alignItems: "center"}]}>
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Home')}>
-                            <Ionicons name={'ios-home'} color={'#707070'} size={30}/>
+                            <Ionicons name={'ios-home'} color={'#0E0C20'} size={30}/>
                         </TouchableOpacity>
 
 
                         <Text style={style.date}>25 May 2021</Text>
 
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Subscription')}>
-                            <Ionicons name={'ios-wallet'} color={'#707070'} size={30}/>
+                            <Ionicons name={'ios-wallet'} color={'#0E0C20'} size={30}/>
                         </TouchableOpacity>
                     </View>
                 </View>

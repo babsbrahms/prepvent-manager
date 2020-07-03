@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, Switch, ScrollView, Platform } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import moment from "moment"
+import moment from "moment";
+import DatePicker from 'react-native-date-picker'
 import Poll from './Poll';
 import Segment from './Segment';
 import { Rules } from '../component/Rules'
 import styles from '../styles';
+import Option from "./Option";
 
 const style = StyleSheet.create({
     title: {
@@ -32,7 +34,20 @@ const style = StyleSheet.create({
     },
     container: {
         marginBottom: 9
-    }
+    },
+    button: {
+        borderRadius: 20,
+        marginHorizontal: 10,
+        marginVertical: 5,
+        padding: 10,
+        backgroundColor: '#2DF19C',
+    },
+    btnText: {
+        fontSize: 24,
+        color: "#FFFFFF",
+        fontWeight: 'bold',
+        textAlign: "center"
+    },
 });
 
 
@@ -41,6 +56,7 @@ export default class Event extends Component {
         super(props);
 
         this.state = {
+            optionOpen: false,
             showDate: false,
             showPoll: false,
             showAdvance: false,
@@ -57,13 +73,18 @@ export default class Event extends Component {
                 contact: "",
                 checkin: false,
                 checkinRule: 'accepted',
-                tableChartRule: 'accepted'
+                tableChartRule: 'accepted',
+                acceptanceDeadline: ""
             }
         }
 
         this.scroll = React.createRef()
     }
 
+            
+    openOption = (type) => this.setState({ optionOpen: true, optionType: type })
+
+    closeOption = () => this.setState({ optionOpen: false, optionType: '' })
 
     changeCheckIn = () => this.setState({ data: { ...this.state.data, checkin: !this.state.data.checkin }})
 
@@ -116,9 +137,13 @@ export default class Event extends Component {
         }  
     }
 
+    addDate = (date) => {
+
+    }
+
     render() {
         const { navigation } = this.props;
-        const  { data, showDate, showPoll, showAdvance } = this.state
+        const  { data, showDate, showPoll, showAdvance, optionOpen, optionType } = this.state
 
         return (
             <ScrollView ref={x => this.scroll = x}>
@@ -140,7 +165,7 @@ export default class Event extends Component {
                     <View style={styles.between}>
                         <Text style={style.title}>Date</Text>
 
-                        <TouchableOpacity style={styles.icon} onPress={() => this.setState({ showDate: true })}>
+                        <TouchableOpacity style={styles.icon} onPress={() => this.openOption('Date')}>
                             <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                         </TouchableOpacity>
                         
@@ -294,8 +319,8 @@ export default class Event extends Component {
                         <View>
                             <Text style={[style.title, { color: '#000000'}]}>Acceptance Deadline</Text>
                                 
-                            <TouchableOpacity style={style.deadline}>
-                                <Text style={[style.to, { color: '#707070'}]}>none</Text>
+                            <TouchableOpacity style={style.deadline} onPress={() => this.openOption('Acceptance Deadline')}>
+                                <Text style={[style.to, { color: '#707070'}]}>{data.acceptanceDeadline ? moment(data.acceptanceDeadline).format("ddd do MMMM YYYY") : "none"}</Text>
                                 <Ionicons name={'ios-arrow-forward'} size={30} color={'#707070'}/>
                             </TouchableOpacity>
                         </View>
@@ -309,6 +334,28 @@ export default class Event extends Component {
                     </Segment>)}
                 </View>
                
+                <Option title={optionType} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                    <View style={styles.details}>
+                        <View>  
+                            {(optionType === 'Acceptance Deadline') && (<DatePicker
+                                date={data.acceptanceDeadline}
+                                onDateChange={(e) => this.setState({ data: { ...this.state.data, acceptanceDeadline: e }})}
+                                minimumDate={new Date()}
+                                mode={"datetime"}
+                            />)}
+
+                            {(optionType === 'Date') && (<DatePicker
+                                date={data.date}
+                                onDateChange={(e) => this.setState({ data: { ...this.state.data, date: e }})}
+                                minimumDate={new Date()}
+                                mode={"date"}
+                            />)}
+                        </View>
+                        <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
+                            <Text style={style.btnText}>SELECT</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Option>
 
             </ScrollView>
         )
