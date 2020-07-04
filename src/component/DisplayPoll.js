@@ -89,7 +89,7 @@ export default class DisplayPoll extends Component {
     }
 
     render() {
-        const { options, inputValue, title, question, polls, current, errors, currentIndex } = this.state;
+        const { polls, current } = this.state;
         
         return (
         <View style={{ borderRadius: 20, marginTop: 0, marginBottom: 9, width: '100%', minHeight: 100, backgroundColor: '#E4E4E4', padding: 5, flex: 1 }}>

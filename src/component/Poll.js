@@ -31,7 +31,7 @@ export default class Poll extends Component {
         current: {
             title: "",
             question: "",
-            options: [],
+            options: {},
         },
         currentIndex: -1,
         inputValue: '',
@@ -42,11 +42,11 @@ export default class Poll extends Component {
         const { current, inputValue} = this.state;
 
         if (inputValue) {
-            this.setState({ current: { ...this.state.current, options: [ ...current.options, inputValue]}, inputValue: "" })
+            this.setState({ current: { ...this.state.current, options: { ...current.options, [inputValue]: 0 }}, inputValue: "" })
         }
     }
 
-    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: []}, errors: {} })
+    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: {}}, errors: {} })
 
     validate = (poll, polls, pollsIndex) => {
         let errors = {};
@@ -64,19 +64,8 @@ export default class Poll extends Component {
 
         if (!poll.question) errors.question = "Question is required";
 
-        if (poll.options.length < 2) {
-            errors.options = "Minimum of two options are required";
-        } else {
-            //MAKE SURE OPTIONS ARE UNIQUE
-            poll.options.forEach((element, index) => {
-                poll.options.forEach((e, i) => {
-                    if ((element === e) && (index !== i) ) {
-                        errors.options = "Options must be unique"
-                    }
-                });
-            });
-        }
-        
+        if (Object.keys(poll.options).length < 2) errors.options = "Minimum of two options are required"; 
+  
         return errors;
     }
 
@@ -88,22 +77,13 @@ export default class Poll extends Component {
         
         if (Object.keys(errors).length === 0) {
 
-            //convert option arr to object
-            let optionsObj = { };
-
-            current.options.forEach(option => {
-                optionsObj[option] = 0;
-            })
-
-            current.options = optionsObj;
-
             if (currentIndex === -1) {
                 polls.push(current);
             } else {
                 polls[currentIndex] = current;
             }
             
-            this.setState({ currentIndex: -1, polls: polls, current: { title: "", question: "", options: []}, errors: {} }, () => {
+            this.setState({ currentIndex: -1, polls: polls, current: { title: "", question: "", options: {}}, errors: {} }, () => {
                 updatePoll(this.state.polls)
             })
         } else {
@@ -126,29 +106,19 @@ export default class Poll extends Component {
     editPoll = (index) => {
         const { polls } = this.state;
 
-        // convert obj to array
-        let current = polls[index];
-        let optionsArr = [];
-
-        for (const key in current.options) {
-            optionsArr.push(key)      
-        }
-
-        current.options = optionsArr
-
-        this.setState({ currentIndex: index, current: current })
+        this.setState({ currentIndex: index, current: polls[index] })
     }
 
-    deleteOption = (index) => {
+    deleteOption = (option) => {
         const { current } = this.state;
 
-        current.options.splice(index, 1);
+        delete current.options[option];
 
-        this.setState({ current: { ...this.state.current, options: [...options] } })
+        this.setState({ current: { ...this.state.current, options: {...options } } })
     }
 
     render() {
-        const { options, inputValue, title, question, polls, current, errors } = this.state;
+        const { inputValue, polls, current, errors } = this.state;
 
         return (
         <View style={{ borderRadius: 20, marginTop: 0, marginBottom: 9, width: '100%', minHeight: 100, backgroundColor: '#E4E4E4', padding: 5, flex: 1 }}>
@@ -193,9 +163,9 @@ export default class Poll extends Component {
         
                 <Text style={style.title}>Options</Text>
                 <ScrollView>
-                    {current.options.map((option, index) => (
+                    {Object.keys(current.options).map((option, index) => (
                         <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
-                            <TouchableOpacity style={styles.icon} onPress={() => this.deleteOption(index)}>
+                            <TouchableOpacity style={styles.icon} onPress={() => this.deleteOption(option)}>
                                 <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
                             </TouchableOpacity>
                             
