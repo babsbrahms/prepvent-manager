@@ -61,6 +61,7 @@ export default class Event extends Component {
             showPoll: false,
             showAdvance: false,
             data: {
+                name: "",
                 poster: null,
                 date: new Date(),
                 location: "",
@@ -147,6 +148,20 @@ export default class Event extends Component {
 
         return (
             <ScrollView ref={x => this.scroll = x}>
+ 
+                <View style={style.container}>
+                    <Text style={style.title}>Name</Text>
+                    <TextInput 
+                        style={styles.textInput} 
+                        placeholder={"Add event name"} 
+                        placeholderTextColor="#0E0C20" 
+                        value={data.name}
+                        onChange={(e) => this.setState({ data: { ...this.state.data, name: e.nativeEvent.text } })}
+                        onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, name: e.nativeEvent.text } })}
+                        
+                    />
+                </View>
+
                 <View style={style.container}>
                     <View style={styles.between}>
                         <Text style={style.title}>Poster</Text>
@@ -187,9 +202,8 @@ export default class Event extends Component {
                     />
 
 
-                    <View style={[styles.segment, { backgroundColor: '#E4E4E4'}]}>
+                    {/* <View style={[styles.segment, { backgroundColor: '#E4E4E4'}]}>
                         <Text style={[style.title, { color: '#000000'}]}>State</Text>
-                        {/* <Text style={[style.to, { color: '#707070'}]}>Kwara</Text> */}
                         <TextInput 
                             style={styles.textInput} 
                             placeholder={"Add event location state"} 
@@ -200,7 +214,6 @@ export default class Event extends Component {
                         />
 
                         <Text style={[style.title, { color: '#000000', marginTop: 9 }]}>Country</Text>
-                        {/* <Text style={[style.to, { color: '#707070'}]}>Nigeria</Text> */}
                         <TextInput 
                             style={styles.textInput} 
                             placeholder={"Add event location country"} 
@@ -209,7 +222,7 @@ export default class Event extends Component {
                             onChange={(e) => this.setState({ data: { ...this.state.data, country: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, country: e.nativeEvent.text } })}
                         />
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={style.container}>

@@ -6,6 +6,7 @@ import { addMessageReducer } from '../action/message';
 import Segment from '../component/Segment';
 import { Budget } from '../component/Budget';
 import styles from '../styles';
+import DisplayPoll from "../component/DisplayPoll"
 
 const style = StyleSheet.create({
     top: {
@@ -60,21 +61,52 @@ const style = StyleSheet.create({
 
 
 class Dashboard extends Component {
+    state = {
+        polls: [
+            {
+                title: 'Food',
+                question: "What for do you what at the event",
+                options: {
+                    "Rice": 0,
+                    "Beans": 0,
+                    "Spagehetti": 0
+                }
+            },
+            {
+                title: 'Clothings',
+                question: "Chooose a cloth you want",
+                options: {
+                    "Suit and Tie": 0,
+                    "Jeans": 0,
+                    "Beach Wear": 0
+                }
+            }
+        ],
+        event: {
+            budget: 0,
+            guest: 0,
+            organizers: 0,
+            expenditure: 0,
+        }
+    }
+
     render() {
         const { navigation } = this.props;
+        const { polls, event } = this.state;
+
         return (
             <ScrollView style={style.container}>
                 <View style={style.top}>
                     <View style={[styles.between, { alignItems: "center"}]}>
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Home')}>
-                            <Ionicons name={'ios-home'} color={'#0E0C20'} size={30}/>
+                            <Ionicons name={'ios-home'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
 
 
                         <Text style={style.date}>25 May 2021</Text>
 
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Subscription')}>
-                            <Ionicons name={'ios-wallet'} color={'#0E0C20'} size={30}/>
+                            <Ionicons name={'ios-wallet'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -93,37 +125,31 @@ class Dashboard extends Component {
 
                     <View style={style.row}>
                         <TouchableOpacity style={style.stats} onPress={() => navigation.navigate('Crowd')}>
-                            <Text style={style.statsValue}>250</Text>
+                            <Text style={style.statsValue}>{event.guest}</Text>
                             <Text style={style.statsTitle}>Guests</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={style.stats} onPress={() => navigation.navigate('Organizer')}>
-                            <Text style={style.statsValue}>5</Text>
+                            <Text style={style.statsValue}>{event.organizers}</Text>
                             <Text style={style.statsTitle}>Organizers</Text>
                         </TouchableOpacity>
                     </View>
                     <Segment>
-                        <Budget />
+                        <TouchableOpacity onPress={() => navigation.navigate('Task')}>
+                            <Budget expenditure={event.expenditure} budget={event.budget} />
+                        </TouchableOpacity>
                     </Segment>
 
 
 
-                    <TouchableOpacity style={style.task} onPress={() => navigation.navigate('Task')}>
-                        <Text style={style.statsValue}>5</Text>
-                        <Text style={style.statsTitle}>Tasks</Text>
+                    <View style={style.task} onPress={() => {}}>
+                        <TouchableOpacity> 
+                            <Text style={style.statsValue}>Polls</Text>
+                            {/* <Text style={style.statsTitle}>Polls</Text> */}
+                        </TouchableOpacity>
 
-                        <View style={style.row}>
-                            <View style={style.stats}>
-                                <Text style={style.statsValue}>250</Text>
-                                <Text style={style.statsTitle}>Complete</Text>
-                            </View>
-
-                            <View style={style.stats}>
-                                <Text style={style.statsValue}>5</Text>
-                                <Text style={style.statsTitle}>Incomplete</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                        <DisplayPoll polls={polls} />
+                    </View>
                 </View>
             </ScrollView>
         )

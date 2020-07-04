@@ -101,6 +101,7 @@ class Communication extends Component {
         const { navigation } = this.props;
         const { optionOpen, data, showPoll, optionType } = this.state;
         
+        console.log(data.polls);
         return (
             <View style={styles.container}>
                 <View style={styles.between}>

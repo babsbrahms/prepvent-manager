@@ -1,5 +1,3 @@
-[] add date to event
-[] add event title/name
-[] finish poll validation
-[] make message ZIndex very high
+[] allow multiple pictures in communication
+[] convert poll options to objects
 [] convert phoneNumber to international format

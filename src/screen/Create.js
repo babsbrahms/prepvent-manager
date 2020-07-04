@@ -22,7 +22,7 @@ class Create extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.Header}>CREATE</Text>
+                <Text style={styles.Header}>CREATE EVENT</Text>
                 
                 <Event />
                 

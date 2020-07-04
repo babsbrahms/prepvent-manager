@@ -46,13 +46,24 @@ export default class Poll extends Component {
         }
     }
 
-    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: []} })
+    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: []}, errors: {} })
 
-    validate = (poll) => {
+    validate = (poll, polls, pollsIndex) => {
         let errors = {};
 
-        if (!poll.title) errors.title = "Title is required";
+        if (!poll.title) {
+            errors.title = "Title is required"
+        }else {
+
+            polls.forEach((p, i) => {
+                if ((poll.title === p.title) && (pollsIndex !== i)) {
+                    errors.title = `A poll has the title "${poll.title}". Use a unique title`
+                }
+            })
+        };
+
         if (!poll.question) errors.question = "Question is required";
+
         if (poll.options.length < 2) {
             errors.options = "Minimum of two options are required";
         } else {
@@ -73,9 +84,19 @@ export default class Poll extends Component {
         const { polls, currentIndex, current } = this.state;
         const { updatePoll } = this.props;
 
-        let errors = this.validate(current);
+        let errors = this.validate(current, polls, currentIndex);
         
         if (Object.keys(errors).length === 0) {
+
+            //convert option arr to object
+            let optionsObj = { };
+
+            current.options.forEach(option => {
+                optionsObj[option] = 0;
+            })
+
+            current.options = optionsObj;
+
             if (currentIndex === -1) {
                 polls.push(current);
             } else {
@@ -105,7 +126,17 @@ export default class Poll extends Component {
     editPoll = (index) => {
         const { polls } = this.state;
 
-        this.setState({ currentIndex: index, current: polls[index] })
+        // convert obj to array
+        let current = polls[index];
+        let optionsArr = [];
+
+        for (const key in current.options) {
+            optionsArr.push(key)      
+        }
+
+        current.options = optionsArr
+
+        this.setState({ currentIndex: index, current: current })
     }
 
     deleteOption = (index) => {
