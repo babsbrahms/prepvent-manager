@@ -59,27 +59,28 @@ export default class AddTask extends Component {
             loading: false,
             guild: [ 
                 {
-                    name: "alert",
+                    name: "Alert",
                     type: "DateTime",
                     required: false,
                     value: "alert",
                 },
                 {
-                    name: "budget",
-                    type: "Number",
-                    required: false,
-                    value: "budget",
-                },
-                {
-                    name: "assign",
+                    name: "Assign",
                     type: "Organizer",
                     required: false,
                     value: "assign",
-                },            {
-                    name: "deadline",
+                },
+                {
+                    name: "Budget",
+                    type: "Number",
+                    required: false,
+                    value: "budget",
+                },          
+                {
+                    name: "Deadline",
                     type: "DateTime",
                     required: true,
-                    value:  "alert",
+                    value:  "deadline",
                 },
             ],
             data: {
@@ -131,7 +132,7 @@ export default class AddTask extends Component {
     setData = ( value) => {
         const {selected} = this.state;
 
-        this.setState({ data: { ...this.state.data, [selected.name]: value } })
+        this.setState({ data: { ...this.state.data, [selected.value]: value } })
     }
 
     submit = () => {
@@ -204,20 +205,19 @@ export default class AddTask extends Component {
 
 
                             <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Budget</Text>
+                                <Text style={style.todoDetailKey}>Assign</Text>
 
                                 <TouchableOpacity onPress={() => this.selectedDetail(guild[1])} style={style.action}>
-                                    {(<Text style={style.todoDetailValue}>{!!data.budget? String(data.budget): 'none'}</Text>)}
+                                    {(<Text style={style.todoDetailValue}>{!!data.assign? String(data.assign.name): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
 
-
                             <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>Assign</Text>
+                                <Text style={style.todoDetailKey}>Budget</Text>
 
                                 <TouchableOpacity onPress={() => this.selectedDetail(guild[2])} style={style.action}>
-                                    {(<Text style={style.todoDetailValue}>{!!data.assign? String(data.assign.name): 'none'}</Text>)}
+                                    {(<Text style={style.todoDetailValue}>{!!data.budget? String(data.budget): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -244,7 +244,7 @@ export default class AddTask extends Component {
                                     style={styles.detailsInput}
                                     placeholder={`Enter ${selected.name}`} 
                                     placeholderTextColor="#0E0C20"
-                                    value={String(data[selected.name])}
+                                    value={String(data[selected.value])}
                                     autoFocus
                                     keyboardType={"phone-pad"}
                                     onChange={(e) => this.setData(Number(e.nativeEvent.text))}
@@ -263,7 +263,7 @@ export default class AddTask extends Component {
                     <View style={styles.details}>
                         <View>  
                             <DatePicker
-                                date={new Date(data[selected.name])}
+                                date={new Date(data[selected.value])}
                                 onDateChange={(e) => this.setData(e)}
                                 minimumDate={new Date()}
                                 mode={"datetime"}
