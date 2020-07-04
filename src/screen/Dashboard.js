@@ -62,32 +62,13 @@ const style = StyleSheet.create({
 
 class Dashboard extends Component {
     state = {
-        polls: [
-            {
-                title: 'Food',
-                question: "What for do you what at the event",
-                options: {
-                    "Rice": 0,
-                    "Beans": 0,
-                    "Spagehetti": 0
-                }
-            },
-            {
-                title: 'Clothings',
-                question: "Chooose a cloth you want",
-                options: {
-                    "Suit and Tie": 0,
-                    "Jeans": 0,
-                    "Beach Wear": 0
-                }
-            }
-        ],
         event: {
             budget: 0,
             guest: 0,
             organizers: 0,
             expenditure: 0,
-        }
+        },
+        polls: []
     }
 
     render() {
@@ -148,7 +129,7 @@ class Dashboard extends Component {
                             {/* <Text style={style.statsTitle}>Polls</Text> */}
                         </TouchableOpacity>
 
-                        <DisplayPoll polls={polls} />
+                        {(polls.length > 0) && (<DisplayPoll polls={polls} />)}
                     </View>
                 </View>
             </ScrollView>

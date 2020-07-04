@@ -137,13 +137,13 @@ export default class AddContact extends PureComponent {
 
                 const list = contacts.filter(contact => {
                     if (!!contact.selected) {
-                        return {
-                            name: contact.displayName,
-                            phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
-                            email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
-                        }
+                        return contact
                     }
-                })
+                }).map(contact => ({
+                    name: contact.displayName,
+                    phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
+                    // email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                }))
 
                 console.log(list);
             
