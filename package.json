@@ -13,8 +13,8 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/analytics": "^7.1.7",
     "@react-native-firebase/app": "^8.0.0",
+    "csvtojson": "^2.0.10",
     "install": "^0.13.0",
-    "json2csv": "^5.0.1",
     "moment": "^2.27.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
@@ -23,6 +23,7 @@
     "react-native-contacts": "^5.2.3",
     "react-native-date-picker": "^2.7.12",
     "react-native-document-picker": "^3.5.3",
+    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-picker": "^2.3.1",
     "react-native-modal": "^11.5.6",
@@ -37,7 +38,6 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "rn-fetch-blob": "^0.12.0",
     "validator": "^13.1.1"
   },
   "devDependencies": {

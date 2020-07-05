@@ -67,7 +67,7 @@ export default class Event extends Component {
                 location: "",
                 state: "",
                 country: "",
-                budget: "",
+                budget: 0,
                 invitation: "",
                 host: "",
                 polls: [],
@@ -231,10 +231,10 @@ export default class Event extends Component {
                         style={styles.textInput} 
                         placeholder={"Enter your budget for this event"} 
                         placeholderTextColor="#0E0C20" 
-                        keyboardType={"phone-pad"}
-                        value={data.budget}
-                        onChange={(e) => this.setState({ data: { ...this.state.data, budget: e.nativeEvent.text } })}
-                        onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, budget: e.nativeEvent.text } })}
+                        keyboardType={"number-pad"}
+                        value={String(data.budget)}
+                        onChange={(e) => this.setState({ data: { ...this.state.data, budget: Number(e.nativeEvent.text) } })}
+                        onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, budget: Number(e.nativeEvent.text) } })}
                     />
                 </View>
 

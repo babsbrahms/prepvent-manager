@@ -66,15 +66,22 @@ export default class AddContact extends PureComponent {
     }
 
     androidPermission = () => {
+        const { close } = this.props;
         PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
             {
               'title': 'Contacts',
               'message': 'This app would like to view your contacts.',
-              'buttonPositive': 'Please accept bare mortal'
+              'buttonPositive': 'Ok'
             }
-        ).then(() => {
-            this.getAll()
+        ).then((result) => {
+            console.log(result);
+            if (result === 'granted') {
+                this.getAll()
+            } else {
+                close()
+            }
+            
         })
     }
 

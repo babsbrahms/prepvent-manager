@@ -109,7 +109,7 @@ class Communication extends Component {
                         <Ionicons name={'ios-notifications-outline'} color={'white'} size={30}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate("Notification")}>
+                    <TouchableOpacity style={styles.icon} onPress={() => {}}>
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>

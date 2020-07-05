@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, Platform, PermissionsAndroid } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+import csvtojsonV2 from "csvtojson";
 import Segment from '../component/Segment';
 import styles from '../styles';
 import Option from './Option'
@@ -85,6 +87,7 @@ export default class AddGuest extends Component {
         super(props);
         this.state = { 
             refreshing: false,
+            loading: false,
             active: '',
             optionOpen: false,
             sideBarOpen: false,
@@ -104,7 +107,7 @@ export default class AddGuest extends Component {
                 },
                 {
                     name: "Phone Number",
-                    type: "String",
+                    type: "Number",
                     required: false,
                     value: "phoneNumber",
                 },
@@ -160,10 +163,36 @@ export default class AddGuest extends Component {
         }
     }
 
+    csvPermission = () => {
+        if (Platform.OS === 'android') {
+            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE, {
+                title: 'CSV File Permission',
+                message: 'This app would like to read your csv file.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+            })
+            .then((result) => {
+                if (result === 'granted') {
+                    this.addCsv()
+                }  
+            })
+            .catch(err => {
+                console.log(err);
+                
+            })
+        } else {
+            this.addCsv()
+        }  
+    }
+
+
     addCsv = async () => {
+        const { addMessage } = this.props;
+
         try {
             const res = await DocumentPicker.pick({
-              type: [DocumentPicker.types.csv],
+             // type: [DocumentPicker.types.csv],
             });
             console.log(
               res.uri,
@@ -172,8 +201,28 @@ export default class AddGuest extends Component {
               res.size
             );
 
-            this.setState({ contacts: { uri: res.uri, type: res.type, name: res.name }, contactType: "csv" })
+            let file = Platform.OS === 'android'? res.uri : res.uri.replace('file://', '')
+
             
+            if (res.size > 2000000) {
+                addMessage("File is too large (2MB LIMIT)")
+            } else if (["application/vnd.ms-excel", "text/csv", "text/comma-separated-values"].indexOf(res.type) > -1 ) {
+               this.setState({ loading:  true }, () => {                         
+                    RNFS.readFile(file, 'utf8')
+                    .then((data) => {
+                        
+                      //  console.log(data)
+                        this.formatList(data)
+                    })
+                    .catch(err => {
+                        console.log(err);  
+                    })
+               })
+                
+            } else {
+                addMessage("Only csv files are acceptable")
+            }
+ 
         } catch (err) {
             if (DocumentPicker.isCancel(err)) {
               // User cancelled the picker, exit any dialogs or menus and move on
@@ -183,26 +232,58 @@ export default class AddGuest extends Component {
         }
     }
 
+    formatList = (csvString) => {
+        const { addMessage} = this.props;
+
+        csvtojsonV2()
+        .fromString(csvString)
+        .then((result) =>{
+            console.log(result);
+          
+            if (result.length > 0) {
+              //let contact = result.map(res =>(res.phone))
+  
+                let keys = Object.keys(result[0]);
+
+                console.log(keys);
+                
+  
+                this.setState({ contacts: result, contactType: "csv", options: keys, loading: false })
+
+            } else {
+                addMessage('Warning', 'The csv file is empty')
+            }
+            
+        })
+        .catch(err => {
+            addMessage('Error', 'Error converting csv file', false, false)
+        })
+    }
+  
+
     selectedDetail = (key) => this.setState({ selected: key }, () => {
-        if (key.type === 'String') {
+        if (['String', "Number"].includes(key.type)) {
             if (this.input) {
                 this.input.focus()
             }
-        } else if (key.type === "DateTime") { 
-            this.openOption()
-        } else if (key.type === "Organizer") {
+        } else if (key.type === "Option") {
             this.openOption()
         }
     })  
     
     setData = ( value) => {
-        const {selected} = this.state;
+        const {selected, optionOpen} = this.state;
 
-        this.setState({ data: { ...this.state.data, [selected.value]: value } })
+        this.setState({ data: { ...this.state.data, [selected.value]: value } }, () => {
+            if (optionOpen === true) {
+                this.closeOption()
+            }
+        })
     }
 
     render() {
-        const { refreshing, active, optionOpen, sideBarOpen, inputValue, data, contactType, selected, inputForm, csvForm } = this.state;
+        const { refreshing, loading, active, optionOpen, sideBarOpen, inputValue,
+             data, contactType, selected, inputForm, csvForm, options } = this.state;
         
         const { close } = this.props
         return (
@@ -234,7 +315,7 @@ export default class AddGuest extends Component {
 
                         <TouchableOpacity
                             style={[style.link, { borderBottomColor: active === 'csv'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.setState({ active: 'csv' }, () => this.addCsv())}
+                            onPress={() => this.setState({ active: 'csv' }, () => this.csvPermission())}
                         >
                             <Text style={style.text}>CSV file</Text>
                         </TouchableOpacity>
@@ -251,7 +332,7 @@ export default class AddGuest extends Component {
 
 
                 <Text style={styles.title}>Details</Text>
-                <Segment color={'#E4E4E4'}>
+                <Segment color={'#E4E4E4'} loading={loading}>
                     <View style={styles.details}>
                         <ScrollView>
                             {(contactType === "input") && (<View>
@@ -283,7 +364,7 @@ export default class AddGuest extends Component {
                         </ScrollView>
 
                         <View style={styles.detailsRow}>
-                            {(selected.type === "String") && (
+                            {((selected.type === "String") || (selected.type === "Number")) && (
                                 <TextInput 
                                     ref={(x) => this.input = x}
                                     style={styles.detailsInput}
@@ -291,6 +372,7 @@ export default class AddGuest extends Component {
                                     placeholderTextColor="#0E0C20"
                                     value={String(data[selected.value])}
                                     autoFocus
+                                    keyboardType={selected.type === "String"? "default" : "phone-pad"}
                                     onChange={(e) => this.setData(e.nativeEvent.text)}
                                     onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
                                 />
@@ -299,11 +381,20 @@ export default class AddGuest extends Component {
                     </View>
                 </Segment>
                 <Option title={active} openModal={optionOpen} closeModal={() => this.closeOption()}>
-
+                    {options.map((option, index) => (
+                        <TouchableOpacity key={index} style={styles.optionBody} onPress={() => this.setData(option)}>
+                            <Text style={styles.optionText}>{option}</Text>
+                        </TouchableOpacity>
+                    ))}
+                    
                 </Option>
                 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AddContact selection="multiple" addContact={(contacts) => this.addPhone(contacts)} />
+                    <AddContact 
+                        selection="multiple" 
+                        close={() => this.closeSideBar()} 
+                        addContact={(contacts) => this.addPhone(contacts)} 
+                    />
                 </SideBar>
             </View>
             <Message />

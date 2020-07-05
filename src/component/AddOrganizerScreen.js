@@ -296,6 +296,7 @@ export default class AddOrganizer extends Component {
                     <AddContact 
                         selection="single" 
                         addContact={(contact) => this.addContact(contact)} 
+                        close={() => this.closeSideBar()}
                     />
                 </SideBar>
             </View>
