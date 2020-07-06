@@ -56,7 +56,7 @@ class Crowd extends Component {
             modalOpen: false,
             modalType: '',
             sideBarOpen: false,
-            guestId: ''
+            guest: {}
         }
     }
     
@@ -71,7 +71,7 @@ class Crowd extends Component {
 
     render() {
         const { navigation, addMessage } = this.props;
-        const { modalOpen, modalType, sideBarOpen, guestId } = this.state;
+        const { modalOpen, modalType, sideBarOpen, guest } = this.state;
 
         return (
             <View style={styles.container}>
@@ -80,7 +80,7 @@ class Crowd extends Component {
                         <Ionicons name={'ios-notifications-outline'} color={'white'} size={30}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ guestId: '' }, () => this.openModal('Guest'))}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.openModal('Guest')}>
                         <Ionicons name={'ios-add'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>
@@ -107,12 +107,12 @@ class Crowd extends Component {
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
                     {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === "Guest") && (<AddGuest close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === 'EditGuest') && (<EditGuest guestId={guestId} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === "TableChart") && (<TableChart editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === 'EditGuest') && (<EditGuest guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "TableChart") && (<TableChart editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <Guest editGuest={(uid) => this.setState({ guestId: uid }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
+                    <Guest editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
                 </SideBar>                
             </View>
         )

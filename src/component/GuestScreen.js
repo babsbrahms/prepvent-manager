@@ -54,13 +54,6 @@ export default class Guest extends Component {
     state = { 
         refreshing: false,
         selectedIndex: -1,
-        selected: {
-          name: 'Olayinka',
-          email: 'yeancahBrahms7@gmail.com',
-          'VIP Alert': true,
-          accpted: true,
-          uid: '12weqw3431e3'
-        },
         filterParams: 'invited',
         searchParams: 'name',
         optionOpen: false,
@@ -201,7 +194,7 @@ export default class Guest extends Component {
     }
 
     render() {
-        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, selected, search, data } = this.state;
+        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data } = this.state;
         
         const { close, editGuest } = this.props
         return (
@@ -260,7 +253,6 @@ export default class Guest extends Component {
                                     {(!!item.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.phonecall(item.phoneNumber, false)}>
                                         <Ionicons name={'ios-call'} color={'#707070'} size={30}/>
                                     </TouchableOpacity>)}
-
                                 </View>
                             </View>
                             {(selectedIndex === index) && (<View style={style.todoDetail}>
@@ -277,7 +269,7 @@ export default class Guest extends Component {
                                         <Text style={[style.todoAction, { color: '#2DF19C' }]}>INVITE</Text>
                                     </TouchableOpacity>
                                     
-                                    <TouchableOpacity style={styles.icon} onPress={() => editGuest(selected.uid)}>
+                                    <TouchableOpacity style={styles.icon} onPress={() => editGuest(item)}>
                                         <Text style={[style.todoAction, { color: '#2DF19C' }]}>EDIT</Text>
                                     </TouchableOpacity>
                                     

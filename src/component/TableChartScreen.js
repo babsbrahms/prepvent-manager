@@ -86,7 +86,6 @@ export default class TableChart extends Component {
         optionOpen: false,
         option: '',
         selectedIndex: -1,
-        selected: { uid: 'ddsdsdsd'},
         selectedTable: '',
         tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
         newTableName: "",
@@ -280,7 +279,7 @@ export default class TableChart extends Component {
     render() {
         const { close, editGuest } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, tables, selected, newTableName, search, data, guests, loading } = this.state;
+            selectedTable, tables, newTableName, search, data, guests, loading } = this.state;
 
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
@@ -349,7 +348,7 @@ export default class TableChart extends Component {
                                         </View>))}
                                     </View>
                                     <View style={styles.between}>                                        
-                                        <TouchableOpacity style={styles.icon} onPress={() =>  editGuest(selected.uid)}>
+                                        <TouchableOpacity style={styles.icon} onPress={() =>  editGuest(item)}>
                                             <Text style={[style.todoAction, { color: '#2DF19C' }]}>EDIT</Text>
                                         </TouchableOpacity>
                                         

@@ -78,113 +78,102 @@ const style = StyleSheet.create({
 
 
 export default class EditGuest extends Component {
-    state = { 
-        optionOpen: false,
-        optionType: '',
-        selected: {},
-        loading: false,
-        schema: {
-            name: {
-                name: "Name",
-                type: "String",
-                required: true,
-                value: "name",
-            },
-            email: {
-                name: "Email",
-                type: "String",
-                required: true,
-                value: "email",
-            },
-            phoneNumber: {
-                name: "Phone Number",
-                type: "Number",
-                required: true,
-                value: "phoneNumber",
-            },
-            invited: {
-                name: "Invited",
-                type: "DateTime",
-                required: true,
-                value: "invited",
-            },
-            invitedBy: {
-                name: "Invited By",
-                type: "Organizer",
-                required: true,
-                value: "invitedBy",
-            },
-            accepted: {
-                name: "Accepted",
-                type: "DateTime",
-                required: true,
-                value: "accepted",
-            },
-            checkedIn: {
-                name: "Check In",
-                type: "DateTime",
-                required: true,
-                value: "checkedIn",
-            },
-            vip: {
-                name: "VIP Alert",
-                type: "Boolean",
-                required: false,
-                value: "vip",
-            },
-            table: {
-                name: "Table",
-                type: "Table",
-                required: true,
-                value: "table",
-            }
-        },
-        polls: [
-            {
-                title: "food",
-                question: "Choose a food",
-                options: {
-                    'Fried Rice': 0,
-                    'Amala': 0,
-                    "Eba": 0
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            optionOpen: false,
+            optionType: '',
+            selected: {},
+            loading: false,
+            schema: {
+                name: {
+                    name: "Name",
+                    type: "String",
+                    required: true,
+                    value: "name",
+                },
+                email: {
+                    name: "Email",
+                    type: "String",
+                    required: true,
+                    value: "email",
+                },
+                phoneNumber: {
+                    name: "Phone Number",
+                    type: "Number",
+                    required: true,
+                    value: "phoneNumber",
+                },
+                invited: {
+                    name: "Invited",
+                    type: "DateTime",
+                    required: true,
+                    value: "invited",
+                },
+                invitedBy: {
+                    name: "Invited By",
+                    type: "Organizer",
+                    required: true,
+                    value: "invitedBy",
+                },
+                accepted: {
+                    name: "Accepted",
+                    type: "DateTime",
+                    required: true,
+                    value: "accepted",
+                },
+                checkedIn: {
+                    name: "Check In",
+                    type: "DateTime",
+                    required: true,
+                    value: "checkedIn",
+                },
+                vip: {
+                    name: "VIP Alert",
+                    type: "Boolean",
+                    required: false,
+                    value: "vip",
+                },
+                table: {
+                    name: "Table",
+                    type: "Table",
+                    required: true,
+                    value: "table",
                 }
             },
-            {
-                title: "color",
-                question: "Choose a color",
-                options: {
-                    'Red': 0,
-                    'Blue': 0,
-                    "Green": 0
-                } 
-            }
-        ],
-        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Children's Table", uid: "121ert"}],
-        data: {
-            uid: "12113233",
-            name: "Olayinka",
-            email: "yeancahbrahms7@gmail.com",
-            phoneNumber: "",
-            invited: '7/6/2020 10:11:9',
-            invitedBy: {
-                uid: '233',
-                name: "olayinka",
-                phoneNumber: "+2348142319913"
-            },
-            accepted: '7/6/2020 10:11:9',
-            checkedIn: '7/6/2020 10:11:9',
-            vip: false,
-            table: "Bride's Table",
-            color: "Red",
-            food: 'Fried Rice'
+            polls: [
+                {
+                    title: "food",
+                    question: "Choose a food",
+                    options: {
+                        'Fried Rice': 0,
+                        'Amala': 0,
+                        "Eba": 0
+                    }
+                },
+                {
+                    title: "color",
+                    question: "Choose a color",
+                    options: {
+                        'Red': 0,
+                        'Blue': 0,
+                        "Green": 0
+                    } 
+                }
+            ],
+            tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Children's Table", uid: "121ert"}],
+            data: props.guest
         }
     }
+    
 
     componentDidMount() {
-        const { guestId } = this.props;
-
-        if (guestId) {
-            this.fetchGuest(guestId)
+        const { guest } = this.props;
+        console.log(guest);
+        
+        if (guest.uid) {
+            this.fetchGuest(guest.uid)
         }
     }
 
@@ -271,7 +260,7 @@ export default class EditGuest extends Component {
                 <View>
                     <Text style={styles.title}>Guest</Text>
 
-                    <Text style={style.to}>Olayinka Ibrahim</Text>
+                    <Text style={style.to}>{data.name}</Text>
                 </View>
 
 
