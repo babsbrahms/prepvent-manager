@@ -67,14 +67,22 @@ export default class CheckIn extends Component {
         active: '',
         inputValue: '',
         data: {
+            uid: "23323",
             name: "Olayinka Ibrahim",
             email: "ib@gmail.com",
             phone: "+2348132319913",
-            invited: true,
-            accepted: true,
-            checkedIn: false,
-            table: "table 3",
-            vip: true
+            invited: '7/6/2020 10:11:9',
+            invitedBy: {
+                uid: '233',
+                name: "olayinka",
+                phoneNumber: "+2348142319913"
+            },
+            accepted: '7/6/2020 10:11:9',
+            checkedIn: '7/6/2020 10:11:9',
+            vip: false,
+            table: "Bride's Table",
+            color: "Red",
+            food: 'Fried Rice'
         },
         loading: false,
         processing: false,
@@ -199,13 +207,13 @@ export default class CheckIn extends Component {
                             // }}
                         />
                     )}
-                    {(!processing) &&(<View style={style.details}>
+                    {(!processing) && (<View style={style.details}>
                         <ScrollView>
                             {Object.keys(data).map(key => {
                                 <View style={style.todoDetailIndex}>
                                     <Text key={key} style={style.todoDetailKey}>{key}</Text>
     
-                                    <Text style={style.todoDetailValue}>{data[key]}</Text>
+                                    <Text style={style.todoDetailValue}>{key === "invitedBy"? data[key].name : String(data[key])}</Text>
                                 </View>
                             })}
                         

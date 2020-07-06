@@ -387,7 +387,7 @@ export default class AddGuest extends Component {
                 </Segment>
                 <Option title={active} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {options.map((option, index) => (
-                        <TouchableOpacity key={index} style={styles.optionBody} onPress={() => this.setData(option)}>
+                        <TouchableOpacity key={index} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
                             <Text style={styles.optionText}>{option}</Text>
                         </TouchableOpacity>
                     ))}

@@ -159,19 +159,22 @@ export default class EditGuest extends Component {
                 } 
             }
         ],
-        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
+        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Children's Table", uid: "121ert"}],
         data: {
-            uid: "",
-            name: "",
-            email: "",
+            uid: "12113233",
+            name: "Olayinka",
+            email: "yeancahbrahms7@gmail.com",
             phoneNumber: "",
-            invited: "",
-            invitedBy: {},
-            accepted: "",
-            checkedIn: "",
+            invited: '7/6/2020 10:11:9',
+            invitedBy: {
+                uid: '233',
+                name: "olayinka",
+                phoneNumber: "+2348142319913"
+            },
+            accepted: '7/6/2020 10:11:9',
+            checkedIn: '7/6/2020 10:11:9',
             vip: false,
-            table: "",
-
+            table: "Bride's Table",
             color: "Red",
             food: 'Fried Rice'
         }
@@ -409,14 +412,14 @@ export default class EditGuest extends Component {
                 </Segment>
                 <Option title={selected.name} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optionType === 'Poll') && Object.keys(selected.options).map((option) => ( 
-                        <TouchableOpacity key={option} style={styles.optionBody} onPress={() => this.setData(option)}>
+                        <TouchableOpacity key={option} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
                             <Text style={styles.optionText}>{option}</Text>
                         </TouchableOpacity>
                     ))}
 
 
                     {(optionType === 'Table') && tables.map((table) => ( 
-                        <TouchableOpacity key={table.uid} style={styles.optionBody} onPress={() => this.setData(table.name)}>
+                        <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === table.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(table.name)}>
                             <Text style={styles.optionText}>{table.name}</Text>
                         </TouchableOpacity>
                     ))}

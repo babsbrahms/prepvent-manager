@@ -124,51 +124,111 @@ export default class TableChart extends Component {
         ],
         data: [
             {
+                uid: "11212qwqeap",
                 name: 'biola',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                VIP: true,
-                accpted: true,
-                uid: '12weq1e3'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice'  
             },
             {
+                uid: "11212xcv",
                 name: 'Olayinka',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                VIP: true,
-                accpted: true,
-                uid: '1weqw1e'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice'  
             },
             {
+                uid: "11212mnm",
                 name: 'Zharadeen',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                VIP: true,
-                accpted: true,
-                uid: '1weq431e3'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice'  
             },
             {
+                uid: "11212ljkkl",
                 name: 'Najeeb',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                VIP: true,
-                accpted: true,
-                uid: '12weqw3433'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice'  
             },            
             {
+                uid: "11212ew",
                 name: 'Teslim',
                 email: 'tessy@gmail.com',
                 phoneNumber: "+3248142319913",
-                VIP: true,
-                accpted: true,
-                uid: '12eqw431e3'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice'
             },
-            {
+            {   
+                uid: "11212",
                 name: 'Rukayat',
                 email: 'ruka@gmail.com',
-                VIP: true,
-                accpted: true,
-                uid: '12we3431e3'  
+                invited: '7/6/2020 10:11:9',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: '7/6/2020 10:11:9',
+                checkedIn: '7/6/2020 10:11:9',
+                vip: false,
+                table: "Bride's Table",
+                color: "Red",
+                food: 'Fried Rice' 
             }
         ]
     }
@@ -285,7 +345,7 @@ export default class TableChart extends Component {
                                         <View key={key} style={style.todoDetailIndex}>
                                             <Text style={style.todoDetailKey}>{key}</Text>
 
-                                            <Text style={style.todoDetailValue}>{String(item[key])}</Text>
+                                            <Text style={style.todoDetailValue}>{key === "invitedBy"? item[key].name : String(item[key])}</Text>
                                         </View>))}
                                     </View>
                                     <View style={styles.between}>                                        
