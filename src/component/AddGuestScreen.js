@@ -158,8 +158,13 @@ export default class AddGuest extends Component {
     selectMethod = (method) => this.setState({ active: method })
 
     addPhone = (contacts) => {
+        const { addMessage } = this.props;
+
         if (contacts.length > 0) {
-            this.setState({ contacts, contactType: "phone" }, () => this.closeSideBar())
+            this.setState({ contacts, contactType: "phone" }, () =>{
+                 this.closeSideBar();
+                 addMessage('Phone contact added')
+            })
         }
     }
 

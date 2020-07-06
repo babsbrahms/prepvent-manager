@@ -88,7 +88,7 @@ export default class TableChart extends Component {
         selectedIndex: -1,
         selected: { uid: 'ddsdsdsd'},
         selectedTable: '',
-        tables: ['Table 1', 'Bride Table', "Childre's Table"],
+        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
         newTableName: "",
         search: "",
         guests: [
@@ -199,13 +199,7 @@ export default class TableChart extends Component {
     addTable = () => {
         const { newTableName, tables} = this.state;
          
-
-        let index = tables.indexOf()
-        if ((index < 0) && (newTableName !== "")) {
-            this.setState({ table: [ ...tables, newTableName], newTableName: "" })
-        } else {
-
-        }  
+ 
     }
 
     deleteTable = (table) => {
@@ -340,11 +334,11 @@ export default class TableChart extends Component {
                                 <ScrollView horizontal style={{ alignSelf: 'flex-end', paddingBottom: 4, borderBottomWidth: 3, borderBottomColor: '#707070'}}>
                                     {tables.map(table => 
                                         <TouchableOpacity
-                                            key={table}
-                                            style={[style.link, { borderBottomColor: selectedTable === table? '#2DF19C' : '#0E0C20'}]}
+                                            key={table.uid}
+                                            style={[style.link, { borderBottomColor: selectedTable === table.name? '#2DF19C' : '#0E0C20'}]}
                                             onPress={() => this.selectTable(table)}
                                         >
-                                            <Text style={style.text}>{table}</Text>
+                                            <Text style={style.text}>{table.name}</Text>
                                         </TouchableOpacity>
                                     )}
                                 </ScrollView>

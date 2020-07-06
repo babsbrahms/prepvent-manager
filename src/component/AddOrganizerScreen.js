@@ -57,51 +57,50 @@ export default class AddOrganizer extends Component {
 
         this.state ={ 
             optionOpen: false,
-            guild: [
-                {
+            schema: { 
+                checkIn: {
                     name: "Check In",
                     type: "Boolean",
                     required: false,
                     value: "checkIn",
                 }, 
-                {
+                communication: {
                     name: "Communication",
                     type: "Boolean",
                     required: false,
                     value: "communication",
                 },
-  
-                {
+                invite: {
                     name: "Invite",
                     type: "Number",
                     required: false,
                     value: "invite",
                 },
-                {
+                organizer: {
                     name: "Oranigzer",
                     type: "Boolean",
                     required: false,
                     value: "organizer",
                 },
-                {
+                table: {
                     name: "Table Chart",
                     type: "Boolean",
                     required: false,
                     value: "tableChart",
                 },
-                {
+               task: {
                     name: "Task",
                     type: "Boolean",
                     required: false,
                     value: "task",
                 },
-                {
+                settings:{
                     name: "Settings",
                     type: "Boolean",
                     required: false,
                     value: "settings",
                 },
-            ],
+            },
             data: {
                 name: "",
                 email: "",
@@ -174,7 +173,7 @@ export default class AddOrganizer extends Component {
 
     render() {
         const { close, selectedIndex } = this.props;
-        const { optionOpen, guild, data, selected, sideBarOpen, loading } = this.state;
+        const { optionOpen, schema, data, selected, sideBarOpen, loading } = this.state;
 
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
@@ -205,11 +204,23 @@ export default class AddOrganizer extends Component {
                 <Segment loading={loading}>
                     <View style={styles.details}>
                         <ScrollView>
+                            {/* {Object.values(guid).map(key => (
+                            <View key={key.name} style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>{key.name}</Text>
+
+                                <TouchableOpacity onPress={() => this.selectedDetail(key, data[key.value])} style={style.action}>
+                                    {(key.type === "Number") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data[key.value]): 'none'}</Text>)}
+                                    {(key.type === "DateTime") && (<Text style={style.todoDetailValue}>{!!data[key.value]?  moment.utc(data[key.value]).format("ddd Do MMM YYYY"): 'none'}</Text>)}
+                                    {(key.type === "Organizer") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data.assign.name): 'none'}</Text>)}
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+                            ))} */}
                             
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Check In</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[0], data.checkIn)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.checkIn, data.checkIn)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.checkIn? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -218,7 +229,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Communication</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[1], data.communication)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.communication, data.communication)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.communication? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -227,7 +238,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Invite</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[2], data.invite)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.invite, data.invite)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{data.invite}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -236,7 +247,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Organizer</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[3], data.organizer)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.organizer, data.organizer)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.organizer? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -245,7 +256,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Table Chart</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[4], data.tableChart)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.table, data.tableChart)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.tableChart? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -254,7 +265,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Task</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[5], data.task)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.task, data.task)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.task? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -263,7 +274,7 @@ export default class AddOrganizer extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Settings</Text>
 
-                                <TouchableOpacity onPress={() => this.changeAccess(guild[6], data.settings)} style={style.action}>
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.settings, data.settings)} style={style.action}>
                                     <Text style={style.todoDetailValue}>{!!data.settings? 'grant': 'deny'}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>

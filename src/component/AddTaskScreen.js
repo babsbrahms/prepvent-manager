@@ -57,32 +57,32 @@ export default class AddTask extends Component {
             optionOpen: false,
             optionType: '',
             loading: false,
-            guild: [ 
-                {
+            schema: { 
+                alert: {
                     name: "Alert",
                     type: "DateTime",
                     required: false,
                     value: "alert",
                 },
-                {
+                assign: {    
                     name: "Assign",
                     type: "Organizer",
                     required: false,
                     value: "assign",
                 },
-                {
+                budget: {
                     name: "Budget",
                     type: "Number",
                     required: false,
                     value: "budget",
                 },          
-                {
+                deadline: {
                     name: "Deadline",
                     type: "DateTime",
                     required: true,
                     value:  "deadline",
                 },
-            ],
+            },
             data: {
                 task: "",
                 alert : "",
@@ -148,7 +148,7 @@ export default class AddTask extends Component {
  
     render() {
         const { close, selectedIndex } = this.props;
-        const  { optionOpen, data, guild, selected, organizers, loading } = this.state;
+        const  { optionOpen, data, schema, selected, organizers, loading } = this.state;
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
@@ -180,7 +180,7 @@ export default class AddTask extends Component {
                 <Segment color={'#E4E4E4'} loading={loading}>
                     <View style={styles.details}>
                         <ScrollView>
-                            {/* {guild.map(key => (
+                            {/* {Object.values(guid).map(key => (
                             <View key={key.name} style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>{key.name}</Text>
 
@@ -196,7 +196,7 @@ export default class AddTask extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Alert</Text>
 
-                                <TouchableOpacity onPress={() => this.selectedDetail(guild[0])} style={style.action}>
+                                <TouchableOpacity onPress={() => this.selectedDetail(schema.alert)} style={style.action}>
                                     {(<Text style={style.todoDetailValue}>{!!data.alert?  moment(data.alert).format("ddd Do MMM YYYY hh:mm a"): 'none'}</Text>)}
 
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
@@ -207,7 +207,7 @@ export default class AddTask extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Assign</Text>
 
-                                <TouchableOpacity onPress={() => this.selectedDetail(guild[1])} style={style.action}>
+                                <TouchableOpacity onPress={() => this.selectedDetail(schema.assign)} style={style.action}>
                                     {(<Text style={style.todoDetailValue}>{!!data.assign? String(data.assign.name): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -216,7 +216,7 @@ export default class AddTask extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Budget</Text>
 
-                                <TouchableOpacity onPress={() => this.selectedDetail(guild[2])} style={style.action}>
+                                <TouchableOpacity onPress={() => this.selectedDetail(schema.budget)} style={style.action}>
                                     {(<Text style={style.todoDetailValue}>{!!data.budget? String(data.budget): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
@@ -226,7 +226,7 @@ export default class AddTask extends Component {
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Deadline</Text>
 
-                                <TouchableOpacity onPress={() => this.selectedDetail(guild[3])} style={style.action}>
+                                <TouchableOpacity onPress={() => this.selectedDetail(schema.deadline)} style={style.action}>
                                     {(<Text style={style.todoDetailValue}>{!!data.deadline?  moment(data.deadline).format("ddd Do MMM YYYY hh:mm a"): 'none'}</Text>)}
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>

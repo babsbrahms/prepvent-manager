@@ -6,6 +6,7 @@ export const contactFilter = [
     { name: 'Checked In', options: false },
     { name: 'Not Accepted', options: false },
     { name: 'VIP', options: false },
+    { name: 'Table', options: true },
 ];
 
 export const contactSearch = [

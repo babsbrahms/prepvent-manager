@@ -93,7 +93,7 @@ const styles = {
     optionText: {
         color: '#707070',
         fontSize: 24,
-        fontWeight: "bold",
+        // fontWeight: "bold",
         textAlign: 'center',
     },
     details: {

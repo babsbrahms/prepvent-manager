@@ -5,7 +5,6 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
 import styles from '../styles';
 import Option from './Option'
-import SideBar from "./SideBar";
 import Message from "./Message"
 
 
@@ -80,26 +79,101 @@ const style = StyleSheet.create({
 
 export default class EditGuest extends Component {
     state = { 
-        refreshing: false,
-        active: 'phone',
         optionOpen: false,
-        sideBarOpen: false,
-        inputValue: '',
+        optionType: '',
+        selected: {},
+        loading: false,
         schema: {
             name: {
-                type: "string"
+                name: "Name",
+                type: "String",
+                required: true,
+                value: "name",
             },
             email: {
-                type: "string"
+                name: "Email",
+                type: "String",
+                required: true,
+                value: "email",
             },
             phoneNumber: {
-                type: "string"
+                name: "Phone Number",
+                type: "Number",
+                required: true,
+                value: "phoneNumber",
+            },
+            invited: {
+                name: "Invited",
+                type: "DateTime",
+                required: true,
+                value: "invited",
+            },
+            invitedBy: {
+                name: "Invited By",
+                type: "Organizer",
+                required: true,
+                value: "invitedBy",
+            },
+            accepted: {
+                name: "Accepted",
+                type: "DateTime",
+                required: true,
+                value: "accepted",
+            },
+            checkedIn: {
+                name: "Check In",
+                type: "DateTime",
+                required: true,
+                value: "checkedIn",
+            },
+            vip: {
+                name: "VIP Alert",
+                type: "Boolean",
+                required: false,
+                value: "vip",
+            },
+            table: {
+                name: "Table",
+                type: "Table",
+                required: true,
+                value: "table",
             }
         },
+        polls: [
+            {
+                title: "food",
+                question: "Choose a food",
+                options: {
+                    'Fried Rice': 0,
+                    'Amala': 0,
+                    "Eba": 0
+                }
+            },
+            {
+                title: "color",
+                question: "Choose a color",
+                options: {
+                    'Red': 0,
+                    'Blue': 0,
+                    "Green": 0
+                } 
+            }
+        ],
+        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
         data: {
+            uid: "",
             name: "",
             email: "",
             phoneNumber: "",
+            invited: "",
+            invitedBy: {},
+            accepted: "",
+            checkedIn: "",
+            vip: false,
+            table: "",
+
+            color: "Red",
+            food: 'Fried Rice'
         }
     }
 
@@ -114,21 +188,68 @@ export default class EditGuest extends Component {
     fetchGuest = () => {
 
     }
-    
-    openSideBar = () => this.setState({ sideBarOpen: true })
 
-    closeSideBar = () => this.setState({ sideBarOpen: false })
+    openOption = (type) => this.setState({ optionOpen: true, optionType: type })
+
+    closeOption = () => this.setState({ optionOpen: false, optionType: "" })
 
 
-    openOption = () => this.setState({ optionOpen: true })
+    selectedDetail = (key, value) => this.setState({ selected: key }, () => {
+        if (['String', 'Number'].includes(key.type)) {
+            if (this.input) {
+                this.input.focus()
+            }
+        } else if (key.type === "DateTime") { 
+            this.openOption(key.type)
+        } else if (key.type === "Organizer") {
+            this.openOption(key.type)
+        } else if (key.type === 'Table') {
+            this.openOption(key.type)
+        } else if (key.type === "Boolean") {
+            this.setData(!value)  
+        }
+    }) 
 
-    closeOption = () => this.setState({ optionOpen: false })
 
+    selectedPoll = (key) => {
+
+        //form selected and open 
+        this.setState({ selected: 
+            {
+                name: key.title,
+                type: "Poll",
+                required: false,
+                value: key.title,
+                options: key.options
+            }
+        }, () => {
+        
+            this.openOption('Poll')
+        })
+    } 
+
+
+    setData = ( value) => {
+        const {selected, optionOpen} = this.state;
+
+        this.setState({ data: { ...this.state.data, [selected.value]: value } }, () => {
+            if (optionOpen) {
+                this.closeOption()
+            }
+        })
+    }
+
+
+    submit = () => {
+        const { } = this.state;
+
+        this.setState({ loading: true })
+    }
 
     render() {
-        const { refreshing, active, optionOpen, sideBarOpen, inputValue, data } = this.state;
+        const { optionOpen, data, polls, schema, optionType, selected, loading, tables } = this.state;
         
-        const { close, guestId } = this.props
+        const { close } = this.props
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
@@ -138,7 +259,7 @@ export default class EditGuest extends Component {
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.submit()}>
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>
@@ -153,45 +274,154 @@ export default class EditGuest extends Component {
 
 
                 <Text style={styles.title}>Details</Text>
-                <Segment color={'#E4E4E4'}>
+                <Segment color={'#E4E4E4'} loading={loading}>
                     <View style={styles.details}>
                         <ScrollView>
+                            {/* {Object.values(guid).map(key => (
+                            <View key={key.name} style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>{key.name}</Text>
 
-                            {Object.keys(data).map(key => (
-                                <View key={key} style={style.todoDetailIndex}>
-                                    <Text style={style.todoDetailKey}>{key}</Text>
+                                <TouchableOpacity onPress={() => this.selectedDetail(key, data[key.value])} style={style.action}>
+                                    {(key.type === "Number") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data[key.value]): 'none'}</Text>)}
+                                    {(key.type === "DateTime") && (<Text style={style.todoDetailValue}>{!!data[key.value]?  moment.utc(data[key.value]).format("ddd Do MMM YYYY"): 'none'}</Text>)}
+                                    {(key.type === "Organizer") && (<Text style={style.todoDetailValue}>{!!data[key.value]? String(data.assign.name): 'none'}</Text>)}
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+                            ))} */}
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Name</Text>
 
-                                    <TouchableOpacity style={style.action}>
-                                        <Text style={style.todoDetailValue}>{data[key]? data[key] : "none"}</Text>
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.name, data.name)}>
+                                    <Text style={style.todoDetailValue}>{data.name? data.name : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+
+
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Email</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.email, data.email)}>
+                                    <Text style={style.todoDetailValue}>{data.email? data.email : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+
+
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Phone Number</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.phoneNumber, data.phoneNumber)}>
+                                    <Text style={style.todoDetailValue}>{data.phoneNumber? data.phoneNumber : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+                            
+
+                            {/* <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Invited</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.invited, data.invited)}>
+                                    <Text style={style.todoDetailValue}>{data.invited? data.invited : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View> */}
+
+
+                            {/* <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Invited By</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.invitedBy, data.invitedBy)}>
+                                    <Text style={style.todoDetailValue}>{data.invitedBy? data.invitedBy.name : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View> */}
+
+
+                            {/* <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Accepted</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.accepted, data.accepted)}>
+                                    <Text style={style.todoDetailValue}>{data.accepted? data.accepted : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View> */}
+
+
+                            {/* <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Checked In</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.checkedIn, data.checkedIn)}>
+                                    <Text style={style.todoDetailValue}>{data.checkedIn? data.checkedIn : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View> */}
+
+
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>VIP Alert</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.vip, data.vip)}>
+                                    <Text style={style.todoDetailValue}>{data.vip? 'true' : "false"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+
+
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Table</Text>
+
+                                <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.table, data.table)}>
+                                    <Text style={style.todoDetailValue}>{data.table? data.table : "none"}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
+
+                            {polls.map(key => (
+                                <View key={key.title} style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>{key.title}</Text>
+
+                                    <TouchableOpacity onPress={() => this.selectedPoll(key)} style={style.action}>
+                                        <Text style={style.todoDetailValue}>{data[key.title]? data[key.title] : "none"}</Text>
                                         <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                     </TouchableOpacity>
                                 </View>
                             ))}
-
                         </ScrollView>
 
                         <View style={styles.detailsRow}>
-                            <TextInput 
-                                style={styles.detailsInput} 
-                                placeholder={"Enter "} 
-                                placeholderTextColor="#0E0C20" 
-                                value={inputValue}
-                                onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}
-                                onSubmitEditing={(e) => this.addInput()}
-                            />
-                            <TouchableOpacity style={styles.icon} onPress={() => this.addInput()}>
-                                <Ionicons name={'ios-send'} size={30} color={'#707070'}/>
-                            </TouchableOpacity>
+                            {((selected.type === "String") || (selected.type === "Number")) && (
+                                <TextInput 
+                                    ref={(x) => this.input = x}
+                                    style={styles.detailsInput}
+                                    placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
+                                    placeholderTextColor="#0E0C20"
+                                    value={String(data[selected.value])}
+                                    autoFocus
+                                    keyboardType={selected.type === "String"? "default" : "phone-pad"}
+                                    onChange={(e) => this.setData(e.nativeEvent.text)}
+                                    onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
+                                />
+                            )}
                         </View>
                     </View>
                 </Segment>
-                <Option title={active} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                <Option title={selected.name} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                    {(optionType === 'Poll') && Object.keys(selected.options).map((option) => ( 
+                        <TouchableOpacity key={option} style={styles.optionBody} onPress={() => this.setData(option)}>
+                            <Text style={styles.optionText}>{option}</Text>
+                        </TouchableOpacity>
+                    ))}
 
+
+                    {(optionType === 'Table') && tables.map((table) => ( 
+                        <TouchableOpacity key={table.uid} style={styles.optionBody} onPress={() => this.setData(table.name)}>
+                            <Text style={styles.optionText}>{table.name}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </Option>
-                
-                <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                   
-                </SideBar>
+
             </View>
             <Message />
         </View>
