@@ -150,7 +150,7 @@ export default class EditGuest extends Component {
                     options: {
                         'Fried Rice': 0,
                         'Amala': 0,
-                        "Eba": 0
+                        "Beans": 0
                     }
                 },
                 {
@@ -208,8 +208,8 @@ export default class EditGuest extends Component {
             this.openOption(key.type)
         } else if (key.type === "Boolean") {
             this.setData(!value)  
-        } else {
-            this.openOption('Alert')
+        } else if (key.type === 'Alert') {
+           // this.openOption('Alert')
         }
     }) 
 
@@ -366,7 +366,7 @@ export default class EditGuest extends Component {
                                 <Text style={style.todoDetailKey}>VIP Alert</Text>
 
                                 <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.vip, data.vip)}>
-                                    <Text style={style.todoDetailValue}>{data.vip? 'true' : "false"}</Text>
+                                    <Text style={style.todoDetailValue}>{data.vip.length > 0? 'true' : "false"}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -376,7 +376,7 @@ export default class EditGuest extends Component {
                                 <Text style={style.todoDetailKey}>Table</Text>
 
                                 <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.table, data.table)}>
-                                    <Text style={style.todoDetailValue}>{data.table? data.table : "none"}</Text>
+                                    <Text style={style.todoDetailValue}>{data.table? data.table.name : "none"}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -424,11 +424,11 @@ export default class EditGuest extends Component {
                         </TouchableOpacity>
                     ))}
 
-                    {(optionType === 'Alert') && organizers.map((organizer) => ( 
+                    {/* {(optionType === 'Alert') && organizers.map((organizer) => ( 
                         <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === organizer.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(organizer)}>
-                            <Text style={styles.optionText}>{table.name}</Text>
+                            <Text style={styles.optionText}>{organizer.name}</Text>
                         </TouchableOpacity>
-                    ))}
+                    ))} */}
                 </Option>
 
             </View>

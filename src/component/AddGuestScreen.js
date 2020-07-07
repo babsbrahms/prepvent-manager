@@ -51,6 +51,11 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: "center"
     },
+    todo: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000000'
+    },
     todoDetailIndex: {
         display: "flex",
         flexDirection: "row",
@@ -90,8 +95,10 @@ export default class AddGuest extends Component {
             loading: false,
             active: '',
             optionOpen: false,
+            optiontype: '',
             sideBarOpen: false,
-            inputValue: '',
+            sideBarType: '',
+            contactCount: 0,
             inputForm: [
                 {
                     name: "Name",
@@ -147,23 +154,48 @@ export default class AddGuest extends Component {
     }
     
     
-    openSideBar = () => this.setState({ sideBarOpen: true })
+    openSideBar = (type) => this.setState({ sideBarOpen: true, sideBarType: type })
 
-    closeSideBar = () => this.setState({ sideBarOpen: false })
+    closeSideBar = () => this.setState({ sideBarOpen: false, sideBarType: "" })
 
-    openOption = () => this.setState({ optionOpen: true })
+    openOption = (type) => this.setState({ optionOpen: true, optiontype: type })
 
-    closeOption = () => this.setState({ optionOpen: false })
+    closeOption = () => this.setState({ optionOpen: false, optiontype: '' })
 
     selectMethod = (method) => this.setState({ active: method })
+
+
+    resetContact = (active) => this.setState({ 
+        active, 
+        selected: {}, 
+        contacts: [], 
+        contactCount: 0, 
+        contactType: "",
+        data: {
+            name: "",
+            email: "",
+            phoneNumber: "",
+        }, 
+        optionOpen: false, 
+        optiontype: '' 
+    }, () => {
+        if (active === 'phone') {
+            this.openSideBar("phone");
+        } else if (active === 'csv') {
+            this.csvPermission()
+        } else if (active === 'input') {
+            this.setState({ contactType: 'input', contactCount: 1 })
+        } else if (active === 'previous') {
+            this.openSideBar("previous");
+        }
+    })
 
     addPhone = (contacts) => {
         const { addMessage } = this.props;
 
         if (contacts.length > 0) {
-            this.setState({ contacts, contactType: "phone" }, () =>{
+            this.setState({ contacts, contactType: "phone", contactCount: contacts.length }, () =>{
                  this.closeSideBar();
-                 addMessage('Phone contact added')
             })
         }
     }
@@ -253,7 +285,7 @@ export default class AddGuest extends Component {
                 console.log(keys);
                 
   
-                this.setState({ contacts: result, contactType: "csv", options: keys, loading: false })
+                this.setState({ contacts: result, contactType: "csv", options: keys, loading: false, contactCount: result.length })
 
             } else {
                 addMessage('Warning', 'The csv file is empty')
@@ -272,7 +304,7 @@ export default class AddGuest extends Component {
                 this.input.focus()
             }
         } else if (key.type === "Option") {
-            this.openOption()
+            this.openOption("Schema")
         }
     })  
     
@@ -286,9 +318,27 @@ export default class AddGuest extends Component {
         })
     }
 
+    onSubmit = () => {
+        const { contactType } = this.state;
+
+        if (contactType === 'phone') {
+            // validate phone and email then submit
+            
+        } else if (contactType === 'csv') {
+            // use data schema to format contact
+
+        } else if (contactType === 'input') {
+            // valiadate data and submit data
+
+        } else if (contactType === 'previous') {
+            // validate phone and email then submit
+
+        }
+    }
+
     render() {
-        const { refreshing, loading, active, optionOpen, sideBarOpen, inputValue,
-             data, contactType, selected, inputForm, csvForm, options } = this.state;
+        const { refreshing, loading, active, optionOpen, sideBarOpen, contactCount, contacts,
+             data, contactType, selected, inputForm, csvForm, options, optiontype, sideBarType } = this.state;
         
         const { close } = this.props
         return (
@@ -300,46 +350,43 @@ export default class AddGuest extends Component {
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon}>
+                    <TouchableOpacity style={styles.icon} onPress={() => onSubmit()}>
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>
 
                 <Text style={styles.Header}>ADD GUEST</Text>
+                <View style={[styles.between, { alignItems: 'center'}]}>
+                    <Text style={styles.title}>Organizer</Text>
 
-                <View>
-                    <Text style={styles.title}>Add guest using:</Text>
-
-                    <View style={[styles.row, { marginBottom: 9 }]}>
-                        <TouchableOpacity 
-                            style={[style.link, { borderBottomColor: active === 'phone'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.setState({ active: "phone" }, () => this.openSideBar())}
-                        >
-                            <Text style={style.text}>Phone Number</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[style.link, { borderBottomColor: active === 'csv'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.setState({ active: 'csv' }, () => this.csvPermission())}
-                        >
-                            <Text style={style.text}>CSV file</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[style.link, { borderBottomColor: active === 'input'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.setState({ contactType: 'input',  active: 'input'})}
-                        >
-                            <Text style={style.text}>Form</Text>
-                        </TouchableOpacity>
-                    </View>
-
+                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openOption('Add Guest Via')}>
+                        <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                    </TouchableOpacity> 
                 </View>
+                <Text style={style.to}>{contactCount} contacts</Text>
 
 
                 <Text style={styles.title}>Details</Text>
                 <Segment color={'#E4E4E4'} loading={loading}>
-                    <View style={styles.details}>
+                    {((contactType === "phone") || (contactType === "previous")) && (
+                        <FlatList 
+                            onRefresh={() => {}}
+                            refreshing={refreshing}
+                            data={contacts}
+                            renderItem={({ item, index }) => 
+                                (<View> 
+                                    <Text style={style.todo}>{item.name}</Text>                       
+                                    {(!!item.phoneNumber) && (<Text >{item.phoneNumber}</Text>)}  
+                                    {(!!item.email) && (<Text >{item.email}</Text> )}
+                                    <View style={styles.hairLine} />
+                                </View>) 
+                            }
+                            keyExtractor={(item,index) => index.toString()}
+                        />
+                    )}
+                    {((contactType !== "phone") || (contactType !== "previous")) && (<View style={styles.details}>
                         <ScrollView>
+                            
                             {(contactType === "input") && (<View>
                                 {inputForm.map(key => (
                                     <View key={key.name} style={style.todoDetailIndex}>
@@ -383,23 +430,61 @@ export default class AddGuest extends Component {
                                 />
                             )}
                         </View>
-                    </View>
+                    </View>)}
                 </Segment>
-                <Option title={active} openModal={optionOpen} closeModal={() => this.closeOption()}>
-                    {options.map((option, index) => (
+                <Option title={optiontype} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                    {(optiontype === 'Schema') && options.map((option, index) => (
                         <TouchableOpacity key={index} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
                             <Text style={styles.optionText}>{option}</Text>
                         </TouchableOpacity>
                     ))}
+
+
+                    {(optiontype === "Add Guest Via") && (
+                        <View>
+                            <TouchableOpacity 
+                                style={[styles.optionBody, { borderBottomColor: active === 'phone'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.resetContact("phone")}
+                            >
+                                <Text style={styles.optionText}>Phone Contact</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[styles.optionBody, { borderBottomColor: active === 'csv'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.resetContact('csv')}
+                            >
+                                <Text style={styles.optionText}>CSV File</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[styles.optionBody, { borderBottomColor: active === 'input'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.resetContact('input')}
+                            >
+                                <Text style={styles.optionText}>Form</Text>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity 
+                                style={[styles.optionBody, { borderBottomColor: active === 'previous'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.resetContact('previous')}
+                            >
+                                <Text style={styles.optionText}>Previous Event</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
                     
                 </Option>
                 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AddContact 
+                    {(sideBarType === "phone") && (<AddContact 
                         selection="multiple" 
                         close={() => this.closeSideBar()} 
                         addContact={(contacts) => this.addPhone(contacts)} 
-                    />
+                    />)}
+
+                    {(sideBarType === "previous") && (
+                        <View />
+                    )}
                 </SideBar>
             </View>
             <Message />

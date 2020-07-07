@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import validator from 'validator'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
+import moment from 'moment';
 import { RNCamera } from 'react-native-camera';
 import styles from '../styles';
 import Message from "./Message"
@@ -67,26 +68,48 @@ export default class CheckIn extends Component {
         active: '',
         inputValue: '',
         data: {
-            uid: "23323",
-            name: "Olayinka Ibrahim",
-            email: "ib@gmail.com",
-            phone: "+2348132319913",
-            invited: '7/6/2020 10:11:9',
+            uid: "11212sdf",
+            name: 'Rukayat',
+            email: 'ruka@gmail.com',
+            invited: 12343454555,
             invitedBy: {
                 uid: '233',
                 name: "olayinka",
                 phoneNumber: "+2348142319913"
             },
-            accepted: '7/6/2020 10:11:9',
-            checkedIn: '7/6/2020 10:11:9',
-            vip: false,
-            table: "Bride's Table",
+            accepted: 12343454555,
+            checkedIn: 12343454555,
+            vip: [],
+            table: {
+                uid: 1,
+                name: "Bride's Table"
+            },
             color: "Red",
-            food: 'Fried Rice'
+            food: 'Fried Rice' 
         },
         loading: false,
         processing: false,
-        error: ""
+        error: "",
+        polls: [
+            {
+                title: "food",
+                question: "Choose a food",
+                options: {
+                    'Fried Rice': 0,
+                    'Amala': 0,
+                    "Beans": 0
+                }
+            },
+            {
+                title: "color",
+                question: "Choose a color",
+                options: {
+                    'Red': 0,
+                    'Blue': 0,
+                    "Green": 0
+                } 
+            }
+        ],
     }
 
     findEmail = () => {
@@ -120,7 +143,7 @@ export default class CheckIn extends Component {
 
     render() {
         const { close } = this.props;
-        const  { active, data, processing, loading, inputValue, error } = this.state;
+        const  { active, data, processing, loading, inputValue, error, polls } = this.state;
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
@@ -209,14 +232,78 @@ export default class CheckIn extends Component {
                     )}
                     {(!processing) && (<View style={style.details}>
                         <ScrollView>
-                            {Object.keys(data).map(key => {
+                            <View>
                                 <View style={style.todoDetailIndex}>
-                                    <Text key={key} style={style.todoDetailKey}>{key}</Text>
-    
-                                    <Text style={style.todoDetailValue}>{key === "invitedBy"? data[key].name : String(data[key])}</Text>
+                                    <Text style={style.todoDetailKey}>Name</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.name? data.name : "none"}</Text>
+                    
                                 </View>
-                            })}
-                        
+
+
+                                <View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Email</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.email? data.email : "none"}</Text>
+                                </View>
+
+
+                                <View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Phone Number</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.phoneNumber? data.phoneNumber : "none"}</Text>
+                                </View>
+                                
+
+                                {(!!data.invited) && (<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Invited</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.invited? moment(data.invited).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                </View> )}
+
+
+                                {(!!data.invitedBy) && (<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Invited By</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.invitedBy? data.invitedBy.name : "none"}</Text>
+                                </View>)}
+
+
+                                {(!!data.accepted) && (<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Accepted</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.accepted? moment(data.accepted).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                </View>)} 
+
+
+                                {(!!data.checkedIn) && (<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Checked In</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.checkedIn? moment(data.checkedIn).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                </View> )}
+
+
+                                {(!!data.vip) && (<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>VIP Alert</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.vip.length > 0? 'true' : "false"}</Text>
+                                </View>)}
+
+
+                                {(!!data.table) &&<View style={style.todoDetailIndex}>
+                                    <Text style={style.todoDetailKey}>Table</Text>
+
+                                    <Text style={style.todoDetailValue}>{data.table? data.table.name : "none"}</Text>
+                                </View>}
+
+                                {polls.map(key => (
+                                    <View key={key.title} style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>{key.title}</Text>
+
+                                        <Text style={style.todoDetailValue}>{!!data[key.title]? data[key.title] : "none"}</Text>
+                                    </View>
+                                ))}
+                            </View>
                         </ScrollView>
                         <TouchableOpacity style={style.button}>
                                 <Text style={style.btnText}>Check In</Text>

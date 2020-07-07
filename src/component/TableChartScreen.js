@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInp
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Communications from 'react-native-communications';
+import moment from 'moment';
 import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
@@ -123,113 +124,151 @@ export default class TableChart extends Component {
         ],
         data: [
             {
-                uid: "11212qwqeap",
+                uid: "11212",
                 name: 'biola',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
             {
-                uid: "11212xcv",
+                uid: "11212qwqwe",
                 name: 'Olayinka',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
             {
-                uid: "11212mnm",
+                uid: "11212popi",
                 name: 'Zharadeen',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
             {
-                uid: "11212ljkkl",
+                uid: "11212mnbnmb",
                 name: 'Najeeb',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
-                food: 'Fried Rice'  
+                food: 'Fried Rice' 
             },            
             {
-                uid: "11212ew",
+                uid: "11212zcxzcx",
                 name: 'Teslim',
                 email: 'tessy@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
-                color: "Red",
-                food: 'Fried Rice'
-            },
-            {   
-                uid: "11212",
-                name: 'Rukayat',
-                email: 'ruka@gmail.com',
-                invited: '7/6/2020 10:11:9',
-                invitedBy: {
-                    uid: '233',
-                    name: "olayinka",
-                    phoneNumber: "+2348142319913"
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
                 color: "Red",
                 food: 'Fried Rice' 
+            },
+            {
+                uid: "11212sdf",
+                name: 'Rukayat',
+                email: 'ruka@gmail.com',
+                invited: 12343454555,
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
+                color: "Red",
+                food: 'Fried Rice'  
             }
-        ]
+        ],
+        polls: [
+            {
+                title: "food",
+                question: "Choose a food",
+                options: {
+                    'Fried Rice': 0,
+                    'Amala': 0,
+                    "Beans": 0
+                }
+            },
+            {
+                title: "color",
+                question: "Choose a color",
+                options: {
+                    'Red': 0,
+                    'Blue': 0,
+                    "Green": 0
+                } 
+            }
+        ],
     }
 
     openSideBar = () => this.setState({ sideBarOpen: true })
@@ -262,14 +301,14 @@ export default class TableChart extends Component {
     }
 
     deleteTable = (table) => {
-        Alert.alert('Warning', `Are you sure you want to delete ${table}`, [
+        Alert.alert('Warning', `Are you sure you want to delete ${table.name}`, [
             { text: "Yes", onPress: () => this.confirmDeleteTable(table)},
-            {text: "Cancel", onPress: () => null }
+            { text: "Cancel", onPress: () => null }
         ], { cancelable: true })
     }
 
     confirmDeleteTable = (table) => {
-
+        this.setState({ loading: true })
     }
 
     selectTable = (table) => {
@@ -279,7 +318,10 @@ export default class TableChart extends Component {
     render() {
         const { close, editGuest } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, tables, newTableName, search, data, guests, loading } = this.state;
+            selectedTable, tables, newTableName, search, data, guests, loading, polls } = this.state;
+
+            console.log('table: ', selectedTable);
+            
 
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
@@ -307,7 +349,7 @@ export default class TableChart extends Component {
                 </View>)}
 
                 <View style={{ width: '100%', height: "100%", flex: 1 }}>
-                    <Segment disabled={loading} color="#E4E4E4" marginTop={2}>
+                    <Segment loading={loading} color="#E4E4E4" marginTop={2}>
                         <FlatList 
                         onRefresh={() => {}}
                         refreshing={refreshing}
@@ -340,12 +382,76 @@ export default class TableChart extends Component {
                                 </View>
                                 {(selectedIndex === index) && (<View style={style.todoDetail}>
                                     <View>
-                                        {Object.keys(item).map(key =>(
-                                        <View key={key} style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>{key}</Text>
+                                        <View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Name</Text>
 
-                                            <Text style={style.todoDetailValue}>{key === "invitedBy"? item[key].name : String(item[key])}</Text>
-                                        </View>))}
+                                            <Text style={style.todoDetailValue}>{item.name? item.name : "none"}</Text>
+                        
+                                        </View>
+
+
+                                        <View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Email</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.email? item.email : "none"}</Text>
+                                        </View>
+
+
+                                        <View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Phone Number</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.phoneNumber? item.phoneNumber : "none"}</Text>
+                                        </View>
+                                        
+
+                                        {(!!item.invited) && (<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Invited</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.invited? moment(item.invited).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                        </View> )}
+
+
+                                        {(!!item.invitedBy) && (<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Invited By</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.invitedBy? item.invitedBy.name : "none"}</Text>
+                                        </View>)}
+
+
+                                        {(!!item.accepted) && (<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Accepted</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.accepted? moment(item.accepted).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                        </View>)} 
+
+
+                                        {(!!item.checkedIn) && (<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Checked In</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.checkedIn? moment(item.checkedIn).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                        </View> )}
+
+
+                                        {(!!item.vip) && (<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>VIP Alert</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.vip.length > 0? 'true' : "false"}</Text>
+                                        </View>)}
+
+
+                                        {(!!item.table) &&<View style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>Table</Text>
+
+                                            <Text style={style.todoDetailValue}>{item.table? item.table.name : "none"}</Text>
+                                        </View>}
+
+                                        {polls.map(key => (
+                                            <View key={key.title} style={style.todoDetailIndex}>
+                                                <Text style={style.todoDetailKey}>{key.title}</Text>
+
+                                                <Text style={style.todoDetailValue}>{!!item[key.title]? item[key.title] : "none"}</Text>
+                                            </View>
+                                        ))}
                                     </View>
                                     <View style={styles.between}>                                        
                                         <TouchableOpacity style={styles.icon} onPress={() =>  editGuest(item)}>
@@ -394,8 +500,9 @@ export default class TableChart extends Component {
                                     {tables.map(table => 
                                         <TouchableOpacity
                                             key={table.uid}
-                                            style={[style.link, { borderBottomColor: selectedTable.name === table.name? '#2DF19C' : '#0E0C20'}]}
-                                            onPress={() => this.selectTable(table.name)}
+                                            // style={style.link}
+                                            style={[style.link, { borderBottomColor: (!!selectedTable) && table.name === selectedTable.name? '#2DF19C' : '#0E0C20'}]}
+                                            onPress={() => this.selectTable(table)}
                                         >
                                             <Text style={style.text}>{table.name}</Text>
                                         </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Communications from 'react-native-communications';
+import moment from 'moment';
 import Segment from '../component/Segment';
 import Option from './Option';
 import styles from '../styles';
@@ -65,16 +66,19 @@ export default class Guest extends Component {
                 name: 'biola',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
@@ -83,16 +87,19 @@ export default class Guest extends Component {
                 name: 'Olayinka',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
@@ -101,16 +108,19 @@ export default class Guest extends Component {
                 name: 'Zharadeen',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             },
@@ -119,16 +129,19 @@ export default class Guest extends Component {
                 name: 'Najeeb',
                 email: 'yeancahBrahms7@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice' 
             },            
@@ -137,16 +150,19 @@ export default class Guest extends Component {
                 name: 'Teslim',
                 email: 'tessy@gmail.com',
                 phoneNumber: "+3248142319913",
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice' 
             },
@@ -154,20 +170,43 @@ export default class Guest extends Component {
                 uid: "11212sdf",
                 name: 'Rukayat',
                 email: 'ruka@gmail.com',
-                invited: '7/6/2020 10:11:9',
+                invited: 12343454555,
                 invitedBy: {
                     uid: '233',
                     name: "olayinka",
                     phoneNumber: "+2348142319913"
                 },
-                accepted: '7/6/2020 10:11:9',
-                checkedIn: '7/6/2020 10:11:9',
-                vip: false,
-                table: "Bride's Table",
+                accepted: 12343454555,
+                checkedIn: 12343454555,
+                vip: [],
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
                 color: "Red",
                 food: 'Fried Rice'  
             }
-        ]
+        ],
+        polls: [
+            {
+                title: "food",
+                question: "Choose a food",
+                options: {
+                    'Fried Rice': 0,
+                    'Amala': 0,
+                    "Beans": 0
+                }
+            },
+            {
+                title: "color",
+                question: "Choose a color",
+                options: {
+                    'Red': 0,
+                    'Blue': 0,
+                    "Green": 0
+                } 
+            }
+        ],
     }
 
     openOption = (option) => this.setState({ optionOpen: true, option })
@@ -194,7 +233,7 @@ export default class Guest extends Component {
     }
 
     render() {
-        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data } = this.state;
+        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data, polls } = this.state;
         
         const { close, editGuest } = this.props
         return (
@@ -257,12 +296,76 @@ export default class Guest extends Component {
                             </View>
                             {(selectedIndex === index) && (<View style={style.todoDetail}>
                                 <View>
-                                    {Object.keys(item).map(key =>(
-                                    <View key={key} style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>{key}</Text>
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Name</Text>
 
-                                        <Text style={style.todoDetailValue}>{key === "invitedBy"? item[key].name : String(item[key])}</Text>
-                                    </View>))}
+                                        <Text style={style.todoDetailValue}>{item.name? item.name : "none"}</Text>
+                      
+                                    </View>
+
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Email</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.email? item.email : "none"}</Text>
+                                    </View>
+
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Phone Number</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.phoneNumber? item.phoneNumber : "none"}</Text>
+                                    </View>
+                                    
+
+                                    {(!!item.invited) && (<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Invited</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.invited? moment(item.invited).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                    </View> )}
+
+
+                                    {(!!item.invitedBy) && (<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Invited By</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.invitedBy? item.invitedBy.name : "none"}</Text>
+                                    </View>)}
+
+
+                                    {(!!item.accepted) && (<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Accepted</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.accepted? moment(item.accepted).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                    </View>)} 
+
+
+                                    {(!!item.checkedIn) && (<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Checked In</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.checkedIn? moment(item.checkedIn).format("ddd Do MMM YYYY hh:mm a") : "none"}</Text>
+                                    </View> )}
+
+
+                                    {(!!item.vip) && (<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>VIP Alert</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.vip.length > 0? 'true' : "false"}</Text>
+                                    </View>)}
+
+
+                                    {(!!item.table) &&<View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Table</Text>
+
+                                        <Text style={style.todoDetailValue}>{item.table? item.table.name : "none"}</Text>
+                                    </View>}
+
+                                    {polls.map(key => (
+                                        <View key={key.title} style={style.todoDetailIndex}>
+                                            <Text style={style.todoDetailKey}>{key.title}</Text>
+
+                                            <Text style={style.todoDetailValue}>{!!item[key.title]? item[key.title] : "none"}</Text>
+                                        </View>
+                                    ))}
                                 </View>
                                 <View style={styles.between}>
                                     <TouchableOpacity style={styles.icon} onPress={() =>  {}}>

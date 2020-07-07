@@ -7,7 +7,7 @@
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
 [!] addGuest via: link 
-[!] addGuest via: guest from previous events
+[] addGuest via: guest from previous events
 [] export data for expenditure
 [] export data for guest
 [!] search for guest by qrcode (contactSearch)
@@ -15,3 +15,5 @@
 [] navigate nexted options (contactFilter and contactSearch)
 [] do event day weather report and other evnts around
 [] Add ANY to communication page to list
+[] display vip alert in a proper way
+[] make sure contact conntains phoneNumber or email
