@@ -96,6 +96,12 @@ const styles = {
         // fontWeight: "bold",
         textAlign: 'center',
     },
+    optionSubTitle: {
+        color: '#707070',
+        fontSize: 18,
+        // fontWeight: "bold",
+        textAlign: 'center',
+    },
     details: {
         display: "flex",
         flexDirection: "column",

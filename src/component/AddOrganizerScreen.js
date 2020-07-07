@@ -63,42 +63,49 @@ export default class AddOrganizer extends Component {
                     type: "Boolean",
                     required: false,
                     value: "checkIn",
+                    role: 'Organizer will be able to check guests into the event'
                 }, 
                 communication: {
                     name: "Communication",
                     type: "Boolean",
                     required: false,
                     value: "communication",
+                    role: 'Organizer will be able to communicate with all invited guest.'
                 },
                 invite: {
                     name: "Invite",
                     type: "Number",
                     required: false,
                     value: "invite",
+                    role: 'Organizer will be able to invite the inputed number of guest'
                 },
                 organizer: {
                     name: "Oranigzer",
                     type: "Boolean",
                     required: false,
                     value: "organizer",
+                    role: 'Organizer will be able to change the access or permissions of other organizers'
                 },
                 table: {
                     name: "Table Chart",
                     type: "Boolean",
                     required: false,
                     value: "tableChart",
+                    role: 'Organizer will be able to arrange the table chart for guest at the event'
                 },
                task: {
                     name: "Task",
                     type: "Boolean",
                     required: false,
                     value: "task",
+                    role: 'Organizer will be able to create and assign tasks to organizers. While other organizers without task permission can only change the status of their assigned task'
                 },
                 settings:{
                     name: "Settings",
                     type: "Boolean",
                     required: false,
                     value: "settings",
+                    role: 'Organizer will be able to change date, location and other important property of the event'
                 },
             },
             data: {
@@ -137,16 +144,21 @@ export default class AddOrganizer extends Component {
 
     changeAccess = (key, value) => this.setState({ selected: key }, () => {
         if (key.type === "Boolean") {   
-            this.setData(!value)        
+            // this.setData(!value) 
+            this.openOption()       
         } else if (key.type === "Number") {
 
         }
     })
 
     setData = ( value) => {
-        const {selected} = this.state;
+        const {selected, optionOpen} = this.state;
 
-        this.setState({ data: { ...this.state.data, [selected.value]: value } }, () => console.log(this.state.data) )
+        this.setState({ data: { ...this.state.data, [selected.value]: value } }, () =>  {
+            if (optionOpen === true) {
+                this.closeOption()
+            }
+        })
     }
 
     addContact = contact => {
@@ -200,7 +212,7 @@ export default class AddOrganizer extends Component {
                 </View>
                 <Text style={style.to}>{data.name}</Text>
 
-                <Text style={styles.title}>Access</Text>
+                <Text style={styles.title}>Permission</Text>
                 <Segment loading={loading}>
                     <View style={styles.details}>
                         <ScrollView>
@@ -299,8 +311,12 @@ export default class AddOrganizer extends Component {
                         </View>
                     </View>
                 </Segment>
-                <Option title={''} openModal={optionOpen} closeModal={() => this.closeOption()}>
-
+                <Option title={selected.name} subtitle={selected.role} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                    {[true, false].map((option, index) => (
+                        <TouchableOpacity key={index} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
+                            <Text style={styles.optionText}>{!!option ? 'grant': 'deny'}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </Option>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >

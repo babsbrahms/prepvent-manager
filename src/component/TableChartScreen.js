@@ -81,12 +81,12 @@ export default class TableChart extends Component {
         sideBarOpen: false,
         refreshing: false,
         loading: false,
-        filterParams: 'invited',
-        searchParams: 'name',
+        filterParams: 'Invited',
+        searchParams: 'Name',
         optionOpen: false,
         option: '',
         selectedIndex: -1,
-        selectedTable: '',
+        selectedTable: null,
         tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
         newTableName: "",
         search: "",
@@ -299,7 +299,7 @@ export default class TableChart extends Component {
 
                 {(!!selectedTable) && (
                 <View style={styles.between}>
-                    <Text style={styles.title}>{selectedTable}</Text>
+                    <Text style={styles.title}>{selectedTable.name}</Text>
 
                     <TouchableOpacity style={styles.icon} onPress={() => this.openSideBar()}>
                         <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
@@ -394,8 +394,8 @@ export default class TableChart extends Component {
                                     {tables.map(table => 
                                         <TouchableOpacity
                                             key={table.uid}
-                                            style={[style.link, { borderBottomColor: selectedTable === table.name? '#2DF19C' : '#0E0C20'}]}
-                                            onPress={() => this.selectTable(table)}
+                                            style={[style.link, { borderBottomColor: selectedTable.name === table.name? '#2DF19C' : '#0E0C20'}]}
+                                            onPress={() => this.selectTable(table.name)}
                                         >
                                             <Text style={style.text}>{table.name}</Text>
                                         </TouchableOpacity>
@@ -473,7 +473,7 @@ export default class TableChart extends Component {
                             <View>
                                 
                                 {contactFilter.map((contact) => (
-                                <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectFilter(contact)}>
+                                <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectFilter(contact)}>
                                     <Text style={styles.optionText}>{contact.name}</Text>
                                 </TouchableOpacity>
                                 ))}
@@ -484,7 +484,7 @@ export default class TableChart extends Component {
                             <View>
                            
                                 {contactSearch.map((contact) => (
-                                <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectSearch(contact)}>
+                                <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: searchParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectSearch(contact)}>
                                     <Text style={styles.optionText}>{contact.name}</Text>
                                 </TouchableOpacity>
                                 ))}

@@ -3,3 +3,15 @@
 [] cancel and discard selected input
 [] convert phoneNumber to international format
 [] add ux for addGuest phoneNumber and csv
+[] do account page
+[] wallet page for spending on the event (users can add or transfer to and from the event wallet)
+[] do notification page
+[!] addGuest via: link 
+[!] addGuest via: guest from previous events
+[] export data for expenditure
+[] export data for guest
+[!] search for guest by qrcode (contactSearch)
+[] use option to select list for vip alert (explain what it does)
+[] navigate nexted options (contactFilter and contactSearch)
+[] do event day weather report and other evnts around
+[] Add ANY to communication page to list

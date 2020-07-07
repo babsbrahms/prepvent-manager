@@ -22,7 +22,7 @@ const style = StyleSheet.create({
 
     
 
-const Option = ({openModal, closeModal, children, title}) => {
+const Option = ({openModal, closeModal, children, title, subtitle}) => {
     const scrollViewRef = useRef(null);
 
     const [scrollOffset, setScrollOffset] = useState(null);
@@ -53,6 +53,7 @@ const Option = ({openModal, closeModal, children, title}) => {
             style={style.modal}>
                 <View style={style.scrollableModal}>
                     <Text style={styles.optionTitle}>{title}</Text>
+                    {!!subtitle && <Text style={styles.optionSubTitle}>{subtitle}</Text>}
                     <ScrollView
                         ref={scrollViewRef}
                         onScroll={handleOnScroll}

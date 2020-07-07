@@ -35,6 +35,7 @@ class Communication extends Component {
         optionOpen: false,
         optionType: "",
         showPoll: false,
+        filterParams: '',
         data: {
             to: [],
             subject: "",
@@ -99,7 +100,7 @@ class Communication extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { optionOpen, data, showPoll, optionType } = this.state;
+        const { optionOpen, data, showPoll, optionType, filterParams } = this.state;
         
         console.log(data.polls);
         return (
@@ -219,7 +220,7 @@ class Communication extends Component {
 
                 <Option title="Message To" openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optionType === 'contact') && contactFilter.map((contact) => (
-                    <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectFilter(contact)}>
+                    <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectFilter(contact)}>
                         <Text style={styles.optionText}>{contact.name}</Text>
                     </TouchableOpacity>
                     ))}

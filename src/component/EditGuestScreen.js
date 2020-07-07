@@ -131,9 +131,10 @@ export default class EditGuest extends Component {
                 },
                 vip: {
                     name: "VIP Alert",
-                    type: "Boolean",
+                    type: "Alert",
                     required: false,
                     value: "vip",
+                    role: "Alert selected orgnaizers when an important guest has checked in at the event location"
                 },
                 table: {
                     name: "Table",
@@ -163,6 +164,14 @@ export default class EditGuest extends Component {
                 }
             ],
             tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Children's Table", uid: "121ert"}],
+            organizers: [
+                { name: "olayinka ibrahim", email: "ib@gmail.com", uid: 1},
+                { name: "Teslim", email: "tessy@gmail.com", uid: 2},
+                { name: "Najeeb", email: "baz@gmail.com", uid: 3 },
+                { name: "Zharadeen", email: "zhara@gmail.com", uid: 4},
+                { name: "biola", email: "biol@gmail.com", uid: 5},
+                { name: "Teslim", email: "Tessy@gmail.com", uid: 6},
+            ],
             data: props.guest
         }
     }
@@ -199,6 +208,8 @@ export default class EditGuest extends Component {
             this.openOption(key.type)
         } else if (key.type === "Boolean") {
             this.setData(!value)  
+        } else {
+            this.openOption('Alert')
         }
     }) 
 
@@ -239,7 +250,7 @@ export default class EditGuest extends Component {
     }
 
     render() {
-        const { optionOpen, data, polls, schema, optionType, selected, loading, tables } = this.state;
+        const { optionOpen, data, polls, schema, optionType, selected, loading, tables, organizers } = this.state;
         
         const { close } = this.props
         return (
@@ -399,7 +410,7 @@ export default class EditGuest extends Component {
                         </View>
                     </View>
                 </Segment>
-                <Option title={selected.name} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                <Option title={selected.name} subtitle={selected.role || ''} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optionType === 'Poll') && Object.keys(selected.options).map((option) => ( 
                         <TouchableOpacity key={option} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
                             <Text style={styles.optionText}>{option}</Text>
@@ -408,7 +419,13 @@ export default class EditGuest extends Component {
 
 
                     {(optionType === 'Table') && tables.map((table) => ( 
-                        <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === table.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(table.name)}>
+                        <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === table.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(table)}>
+                            <Text style={styles.optionText}>{table.name}</Text>
+                        </TouchableOpacity>
+                    ))}
+
+                    {(optionType === 'Alert') && organizers.map((organizer) => ( 
+                        <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === organizer.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(organizer)}>
                             <Text style={styles.optionText}>{table.name}</Text>
                         </TouchableOpacity>
                     ))}

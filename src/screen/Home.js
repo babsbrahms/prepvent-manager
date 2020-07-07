@@ -39,8 +39,8 @@ class Home extends Component {
                         <Ionicons name={'ios-add'} color={'white'} size={40}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Subscription')}>
-                        <Ionicons name={'ios-wallet'} color={'white'} size={30}/>
+                    <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Account')}>
+                        <Ionicons name={'ios-person'} color={'white'} size={30}/>
                     </TouchableOpacity>
                 </View>
 

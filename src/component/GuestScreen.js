@@ -54,8 +54,8 @@ export default class Guest extends Component {
     state = { 
         refreshing: false,
         selectedIndex: -1,
-        filterParams: 'invited',
-        searchParams: 'name',
+        filterParams: 'Invited',
+        searchParams: 'Name',
         optionOpen: false,
         option: '',
         search: "",
@@ -291,7 +291,7 @@ export default class Guest extends Component {
                     {(option === 'filter') && (
                     <View>
                         {contactFilter.map((contact) => (
-                        <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectFilter(contact)}>
+                        <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectFilter(contact)}>
                             <Text style={styles.optionText}>{contact.name}</Text>
                         </TouchableOpacity>
                         ))}
@@ -301,7 +301,7 @@ export default class Guest extends Component {
                     {(option === 'search') && (
                     <View>
                         {contactSearch.map((contact) => (
-                        <TouchableOpacity key={contact.name} style={styles.optionBody} onPress={() => this.selectSearch(contact)}>
+                        <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: searchParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectSearch(contact)}>
                             <Text style={styles.optionText}>{contact.name}</Text>
                         </TouchableOpacity>
                         ))}
