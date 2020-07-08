@@ -7,7 +7,8 @@ import { addMessageReducer } from '../action/message';
 import Poll from '../component/Poll';
 import Option from '../component/Option';
 import styles from '../styles';
-import { contactFilter } from "../utils/filter";
+import { guestFilter } from "../utils/filter";
+import SideBar from "../component/SideBar";
 
 const style = StyleSheet.create({
     title: {
@@ -32,6 +33,7 @@ const style = StyleSheet.create({
 
 class Communication extends Component {
     state = {
+        sideBarOpen: false,
         optionOpen: false,
         optionType: "",
         showPoll: false,
@@ -46,6 +48,10 @@ class Communication extends Component {
             polls: []
         }
     }
+
+    openSideBar = () => this.setState({ sideBarOpen: true })
+
+    closeSideBar = () => this.setState({ sideBarOpen: false })
 
     openOption = (option) => this.setState({ optionOpen: true, optionType: option })
 
@@ -100,9 +106,8 @@ class Communication extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { optionOpen, data, showPoll, optionType, filterParams } = this.state;
+        const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen } = this.state;
         
-        console.log(data.polls);
         return (
             <View style={styles.container}>
                 <View style={styles.between}>
@@ -219,7 +224,7 @@ class Communication extends Component {
                 </ScrollView>
 
                 <Option title="Message To" openModal={optionOpen} closeModal={() => this.closeOption()}>
-                    {(optionType === 'contact') && contactFilter.map((contact) => (
+                    {(optionType === 'contact') && guestFilter.map((contact) => (
                     <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectFilter(contact)}>
                         <Text style={styles.optionText}>{contact.name}</Text>
                     </TouchableOpacity>
@@ -228,9 +233,11 @@ class Communication extends Component {
                     {(optionType === 'invite') && (<View>
                         <ActivityIndicator size="small" color={'#2DF19C'} />
                     </View>)}
-                    
-
                 </Option>
+
+                <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
+
+                </SideBar>
             </View>
         )
     }

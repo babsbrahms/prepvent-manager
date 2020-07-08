@@ -321,19 +321,21 @@ export default class AddGuest extends Component {
     onSubmit = () => {
         const { contactType } = this.state;
 
-        if (contactType === 'phone') {
-            // validate phone and email then submit
-            
-        } else if (contactType === 'csv') {
-            // use data schema to format contact
-
-        } else if (contactType === 'input') {
-            // valiadate data and submit data
-
-        } else if (contactType === 'previous') {
-            // validate phone and email then submit
-
-        }
+        this.setState({ loading: true }, () => {
+            if (contactType === 'phone') {
+                // validate phone and email then submit
+                
+            } else if (contactType === 'csv') {
+                // use data schema to format contact
+    
+            } else if (contactType === 'input') {
+                // valiadate data and submit data
+    
+            } else if (contactType === 'previous') {
+                // validate phone and email then submit
+    
+            }
+        })
     }
 
     render() {
@@ -350,7 +352,7 @@ export default class AddGuest extends Component {
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => onSubmit()}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.onSubmit()}>
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 </View>

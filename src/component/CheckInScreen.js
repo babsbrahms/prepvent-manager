@@ -79,7 +79,7 @@ export default class CheckIn extends Component {
             },
             accepted: 12343454555,
             checkedIn: 12343454555,
-            vip: [],
+            vip: {},
             table: {
                 uid: 1,
                 name: "Bride's Table"
@@ -284,9 +284,9 @@ export default class CheckIn extends Component {
 
 
                                 {(!!data.vip) && (<View style={style.todoDetailIndex}>
-                                    <Text style={style.todoDetailKey}>VIP Alert</Text>
+                                    <Text style={style.todoDetailKey}>VIP</Text>
 
-                                    <Text style={style.todoDetailValue}>{data.vip.length > 0? 'true' : "false"}</Text>
+                                    <Text style={style.todoDetailValue}>{data.vip.alert? 'true' : "false"}</Text>
                                 </View>)}
 
 

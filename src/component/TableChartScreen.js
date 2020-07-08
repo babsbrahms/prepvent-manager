@@ -136,7 +136,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -157,7 +157,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -178,7 +178,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -199,7 +199,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -220,7 +220,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -240,7 +240,7 @@ export default class TableChart extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -319,8 +319,6 @@ export default class TableChart extends Component {
         const { close, editGuest } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
             selectedTable, tables, newTableName, search, data, guests, loading, polls } = this.state;
-
-            console.log('table: ', selectedTable);
             
 
         return (
@@ -433,9 +431,9 @@ export default class TableChart extends Component {
 
 
                                         {(!!item.vip) && (<View style={style.todoDetailIndex}>
-                                            <Text style={style.todoDetailKey}>VIP Alert</Text>
+                                            <Text style={style.todoDetailKey}>VIP</Text>
 
-                                            <Text style={style.todoDetailValue}>{item.vip.length > 0? 'true' : "false"}</Text>
+                                            <Text style={style.todoDetailValue}>{!!item.vip.alert? 'true' : "false"}</Text>
                                         </View>)}
 
 

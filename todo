@@ -1,3 +1,4 @@
+[!] update; [] undone; [x] done; [-] remove or not sure
 [] allow multiple pictures in communication
 [] delete image
 [] cancel and discard selected input
@@ -15,5 +16,7 @@
 [] navigate nexted options (contactFilter and contactSearch)
 [] do event day weather report and other evnts around
 [] Add ANY to communication page to list
-[] display vip alert in a proper way
-[] make sure contact conntains phoneNumber or email
+[X] display vip alert in a proper way
+[] make sure selected contact contains phoneNumber or email
+[] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
+[] NAN error with string text input

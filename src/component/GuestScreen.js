@@ -74,7 +74,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -95,7 +95,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -116,7 +116,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -137,7 +137,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -158,7 +158,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -178,7 +178,7 @@ export default class Guest extends Component {
                 },
                 accepted: 12343454555,
                 checkedIn: 12343454555,
-                vip: [],
+                vip: {},
                 table: {
                     uid: 1,
                     name: "Bride's Table"
@@ -347,9 +347,9 @@ export default class Guest extends Component {
 
 
                                     {(!!item.vip) && (<View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>VIP Alert</Text>
+                                        <Text style={style.todoDetailKey}>VIP</Text>
 
-                                        <Text style={style.todoDetailValue}>{item.vip.length > 0? 'true' : "false"}</Text>
+                                        <Text style={style.todoDetailValue}>{item.vip.alert? 'true' : "false"}</Text>
                                     </View>)}
 
 
@@ -368,9 +368,9 @@ export default class Guest extends Component {
                                     ))}
                                 </View>
                                 <View style={styles.between}>
-                                    <TouchableOpacity style={styles.icon} onPress={() =>  {}}>
+                                    {/* <TouchableOpacity style={styles.icon} onPress={() =>  {}}>
                                         <Text style={[style.todoAction, { color: '#2DF19C' }]}>INVITE</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                     
                                     <TouchableOpacity style={styles.icon} onPress={() => editGuest(item)}>
                                         <Text style={[style.todoAction, { color: '#2DF19C' }]}>EDIT</Text>

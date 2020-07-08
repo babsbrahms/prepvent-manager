@@ -55,6 +55,11 @@ const style = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         color: "#0E0C20"
+    },
+    icon: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center"
     }
 
 });
@@ -63,12 +68,31 @@ const style = StyleSheet.create({
 class Dashboard extends Component {
     state = {
         event: {
-            budget: 0,
-            guest: 0,
-            organizers: 0,
-            expenditure: 0,
+            budget: 1200,
+            guest: 200,
+            organizers: 4,
+            expenditure: 540,
         },
-        polls: []
+        polls: [
+            {
+                title: "food",
+                question: "Choose a food",
+                options: {
+                    'Fried Rice': 0,
+                    'Amala': 0,
+                    "Beans": 0
+                }
+            },
+            {
+                title: "color",
+                question: "Choose a color",
+                options: {
+                    'Red': 0,
+                    'Blue': 0,
+                    "Green": 0
+                } 
+            }
+        ]
     }
 
     render() {
@@ -130,6 +154,23 @@ class Dashboard extends Component {
                         </TouchableOpacity>
 
                         {(polls.length > 0) && (<DisplayPoll polls={polls} />)}
+                    </View>
+
+                    <View style={style.row}>
+                        <TouchableOpacity style={style.stats} onPress={() => {}}>
+                            <View style={style.icon}>
+                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
+                            </View>
+                            <Text style={style.statsTitle}>Guests Record</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={style.stats} onPress={() => {}}>
+                            <View style={style.icon}>
+                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
+                            </View>
+                            
+                            <Text style={style.statsTitle}>Expenditure Record</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>

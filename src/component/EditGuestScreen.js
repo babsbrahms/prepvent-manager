@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, Switch } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Segment from '../component/Segment';
@@ -10,9 +10,9 @@ import Message from "./Message"
 
 const style = StyleSheet.create({
     title: {
-        color: '#FFFFFF',
+        color: "#0E0C20",
         fontWeight: "bold",
-        fontSize: 25
+        fontSize: 20
     },
     to: {
         color: '#FFFFFF',
@@ -130,11 +130,11 @@ export default class EditGuest extends Component {
                     value: "checkedIn",
                 },
                 vip: {
-                    name: "VIP Alert",
+                    name: "VIP",
                     type: "Alert",
                     required: false,
                     value: "vip",
-                    role: "Alert selected orgnaizers when an important guest has checked in at the event location"
+                    role: "Alert the orgnaizer that invited the guest and add note for the check in staff"
                 },
                 table: {
                     name: "Table",
@@ -209,7 +209,7 @@ export default class EditGuest extends Component {
         } else if (key.type === "Boolean") {
             this.setData(!value)  
         } else if (key.type === 'Alert') {
-           // this.openOption('Alert')
+            this.openOption('Alert')
         }
     }) 
 
@@ -363,10 +363,10 @@ export default class EditGuest extends Component {
 
 
                             <View style={style.todoDetailIndex}>
-                                <Text style={style.todoDetailKey}>VIP Alert</Text>
+                                <Text style={style.todoDetailKey}>VIP</Text>
 
                                 <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.vip, data.vip)}>
-                                    <Text style={style.todoDetailValue}>{data.vip.length > 0? 'true' : "false"}</Text>
+                                    <Text style={style.todoDetailValue}>{data.vip.name? 'true' : "false"}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -424,11 +424,29 @@ export default class EditGuest extends Component {
                         </TouchableOpacity>
                     ))}
 
-                    {/* {(optionType === 'Alert') && organizers.map((organizer) => ( 
-                        <TouchableOpacity key={table.uid} style={[styles.optionBody, { borderBottomColor: data[selected.value] === organizer.name? '#2DF19C': '#707070'} ]} onPress={() => this.setData(organizer)}>
-                            <Text style={styles.optionText}>{organizer.name}</Text>
-                        </TouchableOpacity>
-                    ))} */}
+                    {(optionType === 'Alert') && (
+                        <View>
+                            <View style={styles.between}>
+                                <Text style={style.title}>Alert</Text>
+                                <Switch value={data.vip.alert}  onValueChange={() => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, alert: !this.state.data.vip.alert }}})} trackColor={{ true: '#2DF19C', false: '#EC3636'}} thumbColor={'#E4E4E4'} />
+                            </View>
+
+                            <Text style={style.title}>Note</Text>
+                            <TextInput 
+                                ref={(x) => this.input = x}
+                                style={styles.detailsInput}
+                                placeholder={`Enter note for checkin staffs`} 
+                                placeholderTextColor="#0E0C20"
+                                value={data.vip.note}
+                                onChange={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}
+                                onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}
+                            />
+
+                            <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
+                                <Text style={style.btnText}>SAVE</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
                 </Option>
 
             </View>
