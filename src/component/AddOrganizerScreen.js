@@ -155,6 +155,8 @@ export default class AddOrganizer extends Component {
         const {selected, optionOpen} = this.state;
 
         this.setState({ data: { ...this.state.data, [selected.value]: value } }, () =>  {
+            console.log(this.state.data);
+            
             if (optionOpen === true) {
                 this.closeOption()
             }
@@ -303,8 +305,8 @@ export default class AddOrganizer extends Component {
                                         value={String(data[selected.value])}
                                         keyboardType={"number-pad"}
                                         autoFocus
-                                        onChange={(e) => this.setData(Number(e.nativeEvent.text))}
-                                        onSubmitEditing={(e) => this.setData(Number(e.nativeEvent.text))}
+                                        onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                        onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
                                     />
                                 </View>
                             )}

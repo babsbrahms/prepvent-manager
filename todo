@@ -18,6 +18,6 @@
 [x] Add ANY to communication page to list
 [X] display vip alert in a proper way
 [] make sure selected contact contains phoneNumber or email
-[] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
-[] NAN error with Number text input
+[X] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
+[x] NAN error with Number text input
 [] padding and width problem with segment

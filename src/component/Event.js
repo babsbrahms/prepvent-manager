@@ -233,8 +233,8 @@ export default class Event extends Component {
                         placeholderTextColor="#E4E4E4" 
                         keyboardType={"number-pad"}
                         value={String(data.budget)}
-                        onChange={(e) => this.setState({ data: { ...this.state.data, budget: Number(e.nativeEvent.text) } })}
-                        onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, budget: Number(e.nativeEvent.text) } })}
+                        onChange={(e) => this.setState({ data: { ...this.state.data, budget: parseFloat(e.nativeEvent.text || 0) } })}
+                        onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, budget: parseFloat(e.nativeEvent.text || 0) } })}
                     />
                 </View>
 

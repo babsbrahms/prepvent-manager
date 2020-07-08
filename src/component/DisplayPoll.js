@@ -48,44 +48,16 @@ export default class DisplayPoll extends Component {
         }
     }
 
-    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: []}, errors: {} })
+    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: {}}, errors: {} })
 
-    validate = (poll, polls, pollsIndex) => {
-        let errors = {};
-
-        if (!poll.title) {
-            errors.title = "Title is required"
-        }else {
-
-            polls.forEach((p, i) => {
-                if ((poll.title === p.title) && (pollsIndex !== i)) {
-                    errors.title = `A poll has the title "${poll.title}". Use a unique title`
-                }
-            })
-        };
-
-        if (!poll.question) errors.question = "Question is required";
-
-        if (poll.options.length < 2) {
-            errors.options = "Minimum of two options are required";
+    selectPoll = (index) => {
+        const { polls, currentIndex } = this.state;
+        
+        if (currentIndex === index) {
+            this.cancelPoll()
         } else {
-            //MAKE SURE OPTIONS ARE UNIQUE
-            poll.options.forEach((element, index) => {
-                poll.options.forEach((e, i) => {
-                    if ((element === e) && (index !== i) ) {
-                        errors.options = "Options must be unique"
-                    }
-                });
-            });
-        }
-        
-        return errors;
-    }
-
-    editPoll = (index) => {
-        const { polls } = this.state;
-        
-        this.setState({ currentIndex: index, current: polls[index] })
+            this.setState({ currentIndex: index, current: polls[index] })
+        }  
     }
 
     render() {
@@ -97,7 +69,7 @@ export default class DisplayPoll extends Component {
             <ScrollView style={style.polls}>
                 {polls.map((poll, index) => (
                     <View key={index.toString()} style={[styles.row, { alignItems: "center", padding: 3}]}>
-                        <TouchableOpacity onPress={() => this.editPoll(index)}>
+                        <TouchableOpacity onPress={() => this.selectPoll(index)}>
                             <Text style={styles.title}>{poll.title}</Text>
                         </TouchableOpacity>
                     </View>

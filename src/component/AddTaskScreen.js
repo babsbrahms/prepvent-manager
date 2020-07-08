@@ -246,9 +246,9 @@ export default class AddTask extends Component {
                                     placeholderTextColor="#E4E4E4"
                                     value={String(data[selected.value])}
                                     autoFocus
-                                    keyboardType={"phone-pad"}
-                                    onChange={(e) => this.setData(Number(e.nativeEvent.text))}
-                                    onSubmitEditing={(e) => this.setData(Number(e.nativeEvent.text))}
+                                    keyboardType={"number-pad"}
+                                    onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                    onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
                                 />
                             </View>
                             )}
