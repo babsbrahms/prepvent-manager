@@ -159,14 +159,14 @@ class Dashboard extends Component {
                     <View style={style.row}>
                         <TouchableOpacity style={style.stats} onPress={() => {}}>
                             <View style={style.icon}>
-                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
+                                <Ionicons name={'ios-cloud-download'} color={'#000000'} size={50}/>
                             </View>
                             <Text style={style.statsTitle}>Guests Record</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={style.stats} onPress={() => {}}>
                             <View style={style.icon}>
-                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
+                                <Ionicons name={'ios-cloud-download'} color={'#000000'} size={50}/>
                             </View>
                             
                             <Text style={style.statsTitle}>Expenditure Record</Text>

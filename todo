@@ -8,7 +8,7 @@
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
 [!] addGuest via: link 
-[] addGuest via: guest from previous events
+[!] addGuest via: guest from previous events
 [] export data for expenditure
 [] export data for guest
 [!] search for guest by qrcode (contactSearch)

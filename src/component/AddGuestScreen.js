@@ -466,12 +466,12 @@ export default class AddGuest extends Component {
                             </TouchableOpacity>
 
 
-                            <TouchableOpacity 
+                            {/* <TouchableOpacity 
                                 style={[styles.optionBody, { borderBottomColor: active === 'previous'? '#2DF19C' : '#E4E4E4'}]}
                                 onPress={() => this.resetContact('previous')}
                             >
                                 <Text style={styles.optionText}>Previous Event</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     )}
                     

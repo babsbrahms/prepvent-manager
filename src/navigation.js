@@ -45,7 +45,7 @@ const Main = createBottomTabNavigator({
     Communication: {
         screen: Communication,
         navigationOptions: {
-            tabBarIcon: ({ focused }) => <Ionicons name="ios-mail" color={focused? '#2DF19C': '#FFFFFF'} size={30} />
+            tabBarIcon: ({ focused }) => <Ionicons name="ios-megaphone" color={focused? '#2DF19C': '#FFFFFF'} size={30} />
         }
     }
 }, 

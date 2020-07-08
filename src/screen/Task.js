@@ -166,6 +166,10 @@ class Task extends Component {
                                             <Ionicons name={'ios-mail'} color={'#707070'} size={30}/>
                                         </TouchableOpacity>)}
 
+                                        {(!!item.assign.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.text(item.assign.phoneNumber)}>
+                                            <Ionicons name={'ios-chatboxes'} color={'#707070'} size={30}/>
+                                        </TouchableOpacity>)}
+
                                         {(!!item.assign.phoneNumber) && (<TouchableOpacity style={styles.icon} onPress={() => Communications.phonecall(item.assign.phoneNumber, false)}>
                                             <Ionicons name={'ios-call'} color={'#707070'} size={30}/>
                                         </TouchableOpacity>)}
