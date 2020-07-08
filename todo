@@ -7,17 +7,20 @@
 [] do account page
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
-[!] addGuest via: link 
+[] addGuest via: link 
+[] Invitation link tracking
 [!] addGuest via: guest from previous events
 [] export data for expenditure
 [] export data for guest
 [!] search for guest by qrcode (contactSearch)
 [x] use option to select list for vip alert (explain what it does)
 [] navigate nexted options (contactFilter and contactSearch)
-[] do event day weather report and other evnts around
+[x] do event day weather report and other evnts around
 [x] Add ANY to communication page to list
 [X] display vip alert in a proper way
 [] make sure selected contact contains phoneNumber or email
 [X] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
 [x] NAN error with Number text input
 [] padding and width problem with segment
+[] Send previous message (Do not include invitation)
+[] Redesign Invitation and message

@@ -18,7 +18,7 @@ import thunk from "redux-thunk";
 import Manager from './src/navigation';
 import rootReducer from "./src/rootReducer";
 import Message from './src/component/Message';
-import { clearMessageReducer } from "./src/action/message"
+import MessageWorker from "./src/component/MessageWorker"
 
 export const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
@@ -31,6 +31,7 @@ const App = () => {
         <StatusBar barStyle="light-content" backgroundColor={"#0E0C20"} />
         <Manager />
         <Message/>
+        <MessageWorker />
       </View>
     </Provider>
   );

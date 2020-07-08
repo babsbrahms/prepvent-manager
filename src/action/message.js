@@ -1,9 +1,10 @@
 import { ADD_MESSAGE, CLEAR_MESSAGE } from '../types';
 
-export const addMessageReducer = (msg) => dispatch => {
+export const addMessageReducer = (message, permanent) => dispatch => {
     return dispatch({
         type: ADD_MESSAGE,
-        payload: msg
+        message,
+        permanent
     })
 }
 

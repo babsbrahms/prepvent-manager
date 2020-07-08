@@ -8,13 +8,21 @@ import { Budget } from '../component/Budget';
 import styles from '../styles';
 import DisplayPoll from "../component/DisplayPoll"
 
+//ios-rainy; ios-thunderstorm; ios-sunny; ios-snow; ios-partly-sunny; ios-moon; ios-cloudy; ios-cloudy-night;
+
 const style = StyleSheet.create({
     top: {
-        height: 250,
+        minHeight: 200,
         width: '100%',
         backgroundColor: "#FFFFFF",
         borderBottomRightRadius: 50,
         borderBottomLeftRadius: 50,
+    },
+    name: {
+        fontSize: 20,
+        color: '#707070',
+        fontWeight: "bold",
+        textAlign: 'center'
     },
     container: {
         backgroundColor: '#0E0C20'
@@ -60,6 +68,17 @@ const style = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center"
+    },
+    otherContainer: {
+        padding: 3,
+        backgroundColor: '#E4E4E4',
+        width: '80%',
+        margin: 2
+    },
+    otherName: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#0E0C20"
     }
 
 });
@@ -92,12 +111,24 @@ class Dashboard extends Component {
                     "Green": 0
                 } 
             }
+        ],
+        otherEvents: [
+            {
+                name: 'Durban',
+                time: '12:30 pm - 3:00 pm',
+                location: 'Taiwo Road, Ilorin, Kwara'
+            },
+            {
+                name: 'Eid Adha',
+                time: '8:00 am - 11:00 ap',
+                location: 'Taiwo Road, Ilorin, Kwara'
+            }
         ]
     }
 
     render() {
         const { navigation } = this.props;
-        const { polls, event } = this.state;
+        const { polls, event, otherEvents } = this.state;
 
         return (
             <ScrollView style={style.container}>
@@ -113,6 +144,28 @@ class Dashboard extends Component {
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Wallet')}>
                             <Ionicons name={'ios-wallet'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
+                    </View>
+                    <View>
+                        <Text style={style.name} numberOfLines={1}>Event Name</Text>
+                        <View style={[styles.around, { alignItems: 'center'}]}>
+                            <Ionicons name={'ios-cloudy'} color={'#707070'} size={50}/>
+                            <View>
+                                <Text style={style.date}>Kwara, Ilorin</Text>
+                                <Text style={style.date}>Cloudy</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={style.name} numberOfLines={1}>Other Events In Kwara State</Text>
+                        <ScrollView horizontal>
+                            {otherEvents.map(other => (
+                                <View style={style.otherContainer}>
+                                    <Text style={style.otherName}>{other.name}</Text>
+                                    <Text style={style.date}>{other.time}</Text>
+                                    <Text style={style.date}>{other.location}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
                     </View>
                 </View>
                 <View style={styles.around}>
