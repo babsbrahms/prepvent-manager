@@ -11,7 +11,7 @@ import Message from "./Message"
 
 const style = StyleSheet.create({
     text: {
-        color: '#707070',
+        color: '#E4E4E4',
         fontSize: 24,  
     },
     link: {
@@ -191,7 +191,7 @@ export default class CheckIn extends Component {
                 {(active === 'phone') && (<TextInput 
                     style={styles.textInput} 
                     placeholder={"Enter guest phone number"} 
-                    placeholderTextColor="#0E0C20" 
+                    placeholderTextColor="#E4E4E4" 
                     value={inputValue}
                     editable={processing}
                     keyboardType={"phone-pad"}
@@ -202,7 +202,7 @@ export default class CheckIn extends Component {
                 {(active === 'email') && (<TextInput 
                     style={styles.textInput} 
                     placeholder={"Enter guest email"} 
-                    placeholderTextColor="#0E0C20"
+                    placeholderTextColor="#E4E4E4"
                     value={inputValue}
                     editable={processing}
                     keyboardType={"email-address"}

@@ -399,7 +399,7 @@ export default class EditGuest extends Component {
                                     ref={(x) => this.input = x}
                                     style={styles.detailsInput}
                                     placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
-                                    placeholderTextColor="#0E0C20"
+                                    placeholderTextColor="#E4E4E4"
                                     value={String(data[selected.value])}
                                     autoFocus
                                     keyboardType={selected.type === "String"? "default" : "phone-pad"}
@@ -436,7 +436,7 @@ export default class EditGuest extends Component {
                                 ref={(x) => this.input = x}
                                 style={styles.detailsInput}
                                 placeholder={`Enter note for checkin staffs`} 
-                                placeholderTextColor="#0E0C20"
+                                placeholderTextColor="#E4E4E4"
                                 value={data.vip.note}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}

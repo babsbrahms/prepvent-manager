@@ -142,7 +142,7 @@ class Communication extends Component {
                         <TextInput 
                             style={styles.textInput} 
                             placeholder={"Add message subject"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             value={data.subject}
                             onChange={(e) => this.setState({ data: { ...this.state.data, subject: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, subject: e.nativeEvent.text } })}
@@ -157,7 +157,7 @@ class Communication extends Component {
                                 key={"message"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Add message body"} 
-                                placeholderTextColor="#0E0C20" 
+                                placeholderTextColor="#E4E4E4" 
                                 multiline
                                 value={data.message}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, message: e.nativeEvent.text } })}
@@ -167,7 +167,7 @@ class Communication extends Component {
                                 key={"host"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Host Name"} 
-                                placeholderTextColor="#0E0C20" 
+                                placeholderTextColor="#E4E4E4" 
                                 value={data.host}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
@@ -176,7 +176,7 @@ class Communication extends Component {
                                 key={"contact"}
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Organizer's contact"} 
-                                placeholderTextColor="#0E0C20" 
+                                placeholderTextColor="#E4E4E4" 
                                 value={data.contact}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}

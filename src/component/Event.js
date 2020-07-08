@@ -154,7 +154,7 @@ export default class Event extends Component {
                     <TextInput 
                         style={styles.textInput} 
                         placeholder={"Add event name"} 
-                        placeholderTextColor="#0E0C20" 
+                        placeholderTextColor="#E4E4E4" 
                         value={data.name}
                         onChange={(e) => this.setState({ data: { ...this.state.data, name: e.nativeEvent.text } })}
                         onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, name: e.nativeEvent.text } })}
@@ -194,7 +194,7 @@ export default class Event extends Component {
                     <TextInput 
                         style={styles.textInput} 
                         placeholder={"Add event location"} 
-                        placeholderTextColor="#0E0C20" 
+                        placeholderTextColor="#E4E4E4" 
                         value={data.location}
                         onChange={(e) => this.setState({ data: { ...this.state.data, location: e.nativeEvent.text } })}
                         onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, location: e.nativeEvent.text } })}
@@ -207,7 +207,7 @@ export default class Event extends Component {
                         <TextInput 
                             style={styles.textInput} 
                             placeholder={"Add event location state"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             value={data.state}
                             onChange={(e) => this.setState({ data: { ...this.state.data, state: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, state: e.nativeEvent.text } })}
@@ -217,7 +217,7 @@ export default class Event extends Component {
                         <TextInput 
                             style={styles.textInput} 
                             placeholder={"Add event location country"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             value={data.country}
                             onChange={(e) => this.setState({ data: { ...this.state.data, country: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, country: e.nativeEvent.text } })}
@@ -230,7 +230,7 @@ export default class Event extends Component {
                     <TextInput 
                         style={styles.textInput} 
                         placeholder={"Enter your budget for this event"} 
-                        placeholderTextColor="#0E0C20" 
+                        placeholderTextColor="#E4E4E4" 
                         keyboardType={"number-pad"}
                         value={String(data.budget)}
                         onChange={(e) => this.setState({ data: { ...this.state.data, budget: Number(e.nativeEvent.text) } })}
@@ -268,7 +268,7 @@ export default class Event extends Component {
                         <TextInput 
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Add inviation letter"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             multiline
                             value={data.invitation}
                             onChange={(e) => this.setState({ data: { ...this.state.data, invitation: e.nativeEvent.text } })}
@@ -277,7 +277,7 @@ export default class Event extends Component {
                         <TextInput 
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Host Name"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             value={data.host}
                             onChange={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
@@ -285,7 +285,7 @@ export default class Event extends Component {
                         <TextInput 
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Organizer's contact"} 
-                            placeholderTextColor="#0E0C20" 
+                            placeholderTextColor="#E4E4E4" 
                             value={data.contact}
                             onChange={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}

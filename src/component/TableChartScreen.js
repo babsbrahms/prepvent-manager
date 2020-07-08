@@ -477,7 +477,7 @@ export default class TableChart extends Component {
                                 <TextInput 
                                     style={styles.textInput} 
                                     placeholder={`Add table name`} 
-                                    placeholderTextColor="#0E0C20"
+                                    placeholderTextColor="#E4E4E4"
                                     value={newTableName}
                                     onChange={(e) => this.setState({ newTableName: e.nativeEvent.text })}
                                     onSubmitEditing={(e) => this.addTable()}

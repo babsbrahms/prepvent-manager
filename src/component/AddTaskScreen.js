@@ -169,7 +169,7 @@ export default class AddTask extends Component {
                 <TextInput 
                     style={styles.textInput} 
                     placeholder={"Add task"} 
-                    placeholderTextColor="#0E0C20" 
+                    placeholderTextColor="#E4E4E4" 
                     value={data.task}
                     editable={!loading}
                     onChange={(e) => this.setState({ data: { ...this.state.data, task: e.nativeEvent.text } })}
@@ -243,7 +243,7 @@ export default class AddTask extends Component {
                                     ref={(x) => this.input = x}
                                     style={styles.detailsInput}
                                     placeholder={`Enter ${selected.name}`} 
-                                    placeholderTextColor="#0E0C20"
+                                    placeholderTextColor="#E4E4E4"
                                     value={String(data[selected.value])}
                                     autoFocus
                                     keyboardType={"phone-pad"}

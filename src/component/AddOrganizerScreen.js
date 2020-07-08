@@ -299,7 +299,7 @@ export default class AddOrganizer extends Component {
                                     <TextInput 
                                         style={styles.detailsInput} 
                                         placeholder={`Enter ${selected.name}`} 
-                                        placeholderTextColor="#0E0C20"
+                                        placeholderTextColor="#E4E4E4"
                                         value={String(data[selected.value])}
                                         keyboardType={"number-pad"}
                                         autoFocus

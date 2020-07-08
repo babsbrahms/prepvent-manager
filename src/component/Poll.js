@@ -141,7 +141,7 @@ export default class Poll extends Component {
                 <TextInput 
                     style={styles.textInput} 
                     placeholder={"Add poll title. i.e. Food"} 
-                    placeholderTextColor="#0E0C20"
+                    placeholderTextColor="#E4E4E4"
                     value={current.title}
                     onChange={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
                     onSubmitEditing={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
@@ -153,7 +153,7 @@ export default class Poll extends Component {
                 <TextInput 
                     style={styles.textInput} 
                     placeholder={"Add poll question"} 
-                    placeholderTextColor="#0E0C20" 
+                    placeholderTextColor="#E4E4E4" 
                     value={current.question}
                     onChange={(e) => this.setState({ current: {...this.state.current, question: e.nativeEvent.text } })}
                     onSubmitEditing={(e) => this.setState({ current: {...this.state.current, question: e.nativeEvent.text } })}
@@ -178,7 +178,7 @@ export default class Poll extends Component {
                     <TextInput 
                         style={styles.detailsInput} 
                         placeholder={"Add poll option"} 
-                        placeholderTextColor="#0E0C20"
+                        placeholderTextColor="#E4E4E4"
                         value={inputValue}
                         keyboardType={"default"}
                         onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}

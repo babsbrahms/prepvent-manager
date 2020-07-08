@@ -423,7 +423,7 @@ export default class AddGuest extends Component {
                                     ref={(x) => this.input = x}
                                     style={styles.detailsInput}
                                     placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
-                                    placeholderTextColor="#0E0C20"
+                                    placeholderTextColor="#E4E4E4"
                                     value={String(data[selected.value])}
                                     autoFocus
                                     keyboardType={selected.type === "String"? "default" : "phone-pad"}
