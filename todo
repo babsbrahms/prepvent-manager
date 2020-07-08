@@ -3,7 +3,7 @@
 [] delete image
 [] cancel and discard selected input
 [] convert phoneNumber to international format
-[] add ux for addGuest phoneNumber and csv
+[X] add ux for addGuest phoneNumber and csv
 [] do account page
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
@@ -12,11 +12,12 @@
 [] export data for expenditure
 [] export data for guest
 [!] search for guest by qrcode (contactSearch)
-[] use option to select list for vip alert (explain what it does)
+[x] use option to select list for vip alert (explain what it does)
 [] navigate nexted options (contactFilter and contactSearch)
 [] do event day weather report and other evnts around
-[] Add ANY to communication page to list
+[x] Add ANY to communication page to list
 [X] display vip alert in a proper way
 [] make sure selected contact contains phoneNumber or email
 [] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
-[] NAN error with string text input
+[] NAN error with Number text input
+[] padding and width problem with segment

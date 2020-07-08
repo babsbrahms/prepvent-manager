@@ -158,7 +158,7 @@ class Task extends Component {
                                 <Text style={style.todo}>{item.task}</Text>                       
                                 <View style={styles.between}>
                                     <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
-                                        <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#E4E4E4'} size={30}/>
+                                        <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
                                     </TouchableOpacity>
 
                                     <View style={[styles.row, { alignItems: "center"}]}>
