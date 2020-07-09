@@ -182,11 +182,13 @@ export default class AddGuest extends Component {
         if (active === 'phone') {
             this.openSideBar("phone");
         } else if (active === 'csv') {
-            this.csvPermission()
+            this.csvPermission();
         } else if (active === 'input') {
             this.setState({ contactType: 'input', contactCount: 1 })
         } else if (active === 'previous') {
             this.openSideBar("previous");
+        } else if (active === 'link') {
+            this.openSideBar("link");
         }
     })
 
@@ -198,6 +200,12 @@ export default class AddGuest extends Component {
                  this.closeSideBar();
             })
         }
+    }
+
+    addLink = (link, count) => {
+        this.setState({ contactType: "link", contactCount: count }, () =>{
+            this.closeSideBar();
+       })
     }
 
     csvPermission = () => {
@@ -288,12 +296,12 @@ export default class AddGuest extends Component {
                 this.setState({ contacts: result, contactType: "csv", options: keys, loading: false, contactCount: result.length })
 
             } else {
-                addMessage('Warning', 'The csv file is empty')
+                addMessage('Warning. The csv file is empty')
             }
             
         })
         .catch(err => {
-            addMessage('Error', 'Error converting csv file', false, false)
+            addMessage('Error converting csv file')
         })
     }
   
@@ -333,7 +341,8 @@ export default class AddGuest extends Component {
     
             } else if (contactType === 'previous') {
                 // validate phone and email then submit
-    
+            } else if (contactType === 'link') {
+
             }
         })
     }
@@ -359,7 +368,7 @@ export default class AddGuest extends Component {
 
                 <Text style={styles.Header}>ADD GUEST</Text>
                 <View style={[styles.between, { alignItems: 'center'}]}>
-                    <Text style={styles.title}>Organizer</Text>
+                    <Text style={styles.title}>Guest</Text>
 
                     <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openOption('Add Guest Via')}>
                         <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>

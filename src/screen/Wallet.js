@@ -40,10 +40,36 @@ class Subscription extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.Header}>WALLET</Text>
+                <Text style={styles.Header}>SUBSCRIPTION</Text>
 
                 <ScrollView>
-                    <Text style={styles.title}>Extra Credit</Text>
+                    <Text style={styles.title}>Basic</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
+                    <Text style={styles.title}>Gold</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
+                    <Text style={styles.title}>Platinum</Text>
                     <Segment>
                         <View style={styles.details}>
                             <View>

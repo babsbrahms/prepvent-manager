@@ -12,16 +12,16 @@ import DisplayPoll from "../component/DisplayPoll"
 
 const style = StyleSheet.create({
     top: {
-        minHeight: 200,
+        minHeight: 100,
         width: '100%',
         backgroundColor: "#FFFFFF",
-        borderBottomRightRadius: 50,
-        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 40,
+        borderBottomLeftRadius: 40,
     },
     name: {
         fontSize: 20,
         color: '#707070',
-        fontWeight: "bold",
+        fontWeight: '300',
         textAlign: 'center'
     },
     container: {
@@ -70,10 +70,15 @@ const style = StyleSheet.create({
         justifyContent: "center"
     },
     otherContainer: {
-        padding: 3,
+        padding: 5,
         backgroundColor: '#E4E4E4',
-        width: '80%',
-        margin: 2
+        width: '65%',
+        margin: 3,
+        marginTop: 5,
+        marginBottom: 32,
+        borderRadius: 20,
+        flex: 1
+
     },
     otherName: {
         fontSize: 20,
@@ -148,7 +153,7 @@ class Dashboard extends Component {
                     <View>
                         <Text style={style.name} numberOfLines={1}>Event Name</Text>
                         <View style={[styles.around, { alignItems: 'center'}]}>
-                            <Ionicons name={'ios-cloudy'} color={'#707070'} size={50}/>
+                            <Ionicons name={'ios-cloudy'} color={'#0E0C20'} size={60}/>
                             <View>
                                 <Text style={style.date}>Kwara, Ilorin</Text>
                                 <Text style={style.date}>Cloudy</Text>
@@ -158,12 +163,12 @@ class Dashboard extends Component {
                     <View>
                         <Text style={style.name} numberOfLines={1}>Other Events In Kwara State</Text>
                         <ScrollView horizontal>
-                            {otherEvents.map(other => (
-                                <View style={style.otherContainer}>
+                            {otherEvents.map((other, i) => (
+                                <TouchableOpacity key={i} style={style.otherContainer}>
                                     <Text style={style.otherName}>{other.name}</Text>
                                     <Text style={style.date}>{other.time}</Text>
                                     <Text style={style.date}>{other.location}</Text>
-                                </View>
+                                </TouchableOpacity>
                             ))}
                         </ScrollView>
                     </View>
@@ -212,14 +217,14 @@ class Dashboard extends Component {
                     <View style={style.row}>
                         <TouchableOpacity style={style.stats} onPress={() => {}}>
                             <View style={style.icon}>
-                                <Ionicons name={'ios-cloud-download'} color={'#000000'} size={50}/>
+                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
                             </View>
                             <Text style={style.statsTitle}>Guests Record</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={style.stats} onPress={() => {}}>
                             <View style={style.icon}>
-                                <Ionicons name={'ios-cloud-download'} color={'#000000'} size={50}/>
+                                <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
                             </View>
                             
                             <Text style={style.statsTitle}>Expenditure Record</Text>

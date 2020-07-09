@@ -68,7 +68,7 @@ export default class DisplayPoll extends Component {
 
             <ScrollView style={style.polls}>
                 {polls.map((poll, index) => (
-                    <View key={index.toString()} style={[styles.row, { alignItems: "center", padding: 3, width: '100%'}]}>
+                    <View key={index.toString()} style={[styles.row, { alignItems: "center", padding: 3 }]}>
                         <TouchableOpacity onPress={() => this.selectPoll(index)}>
                             <Text style={styles.title}>{poll.title}</Text>
                         </TouchableOpacity>

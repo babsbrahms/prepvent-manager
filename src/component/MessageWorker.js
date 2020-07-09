@@ -3,23 +3,25 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { clearMessageReducer } from '../action/message';
 
-const MessageWorker = ({ permanent, clearMessage }) => {
+const MessageWorker = ({ permanent, clearMessage, message }) => {
     let timer = useRef().current;
 
     useEffect(() => {
-        if (!permanent) {
+        if (!permanent && !!message) {
             // clear prevoius timer
             clearTimer();
             // add new timer
             addTimer()
+            console.log('called timer');
+            
         }
-    },[permanent])
+    },[message])
 
     const addTimer = () => {
         
         timer = setTimeout(() => {
             clearMessage()
-        }, 6000)
+        }, 5000)
     }
 
     const clearTimer = () => {
@@ -32,7 +34,8 @@ const MessageWorker = ({ permanent, clearMessage }) => {
 }
 
 const mapStateToprops = (state) => ({
-    permanent: state.messageReducer.permanent
+    permanent: state.messageReducer.permanent,
+    message: state.messageReducer.message
 })
 
 
