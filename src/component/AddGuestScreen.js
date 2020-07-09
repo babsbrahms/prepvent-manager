@@ -11,6 +11,9 @@ import Option from './Option'
 import SideBar from "./SideBar";
 import AddContact from "./AddContact";
 import Message from "./Message";
+import ContactForm from './ContactForm';
+import CsvSchema from './CsvSchema';
+import RegistrationLink from './RegistrationLink';
 
 
 const style = StyleSheet.create({
@@ -22,7 +25,7 @@ const style = StyleSheet.create({
     to: {
         color: '#FFFFFF',
         fontSize: 24,
-        marginBottom: 20
+        marginBottom: 9
     },
     link: {
         color: '#707070',
@@ -87,6 +90,12 @@ const style = StyleSheet.create({
 });
 
 
+let standardSchema = {
+    name: "name",
+    email: "email",
+    phoneNumber: "phoneNumber"
+}
+
 export default class AddGuest extends Component {
     constructor(props) {
         super(props);
@@ -99,46 +108,6 @@ export default class AddGuest extends Component {
             sideBarOpen: false,
             sideBarType: '',
             contactCount: 0,
-            inputForm: [
-                {
-                    name: "Name",
-                    type: "String",
-                    required: false,
-                    value: "name",
-                },
-                {
-                    name: "Email",
-                    type: "String",
-                    required: false,
-                    value: "email",
-                },
-                {
-                    name: "Phone Number",
-                    type: "Number",
-                    required: false,
-                    value: "phoneNumber",
-                },
-            ],
-            csvForm: [
-                {
-                    name: "Name",
-                    type: "Option",
-                    required: false,
-                    value: "name",
-                },
-                {
-                    name: "Email",
-                    type: "Option",
-                    required: false,
-                    value: "email",
-                },
-                {
-                    name: "Phone Number",
-                    type: "Option",
-                    required: false,
-                    value: "phoneNumber",
-                },
-            ],
             options: [],
             data: {
                 name: "",
@@ -147,7 +116,8 @@ export default class AddGuest extends Component {
             },
             selected: {},
             contacts: [],
-            contactType: ''
+            contactType: '',
+            contactIndex: -1
         }
 
         this.input = React.createRef()
@@ -162,8 +132,35 @@ export default class AddGuest extends Component {
 
     closeOption = () => this.setState({ optionOpen: false, optiontype: '' })
 
-    selectMethod = (method) => this.setState({ active: method })
-
+    fetchLinks = () => {
+        this.setState({
+            contacts: [ {
+                uid: '1121',
+                name: 'Friends link',
+                date: 1123232323,
+                creatorName: 'Olayinka',
+                creatorId: '12121',
+                capacity: 0,
+                registrations: 0,
+                active: true,
+                link: 'https:addsdsadsf'
+            }, 
+            {
+                uid: '11wqe',
+                name: 'Office link',
+                date: 1123232323,
+                creatorName: 'Olayinka',
+                creatorId: '12121',
+                capacity: 0,
+                registrations: 0,
+                active: true,
+                link: 'https:addsdsadsf'
+            }],
+            contactType: 'link'
+        }, () => {
+            this.openSideBar("link");
+        })
+    }
 
     resetContact = (active) => this.setState({ 
         active, 
@@ -171,24 +168,31 @@ export default class AddGuest extends Component {
         contacts: [], 
         contactCount: 0, 
         contactType: "",
+        schema: {
+            name: "",
+            email: "",
+            phoneNumber: "",
+        },
         data: {
             name: "",
             email: "",
             phoneNumber: "",
-        }, 
+        },
+        schema: {}, 
         optionOpen: false, 
-        optiontype: '' 
+        optiontype: '',
+        contactIndex: -1
     }, () => {
         if (active === 'phone') {
             this.openSideBar("phone");
         } else if (active === 'csv') {
             this.csvPermission();
-        } else if (active === 'input') {
-            this.setState({ contactType: 'input', contactCount: 1 })
-        } else if (active === 'previous') {
-            this.openSideBar("previous");
+        } else if (active === 'form') {
+            this.setState({ contactType: 'form', contactCount: 0, schema: standardSchema }, () => {
+                this.openSideBar("form");
+            })
         } else if (active === 'link') {
-            this.openSideBar("link");
+            this.fetchLinks()
         }
     })
 
@@ -196,16 +200,10 @@ export default class AddGuest extends Component {
         const { addMessage } = this.props;
 
         if (contacts.length > 0) {
-            this.setState({ contacts, contactType: "phone", contactCount: contacts.length }, () =>{
+            this.setState({ contacts, contactType: "phone", contactCount: contacts.length, schema: standardSchema }, () =>{
                  this.closeSideBar();
             })
         }
-    }
-
-    addLink = (link, count) => {
-        this.setState({ contactType: "link", contactCount: count }, () =>{
-            this.closeSideBar();
-       })
     }
 
     csvPermission = () => {
@@ -283,18 +281,19 @@ export default class AddGuest extends Component {
         csvtojsonV2()
         .fromString(csvString)
         .then((result) =>{
-            console.log(result);
+           // console.log(result);
           
             if (result.length > 0) {
               //let contact = result.map(res =>(res.phone))
   
                 let keys = Object.keys(result[0]);
 
-                console.log(keys);
+               // console.log(keys);
                 
   
-                this.setState({ contacts: result, contactType: "csv", options: keys, loading: false, contactCount: result.length })
-
+                this.setState({ contacts: result, options: keys, loading: false, contactCount: result.length }, () => {
+                    this.openSideBar('csv')
+                })
             } else {
                 addMessage('Warning. The csv file is empty')
             }
@@ -304,26 +303,65 @@ export default class AddGuest extends Component {
             addMessage('Error converting csv file')
         })
     }
-  
 
-    selectedDetail = (key) => this.setState({ selected: key }, () => {
-        if (['String', "Number"].includes(key.type)) {
-            if (this.input) {
-                this.input.focus()
+    addSchema = (schema) => {
+        this.setState({ schema, contactType: "csv" }, ()=> this.closeSideBar())
+    }
+
+    saveContact = (contact) => {
+        const { contactIndex, contacts, schema } = this.state;
+
+        if ( contactIndex === -1) {
+            // add
+            contacts.push(contact)
+        } else {
+            // save (use spread an schema to save)
+
+            let data = { 
+                ...contacts[contactIndex], 
+                [schema.name]: contact.name || '', 
+                [schema.email]: contact.email || '', 
+                [schema.phoneNumber]: contact.phoneNumber || '' 
             }
-        } else if (key.type === "Option") {
-            this.openOption("Schema")
+
+            contacts[contactIndex] = data;
         }
-    })  
-    
-    setData = ( value) => {
-        const {selected, optionOpen} = this.state;
 
-        this.setState({ data: { ...this.state.data, [selected.value]: value } }, () => {
-            if (optionOpen === true) {
-                this.closeOption()
-            }
+        this.setState({ contacts: [...contacts ], contactIndex: -1 }, ()=> this.closeSideBar())
+    }
+
+    editContact = (index, name, phoneNumber, email) => {
+        this.setState({ 
+            contactIndex: index, 
+        data: {
+            name,
+            phoneNumber,
+            email
+        }}, () => {
+            this.openSideBar('form')
         })
+    }
+
+    deleteContact = ( index ) => {
+        const { contacts } = this.state;
+
+        contacts.splice(index, 1);
+
+        this.setState({ contacts: [...contacts ] })
+    }
+
+    saveLink =  contact => {
+        const { contactIndex, contacts, schema } = this.state;
+
+        if ( contactIndex === -1) {
+            // add
+            contacts.push(contact)
+        } else {
+            // save 
+            contacts[contactIndex] = contact;
+        }
+
+        this.setState({ contacts: [...contacts ], contactIndex: -1 }, ()=> this.closeSideBar())
     }
 
     onSubmit = () => {
@@ -334,24 +372,37 @@ export default class AddGuest extends Component {
                 // validate phone and email then submit
                 
             } else if (contactType === 'csv') {
-                // use data schema to format contact
+                // use schema to format contact
     
-            } else if (contactType === 'input') {
-                // valiadate data and submit data
+            } else if (contactType === 'form') {
+                // valiadate contacts and submit contact
     
-            } else if (contactType === 'previous') {
-                // validate phone and email then submit
-            } else if (contactType === 'link') {
+            }  else if (contactType === 'link') {
 
             }
         })
     }
 
     render() {
-        const { refreshing, loading, active, optionOpen, sideBarOpen, contactCount, contacts,
-             data, contactType, selected, inputForm, csvForm, options, optiontype, sideBarType } = this.state;
+        const { refreshing, loading, active, optionOpen, sideBarOpen, contactCount, contacts, schema,
+             data, contactType, selected, options, optiontype, sideBarType, contactIndex } = this.state;
         
-        const { close } = this.props
+        const { close, user } = this.props;
+
+        let title = 'Details'
+
+        if (active === 'phone') {
+            title = 'Phone Contacts'
+        } else if (active === 'csv') {
+            title = 'CSV Contacts'
+        } else if (active === 'form') {
+            title = 'Form Contacts'
+        } else if (active === 'link') {
+            title = 'Registration Links'
+        } else {
+            title = 'Details' 
+        }
+        
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
@@ -376,81 +427,82 @@ export default class AddGuest extends Component {
                 </View>
                 <Text style={style.to}>{contactCount} contacts</Text>
 
+                {(active === 'csv') && (contacts.length > 0) && (
+                <View style={[styles.between, { alignItems: 'center', marginBottom: 9 }]}>
+                    <Text style={styles.title}>Schema</Text>
 
-                <Text style={styles.title}>Details</Text>
+                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar('csv')}>
+                        <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                    </TouchableOpacity> 
+                </View>)}
+
+
+                <View style={[styles.between, { alignItems: 'center'}]}>
+                    <Text style={styles.title}>{title}</Text>
+
+                    {(contactType === 'form') && (
+                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.setState({ contactIndex: -1 }, () => this.openSideBar('form'))}>
+                        <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                    </TouchableOpacity>)}
+
+                    {(contactType === 'link') && (
+                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar('link')}>
+                        <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                    </TouchableOpacity>)}
+                </View>
+                
                 <Segment color={'#E4E4E4'} loading={loading}>
-                    {((contactType === "phone") || (contactType === "previous")) && (
+                    {((["phone", 'form', "csv"].includes(contactType))) && (
                         <FlatList 
                             onRefresh={() => {}}
                             refreshing={refreshing}
                             data={contacts}
                             renderItem={({ item, index }) => 
-                                (<View> 
-                                    <Text style={style.todo}>{item.name}</Text>                       
-                                    {(!!item.phoneNumber) && (<Text >{item.phoneNumber}</Text>)}  
-                                    {(!!item.email) && (<Text >{item.email}</Text> )}
+                            (<View style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                                <TouchableOpacity style={styles.icon} onPress={() => this.deleteContact(index)}>
+                                    <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
+                                </TouchableOpacity>
+                                
+                                <TouchableOpacity onPress={() => this.editContact(index, item[schema.name], item[schema.phoneNumber], item[schema.email])}> 
+                                    <Text style={style.todo}>{item[schema.name]}</Text>                       
+                                    {(!!item[schema.phoneNumber]) && (<Text >{item[schema.phoneNumber]}</Text>)}  
+                                    {(!!item[schema.email]) && (<Text >{item[schema.email]}</Text> )}
                                     <View style={styles.hairLine} />
-                                </View>) 
+                                </TouchableOpacity>
+                            </View>) 
                             }
                             keyExtractor={(item,index) => index.toString()}
                         />
                     )}
-                    {((contactType !== "phone") || (contactType !== "previous")) && (<View style={styles.details}>
-                        <ScrollView>
-                            
-                            {(contactType === "input") && (<View>
-                                {inputForm.map(key => (
-                                    <View key={key.name} style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>{key.name}</Text>
 
-                                        <TouchableOpacity onPress={() => this.selectedDetail(key)} style={style.action}>
-                                            <Text style={style.todoDetailValue}>{data[key.value]? data[key.value] : "none"}</Text>
-                                            <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                ))}
-                            </View>)}
+                    {(contactType === 'link') && (
+                        <FlatList 
+                            onRefresh={() => this.fetchLinks()}
+                            refreshing={refreshing}
+                            data={contacts}
+                            renderItem={({ item, index }) => 
+                            (<View>
+                                <View style={styles.between}>
+                                    <Text style={style.todo}>{item.name}</Text>
 
-                            {(contactType === "csv") && (<View>
-                                {csvForm.map(key => (
-                                    <View key={key.name} style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>{key.name}</Text>
+                                    <TouchableOpacity style={styles.icon} 
+                                        onPress={() => this.setState({ contactIndex: index, data: item }, () => this.openOption('link'))}
+                                    >
+                                        <Ionicons name={'ios-ellipsis-vertical'} size={30} color={"#707070"}/>
+                                    </TouchableOpacity>
+                                </View>
 
-                                        <TouchableOpacity onPress={() => this.selectedDetail(key)} style={style.action}>
-                                            <Text style={style.todoDetailValue}>{data[key.value]? data[key.value] : "none"}</Text>
-                                            <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                ))}
-                            </View>)}
-
-                        </ScrollView>
-
-                        <View style={styles.detailsRow}>
-                            {((selected.type === "String") || (selected.type === "Number")) && (
-                                <TextInput 
-                                    ref={(x) => this.input = x}
-                                    style={styles.detailsInput}
-                                    placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
-                                    placeholderTextColor="#E4E4E4"
-                                    value={String(data[selected.value])}
-                                    autoFocus
-                                    keyboardType={selected.type === "String"? "default" : "phone-pad"}
-                                    onChange={(e) => this.setData(e.nativeEvent.text)}
-                                    onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
-                                />
-                            )}
-                        </View>
-                    </View>)}
+                                <Text style={{ color: item.active? '#707070' : "#EC3636", fontSize: 18 }}>{item.active? 'ACTIVE' : 'INACTIVE'}</Text>
+                                <Text>{item.capacity} Capacity</Text>
+                                <Text>{item.registrations} Registered</Text>
+                                <View style={styles.hairLine} />
+                            </View>) 
+                            }
+                            keyExtractor={(item,index) => index.toString()}
+                        />
+                    )}
                 </Segment>
                 <Option title={optiontype} openModal={optionOpen} closeModal={() => this.closeOption()}>
-                    {(optiontype === 'Schema') && options.map((option, index) => (
-                        <TouchableOpacity key={index} style={[styles.optionBody, { borderBottomColor: data[selected.value] === option? '#2DF19C': '#707070'} ]} onPress={() => this.setData(option)}>
-                            <Text style={styles.optionText}>{option}</Text>
-                        </TouchableOpacity>
-                    ))}
-
-
                     {(optiontype === "Add Guest Via") && (
                         <View>
                             <TouchableOpacity 
@@ -468,8 +520,8 @@ export default class AddGuest extends Component {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                style={[styles.optionBody, { borderBottomColor: active === 'input'? '#2DF19C' : '#E4E4E4'}]}
-                                onPress={() => this.resetContact('input')}
+                                style={[styles.optionBody, { borderBottomColor: active === 'form'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.resetContact('form')}
                             >
                                 <Text style={styles.optionText}>Form</Text>
                             </TouchableOpacity>
@@ -489,7 +541,42 @@ export default class AddGuest extends Component {
                                 <Text style={styles.optionText}>Previous Event</Text>
                             </TouchableOpacity> */}
 
+                        </View>
+                    )}
 
+                    {(optiontype === "link") && (
+                        // info is stored in data
+                        <View>
+                            <TouchableOpacity 
+                                style={styles.optionBody}
+                                onPress={() => {
+                                    this.closeOption();
+                                    this.openSideBar('link')
+                                }}
+                            >
+                                <Text style={styles.optionText}>Edit Link</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity 
+                                style={styles.optionBody}
+                                onPress={() => this.closeOption()}
+                            >
+                                <Text style={styles.optionText}>Copy Link</Text>
+                            </TouchableOpacity>
+
+                            {(data.active) && (<TouchableOpacity 
+                                style={styles.optionBody}
+                                onPress={() => this.closeOption()}
+                            >
+                                <Text style={styles.optionText}>Deactivate Link</Text>
+                            </TouchableOpacity>)}
+
+                            {(!data.active) && (<TouchableOpacity 
+                                style={styles.optionBody}
+                                onPress={() => this.closeOption()}
+                            >
+                                <Text style={styles.optionText}>Activate Link</Text>
+                            </TouchableOpacity>)}
                         </View>
                     )}
                     
@@ -502,9 +589,31 @@ export default class AddGuest extends Component {
                         addContact={(contacts) => this.addPhone(contacts)} 
                     />)}
 
-                    {(sideBarType === "previous") && (
-                        <View />
+                    {(sideBarType === "csv") && (
+                        <CsvSchema 
+                        sample={contacts[0]} 
+                        options={options} 
+                        schema={schema}
+                        data={data}
+                        saveSchema={res => this.addSchema(res)} />
                     )}
+
+                    {(sideBarType === "form") && (
+                        <ContactForm 
+                        contactIndex={contactIndex} 
+                        data={data}
+                        saveForm={(contact) => this.saveContact(contact)}/>
+                    )}
+
+                    
+                    {(sideBarType === "link") && (
+                        <RegistrationLink
+                        contactIndex={contactIndex} 
+                        data={data}
+                        user={user}
+                        saveLink={(link) => this.saveLink(link)}/>
+                    )}
+
                 </SideBar>
             </View>
             <Message />

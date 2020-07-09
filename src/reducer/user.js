@@ -1,7 +1,8 @@
 import { } from '../types';
 
 let init = {
-
+    name: '',
+    uid: ''
 };
 
 function userReducer (state = init, action) {

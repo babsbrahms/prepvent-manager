@@ -70,7 +70,7 @@ class Crowd extends Component {
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
     render() {
-        const { navigation, addMessage } = this.props;
+        const { navigation, addMessage, user } = this.props;
         const { modalOpen, modalType, sideBarOpen, guest } = this.state;
 
         return (
@@ -106,7 +106,7 @@ class Crowd extends Component {
 
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
                     {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === "Guest") && (<AddGuest close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "Guest") && (<AddGuest user={user} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === 'EditGuest') && (<EditGuest guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === "TableChart") && (<TableChart editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
@@ -121,7 +121,7 @@ class Crowd extends Component {
 
 
 const mapStateToprops = (state) => ({
-    
+    user: state.userReducer
 })
 
 const mapDisptachToprops = {

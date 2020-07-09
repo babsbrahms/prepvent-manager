@@ -20,6 +20,8 @@
 [X] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
 [x] NAN error with Number text input
 [] padding and width problem with segment
+[] use user from reducer in registartion link
+[!] password Registration link with a general password
 
 TODAY
 ------
