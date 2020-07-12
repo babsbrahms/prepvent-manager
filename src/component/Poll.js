@@ -110,6 +110,16 @@ export default class Poll extends Component {
         this.setState({ currentIndex: index, current: polls[index], open: false })
     }
 
+
+    editOption = (option) => {
+        let { current } = this.state;
+
+        delete current['options'][option];
+
+        this.setState({ current: { ...this.state.current }, open: true, inputValue: option })
+    }
+
+
     deleteOption = (option) => {
         let { current } = this.state;
 
@@ -178,7 +188,9 @@ export default class Poll extends Component {
                                 <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
                             </TouchableOpacity>
                             
-                            <Text style={style.to}>{option}</Text>
+                            <TouchableOpacity onPress={() => this.editOption(option)}>
+                                <Text style={style.to}>{option}</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </ScrollView>

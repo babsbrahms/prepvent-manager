@@ -151,7 +151,7 @@ class Dashboard extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={style.name} numberOfLines={1}>Event Name</Text>
+                        <Text style={style.name} numberOfLines={1}>PrepVENT Manager launch party</Text>
                         <View style={[styles.around, { alignItems: 'center'}]}>
                             <Ionicons name={'ios-cloudy'} color={'#0E0C20'} size={60}/>
                             <View>
@@ -219,7 +219,7 @@ class Dashboard extends Component {
                             <View style={style.icon}>
                                 <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
                             </View>
-                            <Text style={style.statsTitle}>Guests Record</Text>
+                            <Text style={style.statsTitle}>Download Guests Record</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={style.stats} onPress={() => {}}>
@@ -227,7 +227,7 @@ class Dashboard extends Component {
                                 <Ionicons name={'ios-download'} color={'#000000'} size={50}/>
                             </View>
                             
-                            <Text style={style.statsTitle}>Expenditure Record</Text>
+                            <Text style={style.statsTitle}>Download Expenditure Record</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -1,33 +1,23 @@
 [!] update; [] undone; [x] done; [-] remove or not sure
+------------------------------------------------------
+
 [] allow multiple pictures in communication
 [] delete image
-[X] cancel and discard selected input
 [] convert phoneNumber to international format
-[X] add ux for addGuest phoneNumber and csv
 [] do account page
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
-[x] addGuest via: link 
 [] Invitation link tracking
 [!] addGuest via: guest from previous events
 [] export data for expenditure
 [] export data for guest
 [!] search for guest by qrcode (contactSearch)
-[x] use option to select list for vip alert (explain what it does)
-[x] do event day weather report and other evnts around
-[x] Add ANY to communication page to list
-[X] display vip alert in a proper way
 [] make sure selected contact contains phoneNumber or email
-[X] add distrinctive icon for email and sms or use option bar for all communication for a guest or organizer
-[x] NAN error with Number text input
 [] padding and width problem with segment
 [] use user from reducer in registartion link
 [!] password Registration link with a general password
-[X] textInput should disappear after focus is off
-[x] delete poll option
-
-TODAY
-------
+[] Redesign advance option in event
 [] Send previous message (Do not include invitation)
 [] Redesign Invitation and message
 [] navigate nexted options (contactFilter and contactSearch)
+[] add default for Assign, Invitation(organizer name, contact) and Communication(organizer name, contact)
