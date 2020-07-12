@@ -350,23 +350,44 @@ export default class Event extends Component {
                 <Option title={optionType} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     <View style={styles.details}>
                         <View>  
-                            {(optionType === 'Acceptance Deadline') && (<DatePicker
+                            {(optionType === 'Acceptance Deadline') && (
+                            <View>
+                            
+                                <DatePicker
                                 date={data.acceptanceDeadline}
                                 onDateChange={(e) => this.setState({ data: { ...this.state.data, acceptanceDeadline: e }})}
                                 minimumDate={new Date()}
                                 mode={"datetime"}
-                            />)}
+                                />
 
-                            {(optionType === 'Date') && (<DatePicker
-                                date={data.date}
-                                onDateChange={(e) => this.setState({ data: { ...this.state.data, date: e }})}
-                                minimumDate={new Date()}
-                                mode={"date"}
-                            />)}
+                                <TouchableOpacity style={styles.optionBody} onPress={() =>  this.setState({ data: { ...this.state.data, acceptanceDeadline: '' }}, () => this.closeOption())}>
+                                    <Text style={[styles.optionText, { color: '#EC3636'}]}>CLEAR VALUE</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.optionBody} onPress={() => {
+                                    this.closeOption();
+                                }}>
+                                    <Text style={[styles.optionText, { color: '#2DF19C'}]}>SAVE</Text>
+                                </TouchableOpacity>
+                            </View>
+                            )}
+
+                            {(optionType === 'Date') && (
+                            <View>
+                                <DatePicker
+                                    date={data.date}
+                                    onDateChange={(e) => this.setState({ data: { ...this.state.data, date: e }})}
+                                    minimumDate={new Date()}
+                                    mode={"date"}
+                                />
+
+                                
+                                <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
+                                    <Text style={style.btnText}>SELECT</Text>
+                                </TouchableOpacity>
+                            </View>
+                            )}
                         </View>
-                        <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
-                            <Text style={style.btnText}>SELECT</Text>
-                        </TouchableOpacity>
                     </View>
                 </Option>
 

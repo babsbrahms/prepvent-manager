@@ -1,7 +1,7 @@
 [!] update; [] undone; [x] done; [-] remove or not sure
 [] allow multiple pictures in communication
 [] delete image
-[] cancel and discard selected input
+[X] cancel and discard selected input
 [] convert phoneNumber to international format
 [X] add ux for addGuest phoneNumber and csv
 [] do account page
@@ -23,7 +23,7 @@
 [] padding and width problem with segment
 [] use user from reducer in registartion link
 [!] password Registration link with a general password
-[] textInput should disappear after focus is off
+[X] textInput should disappear after focus is off
 [] delete poll option
 
 TODAY

@@ -226,19 +226,25 @@ export default class RegistrationLink extends PureComponent {
 
                         </ScrollView>
 
-                        <View style={styles.detailsRow}>
+                        <View>
                             {((selected.type === "String") || (selected.type === "Number")) && (
-                                <TextInput 
-                                    ref={(x) => this.input = x}
-                                    style={styles.detailsInput}
-                                    placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
-                                    placeholderTextColor="#E4E4E4"
-                                    value={String(data[selected.value])}
-                                    autoFocus
-                                    keyboardType={selected.type === "String"? "default" : "phone-pad"}
-                                    onChange={(e) => this.setData(e.nativeEvent.text)}
-                                    onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
-                                />
+                                <View>
+                                    <Text style={styles.inputLabel}>{selected.name}</Text>
+                                    <View style={styles.detailsRow}>
+                                    <TextInput 
+                                        ref={(x) => this.input = x}
+                                        style={styles.detailsInput}
+                                        placeholder={`Enter guest ${selected.name.toLowerCase()}`} 
+                                        placeholderTextColor="#E4E4E4"
+                                        value={String(data[selected.value])}
+                                        autoFocus
+                                        onBlur={() => this.setState({ selected: {} })}
+                                        keyboardType={selected.type === "String"? "default" : "phone-pad"}
+                                        onChange={(e) => this.setData(e.nativeEvent.text)}
+                                        onSubmitEditing={(e) => this.setData(e.nativeEvent.text)}
+                                    />
+                                    </View>
+                                </View>
                             )}
                         </View>
                     </View>

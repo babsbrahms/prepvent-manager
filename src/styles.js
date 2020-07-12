@@ -32,13 +32,6 @@ const styles = {
         paddingHorizontal: 10,
         paddinhVertical: 5,
     },
-    textInput: {
-        backgroundColor: "#707070", 
-        color: "#FFFFFF", 
-        fontSize: 18, 
-        borderRadius: 20, 
-        marginBottom: 9
-    },
     search: {
         backgroundColor: "#FFFFFF", 
         color: "#0E0C20", 
@@ -125,7 +118,27 @@ const styles = {
     error: {
         color: '#EC3636',
         fontSize: 16
-    }
+    },
+    textInput: {
+        backgroundColor: "#707070", 
+        color: "#FFFFFF", 
+        fontSize: 18, 
+        borderRadius: 20, 
+        marginBottom: 9,
+        width: '100%',
+        // padding: 15
+    },
+    inputLabel: {
+        position: 'relative',
+        alignSelf: 'flex-start',
+        top: 10,
+        left: 12,
+        backgroundColor: '#FFFFFF',
+        padding: 2,
+        zIndex: 5,
+        color: "#707070",
+        borderRadius: 2
+    },
 }
 
 export default styles;

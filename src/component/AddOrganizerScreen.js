@@ -297,17 +297,22 @@ export default class AddOrganizer extends Component {
 
                         <View>
                             {((selected.type === "String") || (selected.type === "Number")) && (
-                                <View style={styles.detailsRow}>
-                                    <TextInput 
-                                        style={styles.detailsInput} 
-                                        placeholder={`Enter ${selected.name}`} 
-                                        placeholderTextColor="#E4E4E4"
-                                        value={String(data[selected.value])}
-                                        keyboardType={"number-pad"}
-                                        autoFocus
-                                        onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
-                                        onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
-                                    />
+                                <View>
+                                    <Text style={styles.inputLabel}>{selected.name}</Text>
+
+                                    <View style={styles.detailsRow}>
+                                        <TextInput 
+                                            style={styles.detailsInput} 
+                                            placeholder={`Enter ${selected.name}`} 
+                                            placeholderTextColor="#E4E4E4"
+                                            value={String(data[selected.value])}
+                                            keyboardType={"number-pad"}
+                                            autoFocus
+                                            onBlur={() => this.setState({ selected: {} })}
+                                            onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                            onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                        />
+                                    </View>
                                 </View>
                             )}
                         </View>

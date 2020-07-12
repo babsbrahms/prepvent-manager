@@ -235,21 +235,24 @@ export default class AddTask extends Component {
                         </ScrollView>
 
                         <View>
-                            {/* <Text style={[styles.title, { color: "#0E0C20" }]}>{selected.name}</Text> */}
 
                             {(selected.type === "Number") && (
-                            <View style={styles.detailsRow}>
-                                <TextInput 
-                                    ref={(x) => this.input = x}
-                                    style={styles.detailsInput}
-                                    placeholder={`Enter ${selected.name}`} 
-                                    placeholderTextColor="#E4E4E4"
-                                    value={String(data[selected.value])}
-                                    autoFocus
-                                    keyboardType={"number-pad"}
-                                    onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
-                                    onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
-                                />
+                            <View>
+                                <Text style={styles.inputLabel}>{selected.name}</Text>
+                                <View style={styles.detailsRow}>
+                                    <TextInput 
+                                        ref={(x) => this.input = x}
+                                        style={styles.detailsInput}
+                                        placeholder={`Enter ${selected.name}`} 
+                                        placeholderTextColor="#E4E4E4"
+                                        value={String(data[selected.value])}
+                                        autoFocus
+                                        onBlur={() => this.setState({ selected: {} })}
+                                        keyboardType={"number-pad"}
+                                        onChange={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                        onSubmitEditing={(e) => this.setData(parseFloat(e.nativeEvent.text || 0))}
+                                    />
+                                </View>
                             </View>
                             )}
                         </View>
@@ -269,9 +272,21 @@ export default class AddTask extends Component {
                                 mode={"datetime"}
                             />
                         </View>
-                        <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
-                            <Text style={style.btnText}>SELECT</Text>
+                        <TouchableOpacity style={styles.optionBody} onPress={() => {
+                            this.setData('');
+                            this.closeOption();
+                        }}>
+                            <Text style={[styles.optionText, { color: '#EC3636'}]}>CLEAR VALUE</Text>
                         </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.optionBody} onPress={() => {
+                            this.closeOption();
+                        }}>
+                            <Text style={[styles.optionText, { color: '#2DF19C'}]}>SAVE</Text>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
+                            <Text style={style.btnText}>SELECT</Text>
+                        </TouchableOpacity> */}
                     </View>)}
 
 
