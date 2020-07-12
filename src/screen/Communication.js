@@ -38,6 +38,7 @@ class Communication extends Component {
         optionType: "",
         showPoll: false,
         filterParams: '',
+        selectedInput: '',
         data: {
             to: [],
             subject: "",
@@ -106,7 +107,7 @@ class Communication extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen } = this.state;
+        const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput } = this.state;
         
         return (
             <View style={styles.container}>
@@ -152,6 +153,7 @@ class Communication extends Component {
 
                     <View style={style.container}>
                         <Text style={style.title}>Body</Text>
+                        {(!!selectedInput) && (<Text style={styles.inputLabel}>{selectedInput}</Text>)}
                         <View style={styles.textInput}>
                             <TextInput
                                 key={"message"}
@@ -159,6 +161,8 @@ class Communication extends Component {
                                 placeholder={"Add message body"} 
                                 placeholderTextColor="#E4E4E4" 
                                 multiline
+                                onFocus={() => this.setState({ selectedInput : 'Message'})}
+                                onBlur={() => this.setState({ selectedInput : ''})}
                                 value={data.message}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, message: e.nativeEvent.text } })}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, message: e.nativeEvent.text } })}
@@ -168,6 +172,8 @@ class Communication extends Component {
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Host Name"} 
                                 placeholderTextColor="#E4E4E4" 
+                                onFocus={() => this.setState({ selectedInput : 'Host Name'})}
+                                onBlur={() => this.setState({ selectedInput : ''})}
                                 value={data.host}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
@@ -177,6 +183,8 @@ class Communication extends Component {
                                 style={[styles.textInput, { marginBottom: 0}]} 
                                 placeholder={"Organizer's contact"} 
                                 placeholderTextColor="#E4E4E4" 
+                                onFocus={() => this.setState({ selectedInput : "Organizer's contact"})}
+                                onBlur={() => this.setState({ selectedInput : ''})}
                                 value={data.contact}
                                 onChange={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}
                                 onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}

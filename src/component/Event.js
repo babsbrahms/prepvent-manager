@@ -60,6 +60,7 @@ export default class Event extends Component {
             showDate: false,
             showPoll: false,
             showAdvance: false,
+            selectedInput: '',
             data: {
                 name: "",
                 poster: null,
@@ -144,7 +145,7 @@ export default class Event extends Component {
 
     render() {
         const { navigation } = this.props;
-        const  { data, showDate, showPoll, showAdvance, optionOpen, optionType } = this.state
+        const  { data, showDate, showPoll, showAdvance, optionOpen, optionType, selectedInput } = this.state
 
         return (
             <ScrollView ref={x => this.scroll = x}>
@@ -264,12 +265,15 @@ export default class Event extends Component {
 
                 <View style={style.container}>
                     <Text style={style.title}>Invitation letter</Text>
+                    {(!!selectedInput) && (<Text style={styles.inputLabel}>{selectedInput}</Text>)}
                     <View style={styles.textInput}>
                         <TextInput 
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Add inviation letter"} 
                             placeholderTextColor="#E4E4E4" 
                             multiline
+                            onFocus={() => this.setState({ selectedInput : "Invitation Letter"})}
+                            onBlur={() => this.setState({ selectedInput : ''})}
                             value={data.invitation}
                             onChange={(e) => this.setState({ data: { ...this.state.data, invitation: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, invitation: e.nativeEvent.text } })}
@@ -278,6 +282,8 @@ export default class Event extends Component {
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Host Name"} 
                             placeholderTextColor="#E4E4E4" 
+                            onFocus={() => this.setState({ selectedInput : "Host Name"})}
+                            onBlur={() => this.setState({ selectedInput : ''})}
                             value={data.host}
                             onChange={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, host: e.nativeEvent.text } })}
@@ -286,6 +292,8 @@ export default class Event extends Component {
                             style={[styles.textInput, { marginBottom: 0}]} 
                             placeholder={"Organizer's contact"} 
                             placeholderTextColor="#E4E4E4" 
+                            onFocus={() => this.setState({ selectedInput : "Organizer's contact"})}
+                            onBlur={() => this.setState({ selectedInput : ''})}
                             value={data.contact}
                             onChange={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, contact: e.nativeEvent.text } })}

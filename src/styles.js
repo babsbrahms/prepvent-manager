@@ -113,7 +113,7 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between", 
-        paddingTop: 4
+        // paddingTop: 4
     },
     error: {
         color: '#EC3636',

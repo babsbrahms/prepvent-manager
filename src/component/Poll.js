@@ -111,14 +111,11 @@ export default class Poll extends Component {
     }
 
     deleteOption = (option) => {
-        const { current } = this.state;
+        let { current } = this.state;
 
-        console.log(current.options);
-        
+        delete current['options'][option];
 
-        // delete current.options[option];
-
-        // this.setState({ current: { ...this.state.current, options: {...options } } })
+        this.setState({ current: { ...this.state.current } })
     }
 
     render() {

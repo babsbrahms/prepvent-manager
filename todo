@@ -24,7 +24,7 @@
 [] use user from reducer in registartion link
 [!] password Registration link with a general password
 [X] textInput should disappear after focus is off
-[] delete poll option
+[x] delete poll option
 
 TODAY
 ------
