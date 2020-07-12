@@ -215,12 +215,14 @@ export default class CsvSchema extends PureComponent {
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity>
                 <View style={styles.between}>
-                    <Text style={styles.Header}>CSV CONTACT SCHEMA</Text>
+                    <Text style={styles.Header}>CSV SCHEMA</Text>
 
                     {/* <TouchableOpacity style={styles.icon} onPress={() => this.saveSchema()}>
                         <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
                     </TouchableOpacity> */}
                 </View>
+
+                <Text style={style.to}>Match the contact info below to the csv data.</Text>
                 {(!!errors.general) && (<Text style={styles.error}>{errors.general}</Text>)}
                 <Segment color="#E4E4E4" loading={loading}>
                        

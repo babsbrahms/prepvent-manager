@@ -7,7 +7,8 @@
 [] do account page
 [] wallet page for spending on the event (users can add or transfer to and from the event wallet)
 [] do notification page
-[] addGuest via: link 
+[x] addGuest via: link 
+[] Invitation link tracking
 [!] addGuest via: guest from previous events
 [] export data for expenditure
 [] export data for guest
@@ -22,10 +23,11 @@
 [] padding and width problem with segment
 [] use user from reducer in registartion link
 [!] password Registration link with a general password
+[] textInput should disappear after focus is off
+[] delete poll option
 
 TODAY
 ------
-[] Invitation link tracking
 [] Send previous message (Do not include invitation)
 [] Redesign Invitation and message
 [] navigate nexted options (contactFilter and contactSearch)

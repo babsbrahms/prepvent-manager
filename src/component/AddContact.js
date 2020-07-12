@@ -149,7 +149,7 @@ export default class AddContact extends PureComponent {
                 }).map(contact => ({
                     name: contact.displayName,
                     phoneNumber: contact.phoneNumbers.length > 0 ? contact.phoneNumbers[contact.phoneNumbers.length - 1].number : "",
-                    // email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
+                    //email: contact.emailAddresses.length > 0? contact.emailAddresses[contact.emailAddresses.length - 1].email : ""
                 }))
 
                 console.log(list);

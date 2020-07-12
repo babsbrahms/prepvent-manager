@@ -43,6 +43,19 @@ class Subscription extends Component {
                 <Text style={styles.Header}>SUBSCRIPTION</Text>
 
                 <ScrollView>
+                <Text style={styles.title}>Free</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
                     <Text style={styles.title}>Basic</Text>
                     <Segment>
                         <View style={styles.details}>
@@ -80,7 +93,6 @@ class Subscription extends Component {
                             </TouchableOpacity>
                         </View>
                     </Segment>
-
 
                 </ScrollView>
             </View>

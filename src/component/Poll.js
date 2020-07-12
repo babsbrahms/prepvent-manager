@@ -35,18 +35,19 @@ export default class Poll extends Component {
         },
         currentIndex: -1,
         inputValue: '',
-        errors: {}
+        errors: {},
+        open: false
     }
 
     addOption = () => {
         const { current, inputValue} = this.state;
 
         if (inputValue) {
-            this.setState({ current: { ...this.state.current, options: { ...current.options, [inputValue]: 0 }}, inputValue: "" })
+            this.setState({ current: { ...this.state.current, options: { ...current.options, [inputValue]: 0 }}, inputValue: "", open: false })
         }
     }
 
-    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: {}}, errors: {} })
+    cancelPoll = () => this.setState({ currentIndex: -1, current: { title: "", question: "", options: {}}, errors: {}, open: false })
 
     validate = (poll, polls, pollsIndex) => {
         let errors = {};
@@ -83,7 +84,7 @@ export default class Poll extends Component {
                 polls[currentIndex] = current;
             }
             
-            this.setState({ currentIndex: -1, polls: polls, current: { title: "", question: "", options: {}}, errors: {} }, () => {
+            this.setState({ currentIndex: -1, polls: polls, current: { title: "", question: "", options: {}}, errors: {}, open: false }, () => {
                 updatePoll(this.state.polls)
             })
         } else {
@@ -106,19 +107,22 @@ export default class Poll extends Component {
     editPoll = (index) => {
         const { polls } = this.state;
 
-        this.setState({ currentIndex: index, current: polls[index] })
+        this.setState({ currentIndex: index, current: polls[index], open: false })
     }
 
     deleteOption = (option) => {
         const { current } = this.state;
 
-        delete current.options[option];
+        console.log(current.options);
+        
 
-        this.setState({ current: { ...this.state.current, options: {...options } } })
+        // delete current.options[option];
+
+        // this.setState({ current: { ...this.state.current, options: {...options } } })
     }
 
     render() {
-        const { inputValue, polls, current, errors } = this.state;
+        const { inputValue, polls, current, errors, open } = this.state;
 
         return (
         <View style={{ borderRadius: 20, marginTop: 0, marginBottom: 9, width: '100%', minHeight: 100, backgroundColor: '#E4E4E4', padding: 5, flex: 1 }}>
@@ -140,9 +144,10 @@ export default class Poll extends Component {
                 <Text style={style.title}>Title</Text>
                 <TextInput 
                     style={styles.textInput} 
-                    placeholder={"Add poll title. i.e. Food"} 
+                    placeholder={"Add short poll title. i.e. Food"} 
                     placeholderTextColor="#E4E4E4"
                     value={current.title}
+                    maxLength={15}
                     onChange={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
                     onSubmitEditing={(e) => this.setState({ current: {...this.state.current, title: e.nativeEvent.text } })}
                 />
@@ -161,7 +166,14 @@ export default class Poll extends Component {
                 />
                 {(!!errors.question) && (<Text style={styles.error}>{errors.question}</Text>)}
         
-                <Text style={style.title}>Options</Text>
+                <View style={styles.between}>
+                    <Text style={style.title}>Options</Text>
+
+                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ open: true })}>
+                        <Ionicons name={'ios-add'} size={30} color={"#707070"}/>
+                    </TouchableOpacity>
+                </View>
+                
                 <ScrollView>
                     {Object.keys(current.options).map((option, index) => (
                         <View key={index.toString()} style={[styles.row, { alignItems: "center"}]}>
@@ -174,12 +186,14 @@ export default class Poll extends Component {
                     ))}
                 </ScrollView>
                     
+                {(open) && (
                 <View style={[styles.detailsRow, { alignItems: "center"}]}>
                     <TextInput 
                         style={styles.detailsInput} 
                         placeholder={"Add poll option"} 
                         placeholderTextColor="#E4E4E4"
                         value={inputValue}
+                        autoFocus
                         keyboardType={"default"}
                         onChange={(e) => this.setState({ inputValue: e.nativeEvent.text })}
                         onSubmitEditing={() => this.addOption()}
@@ -188,7 +202,7 @@ export default class Poll extends Component {
                     <TouchableOpacity style={styles.icon} onPress={() => this.addOption()}>
                         <Ionicons name={'ios-send'} size={30} color={'#707070'}/>
                     </TouchableOpacity>
-                </View>
+                </View>)}
                 {(!!errors.options) && (<Text style={styles.error}>{errors.options}</Text>)}
         
                 <View style={styles.between}>

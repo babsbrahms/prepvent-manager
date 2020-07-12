@@ -18,8 +18,8 @@ const style = StyleSheet.create({
         backgroundColor: '#0E0C20',
         width: '80%',
         height: '100%',
-        borderRightColor: "#FFFFFF",
-        borderRightWidth: 2,
+        // borderRightColor: "#FFFFFF",
+        // borderRightWidth: 2,
     },
     other: {
         backgroundColor: 'transparent',

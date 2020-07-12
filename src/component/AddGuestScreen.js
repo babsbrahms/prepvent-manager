@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, Platform, PermissionsAndroid } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Platform, PermissionsAndroid, Clipboard } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import DocumentPicker from 'react-native-document-picker';
@@ -107,7 +107,6 @@ export default class AddGuest extends Component {
             optiontype: '',
             sideBarOpen: false,
             sideBarType: '',
-            contactCount: 0,
             options: [],
             data: {
                 name: "",
@@ -158,7 +157,7 @@ export default class AddGuest extends Component {
             }],
             contactType: 'link'
         }, () => {
-            this.openSideBar("link");
+           // this.openSideBar("link");
         })
     }
 
@@ -166,7 +165,6 @@ export default class AddGuest extends Component {
         active, 
         selected: {}, 
         contacts: [], 
-        contactCount: 0, 
         contactType: "",
         schema: {
             name: "",
@@ -188,7 +186,7 @@ export default class AddGuest extends Component {
         } else if (active === 'csv') {
             this.csvPermission();
         } else if (active === 'form') {
-            this.setState({ contactType: 'form', contactCount: 0, schema: standardSchema }, () => {
+            this.setState({ contactType: 'form', schema: standardSchema }, () => {
                 this.openSideBar("form");
             })
         } else if (active === 'link') {
@@ -200,7 +198,7 @@ export default class AddGuest extends Component {
         const { addMessage } = this.props;
 
         if (contacts.length > 0) {
-            this.setState({ contacts, contactType: "phone", contactCount: contacts.length, schema: standardSchema }, () =>{
+            this.setState({ contacts, contactType: "phone", schema: standardSchema }, () =>{
                  this.closeSideBar();
             })
         }
@@ -291,7 +289,7 @@ export default class AddGuest extends Component {
                // console.log(keys);
                 
   
-                this.setState({ contacts: result, options: keys, loading: false, contactCount: result.length }, () => {
+                this.setState({ contacts: result, options: keys, loading: false }, () => {
                     this.openSideBar('csv')
                 })
             } else {
@@ -364,6 +362,13 @@ export default class AddGuest extends Component {
         this.setState({ contacts: [...contacts ], contactIndex: -1 }, ()=> this.closeSideBar())
     }
 
+    changeLinkStatus = () => {
+        const { data } = this.state;
+
+        this.closeOption()
+    }
+
+
     onSubmit = () => {
         const { contactType } = this.state;
 
@@ -384,8 +389,8 @@ export default class AddGuest extends Component {
     }
 
     render() {
-        const { refreshing, loading, active, optionOpen, sideBarOpen, contactCount, contacts, schema,
-             data, contactType, selected, options, optiontype, sideBarType, contactIndex } = this.state;
+        const { refreshing, loading, active, optionOpen, sideBarOpen, contacts, schema,
+             data, contactType, options, optiontype, sideBarType, contactIndex } = this.state;
         
         const { close, user } = this.props;
 
@@ -421,11 +426,14 @@ export default class AddGuest extends Component {
                 <View style={[styles.between, { alignItems: 'center'}]}>
                     <Text style={styles.title}>Guest</Text>
 
-                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openOption('Add Guest Via')}>
+                    <TouchableOpacity disabled={loading} style={styles.icon} 
+                    onPress={() => this.setState({ contactIndex: -1 }, () => {
+                        this.openOption('Add Guest Via')
+                    })}>
                         <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                     </TouchableOpacity> 
                 </View>
-                <Text style={style.to}>{contactCount} contacts</Text>
+                <Text style={style.to}>{contacts.length} contacts</Text>
 
                 {(active === 'csv') && (contacts.length > 0) && (
                 <View style={[styles.between, { alignItems: 'center', marginBottom: 9 }]}>
@@ -458,18 +466,23 @@ export default class AddGuest extends Component {
                             refreshing={refreshing}
                             data={contacts}
                             renderItem={({ item, index }) => 
-                            (<View style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
-                                <TouchableOpacity style={styles.icon} onPress={() => this.deleteContact(index)}>
-                                    <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
-                                </TouchableOpacity>
-                                
-                                <TouchableOpacity onPress={() => this.editContact(index, item[schema.name], item[schema.phoneNumber], item[schema.email])}> 
-                                    <Text style={style.todo}>{item[schema.name]}</Text>                       
-                                    {(!!item[schema.phoneNumber]) && (<Text >{item[schema.phoneNumber]}</Text>)}  
-                                    {(!!item[schema.email]) && (<Text >{item[schema.email]}</Text> )}
-                                    <View style={styles.hairLine} />
-                                </TouchableOpacity>
-                            </View>) 
+
+                            (<View style={{ flex: 1 }}>
+                                <View style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "flex-start", alignItems: 'stretch', flex: 1 }}>
+                                    <TouchableOpacity style={styles.icon} onPress={() => this.deleteContact(index)}>
+                                        <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
+                                    </TouchableOpacity>
+                                    
+                                    <TouchableOpacity onPress={() => this.editContact(index, item[schema.name], item[schema.phoneNumber], item[schema.email])}> 
+                                        <Text style={style.todo}>{item[schema.name]}</Text>                       
+                                        {(!!item[schema.phoneNumber]) && (<Text >{item[schema.phoneNumber]}</Text>)}  
+                                        {(!!item[schema.email]) && (<Text >{item[schema.email]}</Text> )}
+                                        
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.hairLine} />
+                            </View>
+) 
                             }
                             keyExtractor={(item,index) => index.toString()}
                         />
@@ -488,7 +501,7 @@ export default class AddGuest extends Component {
                                     <TouchableOpacity style={styles.icon} 
                                         onPress={() => this.setState({ contactIndex: index, data: item }, () => this.openOption('link'))}
                                     >
-                                        <Ionicons name={'ios-ellipsis-vertical'} size={30} color={"#707070"}/>
+                                        <Ionicons name={'ios-menu'} size={30} color={"#707070"}/>
                                     </TouchableOpacity>
                                 </View>
 
@@ -502,7 +515,7 @@ export default class AddGuest extends Component {
                         />
                     )}
                 </Segment>
-                <Option title={optiontype} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                <Option title={contactIndex == -1? optiontype : data.name} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optiontype === "Add Guest Via") && (
                         <View>
                             <TouchableOpacity 
@@ -557,23 +570,26 @@ export default class AddGuest extends Component {
                                 <Text style={styles.optionText}>Edit Link</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity 
+                            {(!!data.link) && (<TouchableOpacity 
                                 style={styles.optionBody}
-                                onPress={() => this.closeOption()}
+                                onPress={() => {
+                                    Clipboard.setString(data.link)
+                                    this.closeOption()
+                                }}
                             >
                                 <Text style={styles.optionText}>Copy Link</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity>)}
 
-                            {(data.active) && (<TouchableOpacity 
+                            {(!!data.active) && (<TouchableOpacity 
                                 style={styles.optionBody}
-                                onPress={() => this.closeOption()}
+                                onPress={() => this.changeLinkStatus()}
                             >
                                 <Text style={styles.optionText}>Deactivate Link</Text>
                             </TouchableOpacity>)}
 
                             {(!data.active) && (<TouchableOpacity 
                                 style={styles.optionBody}
-                                onPress={() => this.closeOption()}
+                                onPress={() => this.changeLinkStatus()}
                             >
                                 <Text style={styles.optionText}>Activate Link</Text>
                             </TouchableOpacity>)}
