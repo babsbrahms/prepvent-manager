@@ -128,7 +128,7 @@ class Task extends Component {
     }
 
     render() {
-        const { navigation, addMessage } = this.props;
+        const { navigation, addMessage, event, user, organizers } = this.props;
         const {  modalOpen, modalType, refreshing, selectedIndex, data } = this.state;
 
         return (
@@ -226,12 +226,12 @@ class Task extends Component {
     
                     <View style={style.budget}>
                         <ScrollView>
-                            <Budget />
+                            <Budget budget={event.budget} expenditure={event.expenditure} />
                         </ScrollView>
                     </View>
                 </View>
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
-                    <AddTask selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />
+                    <AddTask organizers={organizers} user={user} selectedData={data[selectedIndex]} selectedIndex={selectedIndex} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />
                 </Modal>
             </View>
         )
@@ -240,7 +240,9 @@ class Task extends Component {
 
 
 const mapStateToprops = (state) => ({
-    
+    event: state.eventReducer,
+    user: state.userReducer,
+    organizers: state.organizersReducer
 })
 
 const mapDisptachToprops = {

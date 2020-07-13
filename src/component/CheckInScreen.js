@@ -90,26 +90,6 @@ export default class CheckIn extends Component {
         loading: false,
         processing: false,
         error: "",
-        polls: [
-            {
-                title: "food",
-                question: "Choose a food",
-                options: {
-                    'Fried Rice': 0,
-                    'Amala': 0,
-                    "Beans": 0
-                }
-            },
-            {
-                title: "color",
-                question: "Choose a color",
-                options: {
-                    'Red': 0,
-                    'Blue': 0,
-                    "Green": 0
-                } 
-            }
-        ],
     }
 
     findEmail = () => {
@@ -142,8 +122,8 @@ export default class CheckIn extends Component {
     selectMethod = (method) => this.setState({ active: method, processing: true, inputValue: '', error: "" })
 
     render() {
-        const { close } = this.props;
-        const  { active, data, processing, loading, inputValue, error, polls } = this.state;
+        const { close, polls } = this.props;
+        const  { active, data, processing, loading, inputValue, error } = this.state;
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>

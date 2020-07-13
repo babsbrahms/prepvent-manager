@@ -70,7 +70,7 @@ class Crowd extends Component {
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
     render() {
-        const { navigation, addMessage, user } = this.props;
+        const { navigation, addMessage, user, event, polls, tables, organizers } = this.props;
         const { modalOpen, modalType, sideBarOpen, guest } = this.state;
 
         return (
@@ -101,18 +101,18 @@ class Crowd extends Component {
                 </TouchableOpacity>
 
                 <Segment>
-                    <Chart />
+                    <Chart invited={event.invited} accepted={event.accepted} checkedIn={event.checkedIn} absent={(event.accepted - event.checkedIn)} />
                 </Segment>
 
                 <Modal visible={modalOpen} onRequestClose={() => this.closeModal()} onDismiss={() => this.closeModal()} statusBarTranslucent animationType={"slide"}>
-                    {(modalType === "CheckIn") && (<CheckIn close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "CheckIn") && (<CheckIn polls={polls} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === "Guest") && (<AddGuest user={user} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === 'EditGuest') && (<EditGuest guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === "TableChart") && (<TableChart editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === 'EditGuest') && (<EditGuest polls={polls} tables={tables} organizers={organizers} guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "TableChart") && (<TableChart polls={polls} tables={tables} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <Guest editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
+                    <Guest polls={polls} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
                 </SideBar>                
             </View>
         )
@@ -121,7 +121,11 @@ class Crowd extends Component {
 
 
 const mapStateToprops = (state) => ({
-    user: state.userReducer
+    user: state.userReducer,
+    event: state.eventReducer,
+    polls: state.pollsReducer,
+    tables: state.tablesReducer,
+    organizers: state.organizersReducer
 })
 
 const mapDisptachToprops = {

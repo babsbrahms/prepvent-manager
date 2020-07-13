@@ -88,7 +88,6 @@ export default class TableChart extends Component {
         option: '',
         selectedIndex: -1,
         selectedTable: null,
-        tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Childre's Table", uid: "121ert"}],
         newTableName: "",
         search: "",
         guests: [
@@ -249,26 +248,6 @@ export default class TableChart extends Component {
                 food: 'Fried Rice'  
             }
         ],
-        polls: [
-            {
-                title: "food",
-                question: "Choose a food",
-                options: {
-                    'Fried Rice': 0,
-                    'Amala': 0,
-                    "Beans": 0
-                }
-            },
-            {
-                title: "color",
-                question: "Choose a color",
-                options: {
-                    'Red': 0,
-                    'Blue': 0,
-                    "Green": 0
-                } 
-            }
-        ],
     }
 
     openSideBar = () => this.setState({ sideBarOpen: true })
@@ -301,10 +280,16 @@ export default class TableChart extends Component {
     }
 
     deleteTable = (table) => {
-        Alert.alert('Warning', `Are you sure you want to delete ${table.name}`, [
-            { text: "Yes", onPress: () => this.confirmDeleteTable(table)},
-            { text: "Cancel", onPress: () => null }
-        ], { cancelable: true })
+        const { addMessage } = this.props;
+        if (table) {
+            Alert.alert('Warning', `Are you sure you want to delete ${table.name}`, [
+                { text: "Yes", onPress: () => this.confirmDeleteTable(table)},
+                { text: "Cancel", onPress: () => null }
+            ], { cancelable: true })
+
+        } else {
+            addMessage('Select a table to delete it')
+        }
     }
 
     confirmDeleteTable = (table) => {
@@ -316,9 +301,9 @@ export default class TableChart extends Component {
     }
 
     render() {
-        const { close, editGuest } = this.props;
+        const { close, editGuest, polls, tables } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, tables, newTableName, search, data, guests, loading, polls } = this.state;
+            selectedTable, newTableName, search, data, guests, loading } = this.state;
             
 
         return (
@@ -489,7 +474,7 @@ export default class TableChart extends Component {
 
                             </ScrollView>
                             <View>
-                                <TouchableOpacity style={styles.icon} onPress={() => this.addTable()}>
+                                <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.addTable()}>
                                     <Ionicons name={'md-add-circle'} size={35} color={'#2DF19C'}/>
                                 </TouchableOpacity>
                             </View>
@@ -514,7 +499,7 @@ export default class TableChart extends Component {
 
                             </ScrollView>
                             <View>
-                                <TouchableOpacity disabled={!selectedTable} style={styles.icon} onPress={() => this.deleteTable(selectedTable)}>
+                                <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.deleteTable(selectedTable)}>
                                     <Ionicons name={'md-remove-circle'} size={35} color={'#EC3636'}/>
                                 </TouchableOpacity>
                             </View>

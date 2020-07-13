@@ -143,35 +143,6 @@ export default class EditGuest extends Component {
                     value: "table",
                 }
             },
-            polls: [
-                {
-                    title: "food",
-                    question: "Choose a food",
-                    options: {
-                        'Fried Rice': 0,
-                        'Amala': 0,
-                        "Beans": 0
-                    }
-                },
-                {
-                    title: "color",
-                    question: "Choose a color",
-                    options: {
-                        'Red': 0,
-                        'Blue': 0,
-                        "Green": 0
-                    } 
-                }
-            ],
-            tables: [{ name: 'Table 1', uid: "121"}, { name: 'Bride Table', uid: "121qwq"}, { name: "Children's Table", uid: "121ert"}],
-            organizers: [
-                { name: "olayinka ibrahim", email: "ib@gmail.com", uid: 1},
-                { name: "Teslim", email: "tessy@gmail.com", uid: 2},
-                { name: "Najeeb", email: "baz@gmail.com", uid: 3 },
-                { name: "Zharadeen", email: "zhara@gmail.com", uid: 4},
-                { name: "biola", email: "biol@gmail.com", uid: 5},
-                { name: "Teslim", email: "Tessy@gmail.com", uid: 6},
-            ],
             data: props.guest
         }
     }
@@ -250,9 +221,9 @@ export default class EditGuest extends Component {
     }
 
     render() {
-        const { optionOpen, data, polls, schema, optionType, selected, loading, tables, organizers } = this.state;
+        const { optionOpen, data, schema, optionType, selected, loading,  } = this.state;
         
-        const { close } = this.props
+        const { close, tables, organizers, polls } = this.props
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>

@@ -87,18 +87,13 @@ export default class AddTask extends Component {
                 task: "",
                 alert : "",
                 budget: 0,
-                assign : null,
+                assign : {
+                    name: props.user.name,
+                    uid: props.user.uid
+                },
                 deadline: ""
             },
             selected: {},
-            organizers: [
-                { name: "olayinka ibrahim", email: "ib@gmail.com", uid: 1},
-                { name: "Teslim", email: "tessy@gmail.com", uid: 2},
-                { name: "Najeeb", email: "baz@gmail.com", uid: 3 },
-                { name: "Zharadeen", email: "zhara@gmail.com", uid: 4},
-                { name: "biola", email: "biol@gmail.com", uid: 5},
-                { name: "Teslim", email: "Tessy@gmail.com", uid: 6},
-            ]
         }
 
         this.input = React.createRef()
@@ -147,8 +142,8 @@ export default class AddTask extends Component {
 
  
     render() {
-        const { close, selectedIndex } = this.props;
-        const  { optionOpen, data, schema, selected, organizers, loading } = this.state;
+        const { close, selectedIndex, organizers } = this.props;
+        const  { optionOpen, data, schema, selected, loading } = this.state;
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>

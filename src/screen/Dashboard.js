@@ -91,32 +91,6 @@ const style = StyleSheet.create({
 
 class Dashboard extends Component {
     state = {
-        event: {
-            budget: 1200,
-            guest: 200,
-            organizers: 4,
-            expenditure: 540,
-        },
-        polls: [
-            {
-                title: "food",
-                question: "Choose a food",
-                options: {
-                    'Fried Rice': 0,
-                    'Amala': 0,
-                    "Beans": 0
-                }
-            },
-            {
-                title: "color",
-                question: "Choose a color",
-                options: {
-                    'Red': 0,
-                    'Blue': 0,
-                    "Green": 0
-                } 
-            }
-        ],
         otherEvents: [
             {
                 name: 'Durban',
@@ -132,8 +106,8 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
-        const { polls, event, otherEvents } = this.state;
+        const { navigation, polls, event, } = this.props;
+        const {  otherEvents } = this.state;
 
         return (
             <ScrollView style={style.container}>
@@ -188,7 +162,7 @@ class Dashboard extends Component {
 
                     <View style={style.row}>
                         <TouchableOpacity style={style.stats} onPress={() => navigation.navigate('Crowd')}>
-                            <Text style={style.statsValue}>{event.guest}</Text>
+                            <Text style={style.statsValue}>{event.accepted}</Text>
                             <Text style={style.statsTitle}>Guests</Text>
                         </TouchableOpacity>
 
@@ -238,7 +212,8 @@ class Dashboard extends Component {
 
 
 const mapStateToprops = (state) => ({
-    
+    event: state.eventReducer,
+    polls: state.pollsReducer
 })
 
 const mapDisptachToprops = {

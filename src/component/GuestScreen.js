@@ -186,27 +186,7 @@ export default class Guest extends Component {
                 color: "Red",
                 food: 'Fried Rice'  
             }
-        ],
-        polls: [
-            {
-                title: "food",
-                question: "Choose a food",
-                options: {
-                    'Fried Rice': 0,
-                    'Amala': 0,
-                    "Beans": 0
-                }
-            },
-            {
-                title: "color",
-                question: "Choose a color",
-                options: {
-                    'Red': 0,
-                    'Blue': 0,
-                    "Green": 0
-                } 
-            }
-        ],
+        ]
     }
 
     openOption = (option) => this.setState({ optionOpen: true, option })
@@ -233,9 +213,9 @@ export default class Guest extends Component {
     }
 
     render() {
-        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data, polls } = this.state;
+        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data } = this.state;
         
-        const { close, editGuest } = this.props
+        const { close, editGuest, polls } = this.props
         return (
             <View style={styles.container}>
                 <View style={styles.between}>
