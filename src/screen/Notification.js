@@ -25,21 +25,21 @@ export default class Notification extends Component {
                 </View>
 
                 <Text style={styles.Header}>NOTIFICATION</Text>
+                <Segment>
+                    <FlatList 
+                    onRefresh={() => {}}
+                    refreshing={refreshing}
+                    data={[1, 2]}
+                    renderItem={({ item, index }) => 
+                    <View>
 
-                <FlatList 
-                onRefresh={() => {}}
-                refreshing={refreshing}
-                data={[1, 2]}
-                renderItem={({ item, index }) => 
-                <View>
-                    <Text style={styles.title}>date</Text>
-                    <View style={styles.segment}>
-                    
+                        <View style={styles.hairLine}/>
                     </View>
-                </View>
-                }
-                keyExtractor={(item,index) => index.toString()}
-                />
+                    }
+                    keyExtractor={(item,index) => index.toString()}
+                    />
+                </Segment>
+
 
             </View>
         )

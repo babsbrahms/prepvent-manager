@@ -56,7 +56,7 @@ const style = StyleSheet.create({
         marginTop: 20, 
         width: '100%', 
         backgroundColor: 'white', 
-        flex: 1,
+        //flex: 1,
         marginBottom: 10
     },
     date: {
@@ -125,7 +125,7 @@ class Dashboard extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={style.name} numberOfLines={1}>PrepVENT Manager launch party</Text>
+                        <Text style={style.name}>PrepVENT Manager launch party</Text>
                         <View style={[styles.around, { alignItems: 'center'}]}>
                             <Ionicons name={'ios-cloudy'} color={'#0E0C20'} size={60}/>
                             <View>
@@ -171,11 +171,11 @@ class Dashboard extends Component {
                             <Text style={style.statsTitle}>Organizers</Text>
                         </TouchableOpacity>
                     </View>
-                    <Segment>
+                    <View style={style.task}>
                         <TouchableOpacity onPress={() => navigation.navigate('Task')}>
                             <Budget expenditure={event.expenditure} budget={event.budget} />
                         </TouchableOpacity>
-                    </Segment>
+                    </View>
 
 
 
