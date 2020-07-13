@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator, FlatList, Linking } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
@@ -9,6 +9,7 @@ import Option from '../component/Option';
 import styles from '../styles';
 import { guestFilter } from "../utils/filter";
 import SideBar from "../component/SideBar";
+import Segment from '../component/Segment';
 
 const style = StyleSheet.create({
     title: {
@@ -27,6 +28,21 @@ const style = StyleSheet.create({
     },
     container: {
         marginBottom: 9
+    },
+    messageText: {
+        color: '#E4E4E4',
+        fontSize: 18,
+    },
+    messageLink: {
+        borderBottomColor: '#E4E4E4',
+        padding: 4,
+        marginHorizontal: 3,
+        borderBottomWidth: 4,
+    },
+    messageTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000000'
     }
 });
 
@@ -39,6 +55,9 @@ class Communication extends Component {
         showPoll: false,
         filterParams: '',
         selectedInput: '',
+        message: '',
+        loading: false,
+        refreshing: false,
         data: {
             to: [],
             subject: "",
@@ -47,7 +66,29 @@ class Communication extends Component {
             contact: '',
             image: null,
             polls: []
-        }
+        },
+        messages: []
+    }
+
+
+    
+    fetchMessages = () => {
+        this.setState({
+            messages: [ {
+                uid: '1121',
+                subject: 'Your are invited to my birthday party',
+                body: 'https://wwww.prepvent.com',
+                host: 'olayinka Ibrahim',
+                contact: 'o8142319913'
+            }, 
+            {
+                uid: '1121wq',
+                subject: 'Dress code for the event',
+                body: 'https://wwww.prepvent.com',
+                host: 'olayinka Ibrahim',
+                contact: 'o8142319913'
+            }],
+        })
     }
 
     openSideBar = () => this.setState({ sideBarOpen: true })
@@ -105,9 +146,12 @@ class Communication extends Component {
         });
     }
 
+    selectmessage = (message) => this.setState({ message })
+
     render() {
         const { navigation } = this.props;
-        const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput } = this.state;
+        const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput, 
+            message, loading, messages, refreshing } = this.state;
         
         return (
             <View style={styles.container}>
@@ -122,22 +166,78 @@ class Communication extends Component {
                 </View>
 
                 <Text style={styles.Header}>COMMUNICATION</Text>
+                <View style={style.container}>
+                    <View style={styles.between}>
+                        <Text style={style.title}>To</Text>
 
-                <ScrollView>
-                    <View style={style.container}>
-                        <View style={styles.between}>
-                            <Text style={style.title}>To</Text>
-
-                            <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
-                                <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
-                            </TouchableOpacity>
-                            
-                        </View>
-                        <Text style={style.to}> 24 contacts</Text>
+                        <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
+                            <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                        </TouchableOpacity>
+                        
                     </View>
+                    <Text style={style.to}> 24 contacts</Text>
+                </View>
 
+                <View style={style.container}>
+                    <Text style={styles.title}>Message</Text>
 
+                    <View style={[styles.row, { marginBottom: 9, width: '100%' }]}>
+                        <TouchableOpacity 
+                            disabled={loading}
+                            style={[style.messageLink, { borderBottomColor: message === 'compose'? '#2DF19C' : '#E4E4E4'}]}
+                            onPress={() => this.selectmessage('compose')}
+                        >
+                            <Text style={style.messageText}>Compose Message</Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity
+                            disabled={loading}
+                            style={[style.messageLink, { borderBottomColor: message === 'previous'? '#2DF19C' : '#E4E4E4'}]}
+                            onPress={() => {
+                                this.selectmessage('previous');
+                                this.fetchMessages();
+                            }}
+                        >
+                            <Text style={style.messageText}>Previous Message(s)</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                {(message === 'previous') && (
+                    <Segment>
+                        <FlatList 
+                            onRefresh={() => this.fetchMessages()}
+                            refreshing={refreshing}
+                            data={messages}
+                            renderItem={({ item, index }) => 
+                            (<View>
+                                <View style={styles.between}>
+                                    <Text style={style.messageTitle}>{item.subject}</Text>
+
+                                    <TouchableOpacity style={styles.icon} 
+                                        onPress={() => {}}
+                                    >
+                                        <Ionicons name={'ios-send'} size={30} color={"#707070"}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <TouchableOpacity onPress={() => Linking.openURL(item.body)}>
+                                    <Text style={{ fontStyle: 'italic'}}>{item.body}</Text>
+                                </TouchableOpacity>
+                                
+                                <Text>{item.host}</Text>
+                                <Text>{item.contact}</Text>
+                                <View style={styles.hairLine} />
+                            </View>) 
+                            }
+                            keyExtractor={(item,index) => index.toString()}
+                        />
+
+                    </Segment>
+                )}
+                
+
+                {(message === 'compose') && (
+                <ScrollView>
                     <View style={style.container}>
                         <Text style={style.title}>Subject</Text>
                         <TextInput 
@@ -229,7 +329,7 @@ class Communication extends Component {
                             <Text style={style.link}>Preview message</Text>
                         </TouchableOpacity>
                     </View>
-                </ScrollView>
+                </ScrollView>)}
 
                 <Option title="Message To" openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optionType === 'contact') && guestFilter.map((contact) => (
@@ -253,7 +353,7 @@ class Communication extends Component {
 
 
 const mapStateToprops = (state) => ({
-    
+    user: state.userReducer
 })
 
 const mapDisptachToprops = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         backgroundColor: "#0E0C20",
         padding: 8,
@@ -11,17 +11,20 @@ const styles = {
     },
     row: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        width: '100%',
     },
     between: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        width: '100%',
     },
     around: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        width: '100%',
     },
     Header: {
         fontSize: 40,
@@ -30,7 +33,7 @@ const styles = {
     },
     icon: {
         paddingHorizontal: 10,
-        paddinhVertical: 5,
+        paddingVertical: 5,
     },
     search: {
         backgroundColor: "#FFFFFF", 
@@ -139,6 +142,6 @@ const styles = {
         color: "#707070",
         borderRadius: 2
     },
-}
+});
 
 export default styles;
