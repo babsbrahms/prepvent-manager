@@ -30,7 +30,7 @@ const style = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: 'center',
-        padding: 8
+      //  padding: 8
     },
     container: {
         marginBottom: 9
@@ -328,7 +328,7 @@ export default class Event extends Component {
                 <View style={styles.between}>
                     <Text style={style.title}>Advance Option</Text>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ showAdvance: !this.state.showAdvance })}>
+                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ showAdvance: !this.state.showAdvance }, () => this.scroll.scrollToEnd())}>
                         <Ionicons name={'ios-arrow-forward'} size={30} color={"#FFFFFF"}/>
                     </TouchableOpacity>
                     
@@ -341,7 +341,7 @@ export default class Event extends Component {
                             <Text style={[style.title, { color: '#000000'}]}>Acceptance Deadline</Text>
                                 
                             <TouchableOpacity style={style.deadline} onPress={() => this.openOption('Acceptance Deadline')}>
-                                <Text style={[style.to, { color: '#707070'}]}>{data.acceptanceDeadline ? moment(data.acceptanceDeadline).format("ddd Do MMMM YYYY hh:mm a") : "none"}</Text>
+                                <Text style={{ color: '#707070', fontSize:18}}>{data.acceptanceDeadline ? moment(data.acceptanceDeadline).format("ddd Do MMMM YYYY hh:mm a") : "none"}</Text>
                                 <Ionicons name={'ios-arrow-forward'} size={30} color={'#707070'}/>
                             </TouchableOpacity>
                         </View>

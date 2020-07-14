@@ -16,15 +16,13 @@ const styles = StyleSheet.create({
     },
     between: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     around: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     Header: {
         fontSize: 40,

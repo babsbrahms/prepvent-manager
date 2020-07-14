@@ -13,10 +13,12 @@
 [-] export data for guest
 [!] search for guest by qrcode (contactSearch)
 [] make sure selected contact contains phoneNumber or email
-[] padding and width problem with segment
-[] use user from reducer in registartion link
+[] padding and width problem
+[x] use user from reducer in registartion link
 [!] password Registration link with a general password
-[] Redesign advance option in event
+[x] Redesign advance option in event
 [x] Send previous message (Do not include invitation)
 [x] Redesign Invitation and message
 [] navigate nexted options (contactFilter and contactSearch)
+[] Auth page
+[] undefined in contactForm edit

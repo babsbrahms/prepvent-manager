@@ -108,11 +108,11 @@ class Crowd extends Component {
                     {(modalType === "CheckIn") && (<CheckIn polls={polls} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === "Guest") && (<AddGuest user={user} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === 'EditGuest') && (<EditGuest polls={polls} tables={tables} organizers={organizers} guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === "TableChart") && (<TableChart polls={polls} tables={tables} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "TableChart") && (<TableChart polls={polls} tables={tables} organizers={organizers} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <Guest polls={polls} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
+                    <Guest polls={polls} tables={tables} organizers={organizers} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeSideBar()}/>
                 </SideBar>                
             </View>
         )

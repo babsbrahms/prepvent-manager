@@ -10,6 +10,7 @@ import styles from '../styles';
 import { guestFilter } from "../utils/filter";
 import SideBar from "../component/SideBar";
 import Segment from '../component/Segment';
+import AnyGuest from '../component/AnyGuest'
 
 const style = StyleSheet.create({
     title: {
@@ -52,6 +53,7 @@ class Communication extends Component {
         sideBarOpen: false,
         optionOpen: false,
         optionType: "",
+        subtitle: '',
         showPoll: false,
         filterParams: '',
         selectedInput: '',
@@ -62,8 +64,8 @@ class Communication extends Component {
             to: [],
             subject: "",
             message: "",
-            host: "",
-            contact: '',
+            host: this.props.event.host,
+            contact: this.props.event.contact,
             image: null,
             polls: []
         },
@@ -95,17 +97,39 @@ class Communication extends Component {
 
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
-    openOption = (option) => this.setState({ optionOpen: true, optionType: option })
+    openOption = (option, subtitle) => this.setState({ optionOpen: true, optionType: option, subtitle: subtitle || '' })
 
-    closeOption = () => this.setState({ optionOpen: false, optionType: "" })
+    closeOption = () => this.setState({ optionOpen: false, optionType: "", subtitle: '' })
 
     selectFilter = contact => {
-        this.closeOption()
-        if (contact.options) {
-            this.openOption('invite')
-        } else {
+        this.closeOption();
+        this.setState({ filterParams: contact.name })
+  
+        if (contact.name === 'Any') {
+            this.openSideBar()
+        } else if (contact.name === 'Invited') {
 
+        } else if (contact.name === 'Accepted') {
+
+        } else if (contact.name === 'Invited By') {
+            this.openOption('Invited By', 'Guest invited by:')
+        } else if (contact.name === 'Checked In') {
+
+        } else if (contact.name === 'Not Accepted') {
+
+        } else if (contact.name === 'VIP') {
+
+        } else if (contact.name === 'Table') {
+            this.openOption('Table', 'Guest on table:')
         }
+    }
+
+    findByOrganizer = organizer => {
+        this.closeOption();
+    }
+
+    findByTable = table => {
+        this.closeOption();
     }
 
     addImage = () => {
@@ -148,10 +172,18 @@ class Communication extends Component {
 
     selectmessage = (message) => this.setState({ message })
 
+    addGuest = (contacts) => {
+        const { addMessage } = this.props;
+
+        if (contacts.length > 0) {  
+            this.closeSideBar();
+        }
+    }
+
     render() {
-        const { navigation } = this.props;
+        const { navigation, tables, organizers } = this.props;
         const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput, 
-            message, loading, messages, refreshing } = this.state;
+            message, loading, messages, refreshing, subtitle } = this.state;
         
         return (
             <View style={styles.container}>
@@ -175,7 +207,7 @@ class Communication extends Component {
                         </TouchableOpacity>
                         
                     </View>
-                    <Text style={style.to}> 24 contacts</Text>
+                    <Text style={style.to}>{filterParams}</Text>
                 </View>
 
                 <View style={style.container}>
@@ -198,7 +230,7 @@ class Communication extends Component {
                                 this.fetchMessages();
                             }}
                         >
-                            <Text style={style.messageText}>Previous Message(s)</Text>
+                            <Text style={style.messageText}>Saved Message(s)</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -314,9 +346,7 @@ class Communication extends Component {
                                 <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
                             </TouchableOpacity>
                         </View>
-
-
-                        
+                
                         {(!!showPoll) && (<Poll 
                             polls={data.polls} 
                             updatePoll={(polls) => this.setState({ ...this.state.data, polls })} 
@@ -331,20 +361,45 @@ class Communication extends Component {
                     </View>
                 </ScrollView>)}
 
-                <Option title="Message To" openModal={optionOpen} closeModal={() => this.closeOption()}>
+                <Option title="Message To" subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(optionType === 'contact') && guestFilter.map((contact) => (
-                    <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectFilter(contact)}>
+                    <TouchableOpacity key={contact.name} 
+                        style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} 
+                        onPress={() => this.selectFilter(contact)}
+                    >
                         <Text style={styles.optionText}>{contact.name}</Text>
                     </TouchableOpacity>
                     ))}
 
-                    {(optionType === 'invite') && (<View>
-                        <ActivityIndicator size="small" color={'#2DF19C'} />
+                    {(optionType === 'Invited By') && (<View>
+                        {organizers.map((organizer) => (
+                            <TouchableOpacity key={organizer.uid} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByOrganizer(organizer)}
+                            >
+                                <Text style={styles.optionText}>{organizer.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>)}
+
+                    
+                    {(optionType === 'Table') && (<View>
+                        {tables.map((table) => (
+                            <TouchableOpacity key={table.uid} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByTable(table)}
+                            >
+                                <Text style={styles.optionText}>{table.name}</Text>
+                            </TouchableOpacity>
+                        ))}
                     </View>)}
                 </Option>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-
+                    <AnyGuest
+                        close={() => this.closeSideBar()} 
+                        addContact={(contacts) => this.addGuest(contacts)} 
+                    />
                 </SideBar>
             </View>
         )
@@ -353,7 +408,9 @@ class Communication extends Component {
 
 
 const mapStateToprops = (state) => ({
-    user: state.userReducer
+    event: state.eventReducer,
+    tables: state.tablesReducer,
+    organizers: state.organizersReducer
 })
 
 const mapDisptachToprops = {

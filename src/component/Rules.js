@@ -11,14 +11,10 @@ const style = StyleSheet.create({
         marginTop: 9
     },
     to: {
-        fontSize: 24,
-        marginBottom: 9,
+        fontSize: 18,
+        // marginBottom: 9,
         color: '#707070'
     },
-    link: {
-        color: '#707070',
-        fontSize: 24
-    }
 });
 
 export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
@@ -28,7 +24,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
             <Text style={style.title}>Check In Rules</Text>
             
             <View>
-                <View style={styles.row}>                           
+                <View style={[styles.row, , { alignItems: 'center'}]}>                           
                     <TouchableOpacity style={styles.icon} onPress={() => selectCheckIn('invite')}>
                         <Ionicons name={checkIn === 'invite'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={checkIn === 'invite'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>
@@ -36,7 +32,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
                     <Text  style={style.to}>All guest invited</Text>
                 </View>
 
-                <View style={styles.row}>                           
+                <View style={[styles.row, { alignItems: 'center'}]}>                           
                     <TouchableOpacity style={styles.icon} onPress={() => selectCheckIn('accepted')}>
                         <Ionicons name={checkIn === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={checkIn === 'accepted'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>
@@ -48,7 +44,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
             <Text style={style.title}>Table Chart Rules</Text>
             
             <View>
-                <View style={styles.row}>                           
+                <View style={[styles.row, { alignItems: 'center'}]}>                           
                     <TouchableOpacity style={styles.icon} onPress={() => selectTable('invite')}>
                         <Ionicons name={tableChart === 'invite'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={tableChart === 'invite'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>
@@ -56,7 +52,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
                     <Text  style={style.to}>All guest invited</Text>
                 </View>
 
-                <View style={styles.row}>                           
+                <View style={[styles.row, , { alignItems: 'center'}]}>                           
                     <TouchableOpacity style={styles.icon} onPress={() => selectTable('accepted')}>
                         <Ionicons name={tableChart === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={tableChart === 'accepted'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>

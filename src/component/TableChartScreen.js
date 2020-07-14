@@ -86,6 +86,7 @@ export default class TableChart extends Component {
         searchParams: 'Name',
         optionOpen: false,
         option: '',
+        subtitle: '',
         selectedIndex: -1,
         selectedTable: null,
         newTableName: "",
@@ -254,18 +255,37 @@ export default class TableChart extends Component {
 
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
-    openOption = (option) => this.setState({ optionOpen: true, option })
+    openOption = (option, subtitle) => this.setState({ optionOpen: true, option, subtitle: subtitle || '' })
 
-    closeOption = () => this.setState({ optionOpen: false, option: '' })
+    closeOption = () => this.setState({ optionOpen: false, option: '', subtitle: '' })
 
     selectFilter = contact => {
-        this.closeOption()
-    
-        if (contact.options) {
-            this.openOption('invite')
-        } else {
-            this.setState({ filterParams: contact.name, option: '' })
+        this.closeOption();
+        this.setState({ filterParams: contact.name })
+  
+        if (contact.name === 'Invited') {
+            
+        } else if (contact.name === 'Accepted') {
+
+        } else if (contact.name === 'Invited By') {
+            this.openOption('Invited By', 'Guest invited by:')
+        } else if (contact.name === 'Checked In') {
+
+        } else if (contact.name === 'Not Accepted') {
+
+        } else if (contact.name === 'VIP') {
+
+        } else if (contact.name === 'Table') {
+            this.openOption('Table', 'Guest on table:')
         }
+    }
+
+    findByOrganizer = organizer => {
+        this.closeOption();
+    }
+
+    findByTable = table => {
+        this.closeOption();
     }
 
     selectSearch = contact => {
@@ -301,9 +321,9 @@ export default class TableChart extends Component {
     }
 
     render() {
-        const { close, editGuest, polls, tables } = this.props;
+        const { close, editGuest, polls, tables, organizers } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, newTableName, search, data, guests, loading } = this.state;
+            selectedTable, newTableName, search, data, guests, loading, subtitle } = this.state;
             
 
         return (
@@ -562,7 +582,7 @@ export default class TableChart extends Component {
                             />
                         </Segment>
 
-                        <Option title={`${option} by`} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                        <Option title={`${option}`} subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
                             {(option === 'filter') && (
                             <View>
                                 
@@ -585,9 +605,27 @@ export default class TableChart extends Component {
                             </View>)}
 
 
-                            {(option === 'invite') && (
-                            <View>
-                                <ActivityIndicator size="small" color={'#2DF19C'} />
+                            {(option === 'Invited By') && (<View>
+                                {organizers.map((organizer) => (
+                                    <TouchableOpacity key={organizer.uid} 
+                                        style={styles.optionBody} 
+                                        onPress={() => this.findByOrganizer(organizer)}
+                                    >
+                                        <Text style={styles.optionText}>{organizer.name}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>)}
+
+                            
+                            {(option === 'Table') && (<View>
+                                {tables.map((table) => (
+                                    <TouchableOpacity key={table.uid} 
+                                        style={styles.optionBody} 
+                                        onPress={() => this.findByTable(table)}
+                                    >
+                                        <Text style={styles.optionText}>{table.name}</Text>
+                                    </TouchableOpacity>
+                                ))}
                             </View>)}
                         </Option>
                     </View>
