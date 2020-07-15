@@ -87,6 +87,7 @@ export default class TableChart extends Component {
         optionOpen: false,
         option: '',
         subtitle: '',
+        type: '',
         selectedIndex: -1,
         selectedTable: null,
         newTableName: "",
@@ -323,7 +324,7 @@ export default class TableChart extends Component {
     render() {
         const { close, editGuest, polls, tables, organizers } = this.props;
         const { sideBarOpen, refreshing, filterParams, searchParams, option, optionOpen, selectedIndex,
-            selectedTable, newTableName, search, data, guests, loading, subtitle } = this.state;
+            selectedTable, newTableName, search, data, guests, loading, subtitle, type } = this.state;
             
 
         return (
@@ -552,12 +553,12 @@ export default class TableChart extends Component {
                         </View>
 
                         <View style={styles.around}>
-                            <TouchableOpacity onPress={() => this.openOption('filter')}>
+                            <TouchableOpacity onPress={() =>  this.setState({ type: 'Filter By'}, () => this.openOption('filter'))}>
                                 <Text style={styles.title}>Filter By</Text>
                                 <Text style={style.params}>{filterParams.toLowerCase()}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => this.openOption('search')}>
+                            <TouchableOpacity onPress={() => this.setState({ type: 'Search By'}, () => this.openOption('search'))}>
                                 <Text style={styles.title}>Search By</Text>
                                 <Text style={style.params}>{searchParams.toLowerCase()}</Text>
                             </TouchableOpacity>
@@ -582,7 +583,7 @@ export default class TableChart extends Component {
                             />
                         </Segment>
 
-                        <Option title={`${option}`} subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                        <Option title={type} subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
                             {(option === 'filter') && (
                             <View>
                                 

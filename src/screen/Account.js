@@ -8,6 +8,13 @@ import Segment from '../component/Segment';
 import styles from '../styles';
 
 const style = StyleSheet.create({
+    top: {
+        minHeight: 100,
+        width: '100%',
+        backgroundColor: '#E4E4E4',
+        borderBottomRightRadius: 40,
+        borderBottomLeftRadius: 40,
+    },
     todo: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -36,9 +43,33 @@ const style = StyleSheet.create({
         fontSize: 14,
         color: '#707070'
     }, 
-    todoAction: {
+    button: {
+        borderRadius: 20,
+        marginHorizontal: 10,
+        marginVertical: 5,
+        padding: 10,
+        backgroundColor: '#2DF19C',
+    },
+    btnText: {
         fontSize: 24,
+        color: "#FFFFFF",
         fontWeight: 'bold',
+        textAlign: "center"
+    },
+    messageText: {
+        color: '#E4E4E4',
+        fontSize: 18,
+    },
+    messageLink: {
+        borderBottomColor: '#E4E4E4',
+        padding: 4,
+        marginHorizontal: 3,
+        borderBottomWidth: 4,
+    },
+    messageTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000000'
     }
 
 });
@@ -49,7 +80,8 @@ class Account extends Component {
         transactions: [],
         refreshing: false,
         sideBarOpen: false,
-        loading: false
+        loading: false,
+        active: 'Transaction'
     }
 
     fetchTransaction = () => {
@@ -60,33 +92,62 @@ class Account extends Component {
 
     closeSideBar = () => this.setState({ sideBarOpen: false })
 
+    selectActive = active => this.setState({ active })
+
     render() {
         const { navigation } = this.props;
-        const  { data, refreshing, transactions, sideBarOpen, loading } = this.state
+        const  { data, refreshing, transactions, sideBarOpen, loading, active } = this.state
 
         return (
             <View style={styles.container}>
-                <View style={styles.between}>
-                    <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
+                <View style={style.top}>
+                    <View style={[styles.between, { alignItems: "center"}]}>
+                        <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
+                            <Ionicons name={'ios-arrow-back'} color={'#707070'} size={30}/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                            <Ionicons name={'ios-exit'} color={'#707070'} size={40}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={[styles.around, { marginBottom: 9 }]}>
+                        
+                        <View>
+                            <Text style={[styles.title, { color: "#0E0C20"}]}>Olayinka Ibrahim</Text>
+                            <Text>+2348142319913</Text>
+                            <Text>yeancahbrahms7@gmail.com</Text>
+                        </View>
+
+
+                        <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar()}>
+                            <Ionicons name={'ios-person'} size={60} color={"#0E0C20"}/>
+                        </TouchableOpacity>  
+                    </View>
+
+                </View>
+                
+                <View style={styles.around}>
+                    <TouchableOpacity 
+                        disabled={loading}
+                        style={[style.messageLink, { borderBottomColor: active === 'Transaction'? '#2DF19C' : '#E4E4E4'}]}
+                        onPress={() => this.selectActive('Transaction')}
+                    >
+                        <Text style={style.messageText}>Transaction</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon} onPress={() => {}}>
-                        <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
+                    <TouchableOpacity
+                        disabled={loading}
+                        style={[style.messageLink, { borderBottomColor: active === 'Subscription'? '#2DF19C' : '#E4E4E4'}]}
+                        onPress={() => {
+                            this.selectActive('Subscription');
+                        }}
+                    >
+                        <Text style={style.messageText}>Subscription</Text>
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.Header}>ACCOUNT</Text>
-                <View style={[styles.between, { alignItems: 'center', marginBottom: 9 }]}>
-                    <Text style={styles.title}>Open My Profile</Text>
-
-                    <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar()}>
-                        <Ionicons name={'ios-person'} size={30} color={"#FFFFFF"}/>
-                    </TouchableOpacity>  
-                </View>
-
-                <Text style={styles.title}>Transactions</Text>
-                <Segment>
+                {(active === 'Transaction') && (<Segment>
                     <FlatList 
                     onRefresh={() => this.fetchTransaction()}
                     refreshing={refreshing}
@@ -120,7 +181,63 @@ class Account extends Component {
                     }
                     keyExtractor={(item,index) => index.toString()}
                     />
-                </Segment>
+                </Segment>)}
+
+
+
+                {(active === 'Subscription') && (<ScrollView style={{ marginTop: 10 }}>
+                    <Text style={styles.title}>Free</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
+                    <Text style={styles.title}>Basic</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
+                    <Text style={styles.title}>Gold</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+
+                    <Text style={styles.title}>Platinum</Text>
+                    <Segment>
+                        <View style={styles.details}>
+                            <View>
+
+                            </View>
+                            <TouchableOpacity style={style.button}>
+                                <Text style={style.btnText}>SELECT</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Segment>
+
+                </ScrollView>)}
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
 

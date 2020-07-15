@@ -120,8 +120,8 @@ class Dashboard extends Component {
 
                         <Text style={style.date}>25 May 2021</Text>
 
-                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Wallet')}>
-                            <Ionicons name={'ios-wallet'} color={'#707070'} size={30}/>
+                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Account')}>
+                            <Ionicons name={'ios-person'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
                     </View>
                     <View>

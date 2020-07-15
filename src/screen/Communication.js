@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator, FlatList, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator, FlatList, Linking, KeyboardAvoidingView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
@@ -21,7 +21,7 @@ const style = StyleSheet.create({
     to: {
         color: '#FFFFFF',
         fontSize: 24,
-        marginBottom: 9  
+       // marginBottom: 9  
     },
     link: {
         color: '#707070',
@@ -207,7 +207,7 @@ class Communication extends Component {
                         </TouchableOpacity>
                         
                     </View>
-                    <Text style={style.to}>{filterParams}</Text>
+                    <Text style={{ color: '#FFFFFF'}}>{filterParams}</Text>
                 </View>
 
                 <View style={style.container}>
@@ -342,9 +342,9 @@ class Communication extends Component {
                         <View style={styles.between}>
                             <Text style={style.title}>Poll</Text>
 
-                            <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
+                            {(!showPoll) && (<TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                                 <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
-                            </TouchableOpacity>
+                            </TouchableOpacity>)}
                         </View>
                 
                         {(!!showPoll) && (<Poll 

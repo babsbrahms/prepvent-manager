@@ -12,7 +12,6 @@ import Communication from './screen/Communication';
 
 import Home from './screen/Home';
 import Notification from './screen/Notification';
-import Wallet from './screen/Wallet';
 import Account from './screen/Account';
 import Create from './screen/Create';
 import Settings from './screen/Settings';
@@ -69,7 +68,6 @@ const AppNavigator = createStackNavigator(
     {
       Home: Home,
       Account: Account,
-      Wallet: Wallet,
       Create: Create,
       Main: Main,
       Settings: Settings,

@@ -61,6 +61,7 @@ export default class Guest extends Component {
         optionOpen: false,
         option: '',
         search: "",
+        type: '',
         data: [
             {
                 uid: "11212",
@@ -233,7 +234,7 @@ export default class Guest extends Component {
     }
 
     render() {
-        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data, subtitle } = this.state;
+        const { refreshing, selectedIndex, searchParams, filterParams, optionOpen, option, search, data, subtitle, type } = this.state;
         
         const { close, editGuest, polls, tables, organizers } = this.props
         return (
@@ -260,12 +261,12 @@ export default class Guest extends Component {
                 </View>
 
                 <View style={styles.around}>
-                    <TouchableOpacity onPress={() => this.openOption('filter')}>
+                    <TouchableOpacity onPress={() => this.setState({ type: 'Filter By'}, () => this.openOption('filter'))}>
                         <Text style={styles.title}>Filter By</Text>
                         <Text style={style.params}>{filterParams.toLowerCase()}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.openOption('search')}>
+                    <TouchableOpacity onPress={() => this.setState({ type: 'Search By'}, () => this.openOption('search'))}>
                         <Text style={styles.title}>Search By</Text>
                         <Text style={style.params}>{searchParams.toLowerCase()}</Text>
                     </TouchableOpacity>
@@ -394,7 +395,7 @@ export default class Guest extends Component {
                     />
                 </Segment>
 
-                <Option title={`${option}`} subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
+                <Option title={type} subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
                     {(option === 'filter') && (
                     <View>
                         {contactFilter.map((contact) => (

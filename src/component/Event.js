@@ -305,9 +305,9 @@ export default class Event extends Component {
                     <View style={styles.between}>
                         <Text style={style.title}>Poll</Text>
 
-                        <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
+                        {(!showPoll) && (<TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                             <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
-                        </TouchableOpacity>
+                        </TouchableOpacity>)}
                         
                     </View>
 
@@ -326,7 +326,7 @@ export default class Event extends Component {
                 </View>
 
                 <View style={styles.between}>
-                    <Text style={style.title}>Advance Option</Text>
+                    <Text style={style.title}>Advance Options</Text>
 
                     <TouchableOpacity style={styles.icon} onPress={() => this.setState({ showAdvance: !this.state.showAdvance }, () => this.scroll.scrollToEnd())}>
                         <Ionicons name={'ios-arrow-forward'} size={30} color={"#FFFFFF"}/>
@@ -334,7 +334,7 @@ export default class Event extends Component {
                     
                 </View>
 
-                <View style={style.container}>
+                <View style={[style.container, { marginBottom: 20 }]}>
                     {(!!showAdvance) && (
                     <Segment color='#E4E4E4'>
                         <View>

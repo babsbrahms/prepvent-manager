@@ -37,7 +37,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
                         <Ionicons name={checkIn === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={checkIn === 'accepted'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>
 
-                    <Text  style={style.to}>Only guest that accepted invitation</Text>
+                    <Text  style={style.to}>Only guests that accepted invitation</Text>
                 </View>
             </View>
    
@@ -57,7 +57,7 @@ export const Rules = ({selectCheckIn, checkIn, selectTable, tableChart }) => {
                         <Ionicons name={tableChart === 'accepted'? 'ios-radio-button-on' : 'ios-radio-button-off'} size={30} color={tableChart === 'accepted'? '#2DF19C' :'#707070'}/>
                     </TouchableOpacity>
 
-                    <Text  style={style.to}>Only guest that accepted invitation</Text>
+                    <Text  style={style.to}>Only guests that accepted invitation</Text>
                 </View>
             </View>
         </View>

@@ -21,14 +21,17 @@ const style = StyleSheet.create({
     }
 });
 
-const Segment = ({ color, disabled, loading, height, marginTop, children }) => {
+const Segment = ({ color, disabled, loading, marginTop, children }) => {
     return (
-        <View style={{ borderRadius: 20, marginTop: marginTop? marginTop : 15, width: '100%', minHeight: height? height: 100, backgroundColor: color? color: 'white', padding: 5, flex: 1 }}>
+        <View style={{ borderRadius: 20, marginTop: marginTop? marginTop : 15, width: '100%', minHeight: 100, backgroundColor: color? color: 'white', padding: 5, flex: 1 }}>
             
             {(disabled || loading) && (<View style={style.frontDrop}>
                 {(loading) && (<ActivityIndicator color='#2DF19C' size='large'/>)}
             </View>)}
-            {children}
+            <View style={{ width: '100%', height: '100%' }}>
+                {children}
+            </View>
+            
         </View>
     )
 }
