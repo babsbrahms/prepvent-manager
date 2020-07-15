@@ -151,7 +151,7 @@ export default class Poll extends Component {
                 <Text style={style.title}>Title</Text>
                 <TextInput 
                     style={styles.textInput} 
-                    placeholder={"Add short poll title. i.e. Food"} 
+                    placeholder={"Add short and descriptive poll title. i.e. Drink"} 
                     placeholderTextColor="#E4E4E4"
                     value={current.title}
                     maxLength={15}

@@ -134,7 +134,7 @@ export default class EditGuest extends Component {
                     type: "Alert",
                     required: false,
                     value: "vip",
-                    role: "Alert the orgnaizer that invited the guest and add note for the check in staff"
+                    role: "Alert the inviter organizer when the guest checks in and add note for the check in staff"
                 },
                 table: {
                     name: "Table",
@@ -223,7 +223,9 @@ export default class EditGuest extends Component {
     render() {
         const { optionOpen, data, schema, optionType, selected, loading,  } = this.state;
         
-        const { close, tables, organizers, polls } = this.props
+        const { close, tables, organizers, polls } = this.props;
+
+        console.log(data);
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
             <View style={styles.container}>
@@ -337,7 +339,7 @@ export default class EditGuest extends Component {
                                 <Text style={style.todoDetailKey}>VIP</Text>
 
                                 <TouchableOpacity style={style.action} onPress={() => this.selectedDetail(schema.vip, data.vip)}>
-                                    <Text style={style.todoDetailValue}>{data.vip.name? 'true' : "false"}</Text>
+                                    <Text style={style.todoDetailValue}>{data.vip.alert? 'true' : "false"}</Text>
                                     <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -406,7 +408,7 @@ export default class EditGuest extends Component {
                         <View>
                             <View style={styles.between}>
                                 <Text style={style.title}>Alert</Text>
-                                <Switch value={data.vip.alert}  onValueChange={() => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, alert: !this.state.data.vip.alert }}})} trackColor={{ true: '#2DF19C', false: '#EC3636'}} thumbColor={'#E4E4E4'} />
+                                <Switch value={data.vip.alert}  onValueChange={() => this.setState({ data: { ...this.state.data, vip: { ...this.state.data.vip, alert: !this.state.data.vip.alert }}})} trackColor={{ true: '#2DF19C', false: '#EC3636'}} thumbColor={'#E4E4E4'} />
                             </View>
 
                             <Text style={style.title}>Note</Text>
@@ -416,8 +418,8 @@ export default class EditGuest extends Component {
                                 placeholder={`Enter note for checkin staffs`} 
                                 placeholderTextColor="#E4E4E4"
                                 value={data.vip.note}
-                                onChange={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}
-                                onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.vip, note: e.nativeEvent.text }}})}
+                                onChange={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.data.vip, note: e.nativeEvent.text }}})}
+                                onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, vip: { ...this.state.data.vip, note: e.nativeEvent.text }}})}
                             />
 
                             <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>

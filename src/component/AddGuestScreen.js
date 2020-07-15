@@ -473,7 +473,7 @@ export default class AddGuest extends Component {
                                         <Ionicons name={'ios-remove-circle-outline'} size={30} color={"#EC3636"}/>
                                     </TouchableOpacity>
                                     
-                                    <TouchableOpacity onPress={() => this.editContact(index, item[schema.name], item[schema.phoneNumber], item[schema.email])}> 
+                                    <TouchableOpacity onPress={() => this.editContact(index, item[schema.name] || '', item[schema.phoneNumber] || '', item[schema.email] || '')}> 
                                         <Text style={style.todo}>{item[schema.name]}</Text>                       
                                         {(!!item[schema.phoneNumber]) && (<Text >{item[schema.phoneNumber]}</Text>)}  
                                         {(!!item[schema.email]) && (<Text >{item[schema.email]}</Text> )}

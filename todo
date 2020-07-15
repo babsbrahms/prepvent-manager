@@ -1,21 +1,17 @@
 [!] update; [] undone; [x] done; [-] initiated
 ------------------------------------------------------
+[!] addGuest via: guest from previous events
+[!] search for guest by qrcode (contactSearch)
+[!] password Registration link with a general password
+
 
 [] allow multiple pictures in communication
-[x] delete image
+[] small note attached to pictures in communication
+[] order message component
 [] convert phoneNumber to international format
-[x] do account page
 [] do notification page
 [] Invitation link tracking
-[!] addGuest via: guest from previous events
-[-] export data for expenditure
-[-] export data for guest
-[!] search for guest by qrcode (contactSearch)
 [] make sure selected contact contains phoneNumber or email
 [] padding and width problem
-[!] password Registration link with a general password
 [] Auth page
-[] undefined in contactForm edit
-[] secure registration link
 [] add table services to table chart
-[] Suggest adding food poll to invitation

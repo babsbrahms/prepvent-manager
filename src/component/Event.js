@@ -310,7 +310,7 @@ export default class Event extends Component {
 
                 <View style={style.container}>
                     <View style={styles.between}>
-                        <Text style={style.title}>Food Poll</Text>
+                        <Text style={style.title}>Meal Poll</Text>
 
                         {(!showPoll) && (<TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                             <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
