@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, ActivityIndicator, FlatList, Linking, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, ImageBackground, ScrollView, ActivityIndicator, FlatList, Linking, KeyboardAvoidingView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
@@ -134,7 +134,7 @@ class Communication extends Component {
 
     addImage = () => {
         const options = {
-            title: 'Select Avatar',
+            title: 'Select Image',
             storageOptions: {
               skipBackup: true,
               path: 'images',
@@ -333,7 +333,11 @@ class Communication extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        {(data.image !== null) && (<Image style={styles.image} source={data.image} />)}
+                        {(!!data.image) && (<ImageBackground source={data.image} imageStyle={styles.imageBorder} style={styles.image}>
+                        <TouchableOpacity style={{ padding: 5, borderRadius: 10, backgroundColor: '#E4E4E4',}} onPress={() => this.setState({ data: { ...this.state.data, image: '' }})}>
+                            <Ionicons name={'ios-remove-circle-outline'} size={35} color={'#EC3636'}/>
+                        </TouchableOpacity>
+                    </ImageBackground>)}
                     </View>
 
 

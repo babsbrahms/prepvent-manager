@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, ScrollView, FlatList, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
 import { addMessageReducer } from '../action/message';
 import SideBar from '../component/SideBar';
 import Segment from '../component/Segment';
 import styles from '../styles';
+import Profile from '../component/Profile'
 
 const style = StyleSheet.create({
     top: {
@@ -70,13 +71,18 @@ const style = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#000000'
-    }
+    },
+    date: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#0E0C20"
+    },
 
 });
 
 class Account extends Component {
     state = {
-        user: {},
+        user: this.props.user,
         transactions: [],
         refreshing: false,
         sideBarOpen: false,
@@ -94,9 +100,14 @@ class Account extends Component {
 
     selectActive = active => this.setState({ active })
 
+    saveUser = user => {
+        this.closeSideBar();
+        this.setState({ loading: true, user });
+    }
+
     render() {
         const { navigation } = this.props;
-        const  { data, refreshing, transactions, sideBarOpen, loading, active } = this.state
+        const  { data, refreshing, transactions, sideBarOpen, loading, active, user } = this.state
 
         return (
             <View style={styles.container}>
@@ -106,23 +117,32 @@ class Account extends Component {
                             <Ionicons name={'ios-arrow-back'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
 
+                        <Text style={style.date}>ACCOUNT</Text>
+
                         <TouchableOpacity style={styles.icon} onPress={() => {}}>
-                            <Ionicons name={'ios-exit'} color={'#707070'} size={40}/>
+                            <Ionicons name={'ios-log-out'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={[styles.around, { marginBottom: 9 }]}>
+                    <View style={[styles.around, { marginBottom: 9, marginHorizontal: 9 }]}>
                         
                         <View>
-                            <Text style={[styles.title, { color: "#0E0C20"}]}>Olayinka Ibrahim</Text>
-                            <Text>+2348142319913</Text>
-                            <Text>yeancahbrahms7@gmail.com</Text>
+                            <Text style={[styles.title, { color: "#0E0C20"}]}>{user.name}</Text>
+                            <Text>{user.phoneNumber}</Text>
+                            <Text>{user.email}</Text>
+                            {(!loading) && (<TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar()}>
+                                <Ionicons name={'ios-settings'} size={20} color={"#0E0C20"}/>
+                            </TouchableOpacity>)}  
+
+                            {(!!loading) && (
+                                <ActivityIndicator color={"#0E0C20"} />
+                            )}
                         </View>
 
+                        <View>
+                            <Image source={user.image} style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: '#707070', margin: 2 }} />
 
-                        <TouchableOpacity disabled={loading} style={styles.icon} onPress={() => this.openSideBar()}>
-                            <Ionicons name={'ios-person'} size={60} color={"#0E0C20"}/>
-                        </TouchableOpacity>  
+                        </View>
                     </View>
 
                 </View>
@@ -240,7 +260,7 @@ class Account extends Component {
                 </ScrollView>)}
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-
+                    <Profile user={user} saveUser={(user) => this.saveUser(user)} />
                 </SideBar>
                 
             </View>
@@ -250,7 +270,7 @@ class Account extends Component {
 
 
 const mapStateToprops = (state) => ({
-    
+    user: state.userReducer
 })
 
 const mapDisptachToprops = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, Switch, ScrollView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, Switch, ScrollView, Platform, ImageBackground } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment";
@@ -92,7 +92,7 @@ export default class Event extends Component {
 
     addPoster = () => {
         const options = {
-            title: 'Select Avatar',
+            title: 'Select Poster',
             storageOptions: {
               skipBackup: true,
               path: 'images',
@@ -173,8 +173,15 @@ export default class Event extends Component {
                         
                     </View>
 
-                    {(!!data.poster) && (<Image style={styles.image} resizeMode={'cover'} source={data.poster} />)}
+                    {(!!data.poster) && (
+                    <ImageBackground source={data.poster} imageStyle={styles.imageBorder} style={styles.image}>
+                        <TouchableOpacity style={{ padding: 5, borderRadius: 10, backgroundColor: '#E4E4E4',}} onPress={() => this.setState({ data: { ...this.state.data, poster: '' }})}>
+                            <Ionicons name={'ios-remove-circle-outline'} size={35} color={'#EC3636'}/>
+                        </TouchableOpacity>
+                    </ImageBackground>)}
                 </View>
+
+
 
 
                 <View style={style.container}>
@@ -303,7 +310,7 @@ export default class Event extends Component {
 
                 <View style={style.container}>
                     <View style={styles.between}>
-                        <Text style={style.title}>Poll</Text>
+                        <Text style={style.title}>Food Poll</Text>
 
                         {(!showPoll) && (<TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.setState({ showPoll: true })}>
                             <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>

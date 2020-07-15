@@ -2,7 +2,7 @@
 ------------------------------------------------------
 
 [] allow multiple pictures in communication
-[] delete image
+[x] delete image
 [] convert phoneNumber to international format
 [x] do account page
 [] do notification page
@@ -17,3 +17,5 @@
 [] Auth page
 [] undefined in contactForm edit
 [] secure registration link
+[] add table services to table chart
+[] Suggest adding food poll to invitation

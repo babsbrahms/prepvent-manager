@@ -45,12 +45,20 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         backgroundColor: "#707070",
-        borderBottomRightRadius: 50,
-        borderBottomLeftRadius: 50,
         flex: 1,
         minHeight: 250,
         backgroundColor: "#0E0C20",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
+
+    imageBorder: {
+        borderBottomRightRadius: 50,
+        borderBottomLeftRadius: 50,
+    },
+
     segment: {
         borderRadius: 20,
         marginTop: 0,

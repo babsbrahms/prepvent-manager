@@ -35,13 +35,143 @@ export default class AnyGuest extends PureComponent {
         this.state = {
             search: '',
             refreshing: true,
-            contacts: [],
+            contacts: [
+                {
+                    uid: "11212",
+                    name: 'biola',
+                    email: 'yeancahBrahms7@gmail.com',
+                    phoneNumber: "+3248142319913",
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice'  
+                },
+                {
+                    uid: "11212qwqwe",
+                    name: 'Olayinka',
+                    email: 'yeancahBrahms7@gmail.com',
+                    phoneNumber: "+3248142319913",
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice'  
+                },
+                {
+                    uid: "11212popi",
+                    name: 'Zharadeen',
+                    email: 'yeancahBrahms7@gmail.com',
+                    phoneNumber: "+3248142319913",
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice'  
+                },
+                {
+                    uid: "11212mnbnmb",
+                    name: 'Najeeb',
+                    email: 'yeancahBrahms7@gmail.com',
+                    phoneNumber: "+3248142319913",
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice' 
+                },            
+                {
+                    uid: "11212zcxzcx",
+                    name: 'Teslim',
+                    email: 'tessy@gmail.com',
+                    phoneNumber: "+3248142319913",
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice' 
+                },
+                {
+                    uid: "11212sdf",
+                    name: 'Rukayat',
+                    email: 'ruka@gmail.com',
+                    invited: 12343454555,
+                    invitedBy: {
+                        uid: '233',
+                        name: "olayinka",
+                        phoneNumber: "+2348142319913"
+                    },
+                    accepted: 12343454555,
+                    checkedIn: 12343454555,
+                    vip: {},
+                    table: {
+                        uid: 1,
+                        name: "Bride's Table"
+                    },
+                    color: "Red",
+                    food: 'Fried Rice'  
+                }
+            ],
             loading: false,
         }
     }
     
+    componentDidMount() {
+        this.getAll()
+    }
+    
     getAll = () => {
-
+        this.setState({ refreshing: false })
     }
 
 
@@ -78,7 +208,7 @@ export default class AnyGuest extends PureComponent {
                         return contact
                     }
                 }).map(contact => ({
-                    name: contact.displayName,
+                    name: contact.name,
                     phoneNumber: contact.phoneNumber,
                     email: contact.email
                 }))
@@ -120,19 +250,22 @@ export default class AnyGuest extends PureComponent {
                     <FlatList 
                     onRefresh={() => this.getAll()}
                     refreshing={refreshing}
-                    data={contacts.filter(x => x.displayName.toLowerCase().includes(search.toLowerCase()))}
+                    data={contacts}
                     initialNumToRender={12}
                     renderItem={({ item, index }) => 
                         (<View style={{ width: '100%', flex: 1}}> 
                             <View style={style.container}>
-                                
-                                <Text numberOfLines={2} style={style.contact}>{item.displayName}</Text>                           
+                                <View>
+                                    <Text numberOfLines={2} style={style.contact}>{item.name}</Text>                           
+
+                                    <Text>Invited by {item.invitedBy.name}</Text>
+                                </View>
 
                                 <TouchableOpacity style={style.icon} onPress={() => this.select(item, index)}>
                                     <Ionicons name={item.selected? 'ios-radio-button-on' : 'ios-radio-button-off'} color={'black'} size={30}/>
                                 </TouchableOpacity>
                             </View>
-                            <Text>Invited by {item.invitedBy}</Text>
+                            
                             <View style={styles.hairLine} />
                         
                         </View>) 

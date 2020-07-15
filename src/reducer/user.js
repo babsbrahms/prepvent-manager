@@ -4,8 +4,9 @@ let init = {
     name: 'Olayinka Ibrahim',
     uid: '1212j232kjui',
     countryCode: '+234',
-    phoneNumber: '',
-    email: ''
+    phoneNumber: '+2348142319913',
+    email: 'yeancahbrahms7@gmail.com',
+    image: ''
 };
 
 function userReducer (state = init, action) {
