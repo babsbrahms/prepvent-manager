@@ -119,7 +119,7 @@ class Account extends Component {
 
                         <Text style={style.date}>ACCOUNT</Text>
 
-                        <TouchableOpacity style={styles.icon} onPress={() => {}}>
+                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Authenication')}>
                             <Ionicons name={'ios-log-out'} color={'#707070'} size={30}/>
                         </TouchableOpacity>
                     </View>
@@ -137,7 +137,7 @@ class Account extends Component {
                             {(!!loading) && (
                                 <ActivityIndicator color={"#0E0C20"} />
                             )}
-                        </View>
+                        </View >
 
                         <View>
                             <Image source={user.image} style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: '#707070', margin: 2 }} />

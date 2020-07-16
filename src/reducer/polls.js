@@ -6,18 +6,18 @@ let init = [
         title: "food",
         question: "Choose a food",
         options: {
-            'Fried Rice': 0,
-            'Amala': 0,
-            "Beans": 0
+            'Fried Rice': 7,
+            'Amala': 1,
+            "Beans": 2
         }
     },
     {
         title: "color",
         question: "Choose a color",
         options: {
-            'Red': 0,
-            'Blue': 0,
-            "Green": 0
+            'Red': 10,
+            'Blue': 12,
+            "Green": 20
         } 
     }
 ];

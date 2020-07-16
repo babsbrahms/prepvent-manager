@@ -18,7 +18,7 @@ const style = StyleSheet.create({
         marginTop: 0,
         marginBottom: 9,
         width: '100%',
-        height: '25%',
+      //  height: '25%',
         backgroundColor: "#E4E4E4",
         padding: 5,
         marginTop: 9

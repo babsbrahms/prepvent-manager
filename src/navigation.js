@@ -16,6 +16,8 @@ import Account from './screen/Account';
 import Create from './screen/Create';
 import Settings from './screen/Settings';
 
+import Authenication from './screen/Authentication';
+
 const Main = createBottomTabNavigator({
     Task: {
         screen: Task,
@@ -71,7 +73,8 @@ const AppNavigator = createStackNavigator(
       Create: Create,
       Main: Main,
       Settings: Settings,
-      Notification: Notification
+      Notification: Notification,
+      Authenication: Authenication
     },
     {
       initialRouteName: 'Home',

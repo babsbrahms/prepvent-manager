@@ -5,24 +5,23 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#0E0C20",
         padding: 8,
-        width: '100%',
-        height: '100%',
-        // flex: 1
+        // width: '100%',
+        // height: '100%',
+        flex: 1
     },
     row: {
         display: "flex",
         flexDirection: "row",
-        width: '100%',
     },
     between: {
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     around: {
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     },
     Header: {
         fontSize: 40,

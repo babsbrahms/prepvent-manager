@@ -22,7 +22,22 @@ const style = StyleSheet.create({
         backgroundColor: '#0E0C20', 
         padding: 3, 
         margin: 3 
-    }
+    },
+    bar: {
+        borderRadius: 2,
+        marginTop: 3,
+        marginBottom: 3,
+        width: '100%',
+        height: 4,
+        backgroundColor: '#FFFFFF',
+        
+    },
+    slide: {
+        borderRadius: 2,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#2DF19C',
+    },
 });
 
 export default class DisplayPoll extends Component {
@@ -36,6 +51,7 @@ export default class DisplayPoll extends Component {
             },
         },
         currentIndex: -1,
+        total: 0,
         inputValue: '',
         errors: {}
     }
@@ -56,12 +72,14 @@ export default class DisplayPoll extends Component {
         if (currentIndex === index) {
             this.cancelPoll()
         } else {
-            this.setState({ currentIndex: index, current: polls[index] })
+            let total = Object.values(polls[index].options).reduce((a,c) => a + c, 0);
+
+            this.setState({ currentIndex: index, current: polls[index], total })
         }  
     }
 
     render() {
-        const { polls, current } = this.state;
+        const { polls, current, total } = this.state;
         
         return (
         <View style={{ borderRadius: 20, marginTop: 0, marginBottom: 9, width: '100%', minHeight: 100, backgroundColor: '#E4E4E4', padding: 5, flex: 1 }}>
@@ -87,7 +105,14 @@ export default class DisplayPoll extends Component {
                 <ScrollView>
                     {Object.keys(current.options).map((option, index) => (
                         <View key={index.toString()} >
-                            <Text style={style.to}>{option} = {current.options[option]}</Text>
+                            <View style={styles.between}>
+                                <Text style={style.to}>{option}</Text>
+                                <Text style={style.to}>{current.options[option]}</Text>
+                            </View>
+
+                            <View style={style.bar}>
+                                <View style={[style.slide, { width: `${(current.options[option]/total)*100}%` }]}/>
+                            </View>
                         </View>
                     ))}
                 </ScrollView>
