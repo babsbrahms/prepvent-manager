@@ -107,7 +107,7 @@ export default class DisplayPoll extends Component {
                         <View key={index.toString()} >
                             <View style={styles.between}>
                                 <Text style={style.to}>{option}</Text>
-                                <Text style={style.to}>{current.options[option]}</Text>
+                                <Text style={style.to}>{current.options[option]} votes</Text>
                             </View>
 
                             <View style={style.bar}>

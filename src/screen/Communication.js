@@ -7,7 +7,7 @@ import { addMessageReducer } from '../action/message';
 import Poll from '../component/Poll';
 import Option from '../component/Option';
 import styles from '../styles';
-import { guestFilter } from "../utils/filter";
+import { contactFilter } from "../utils/filter";
 import SideBar from "../component/SideBar";
 import Segment from '../component/Segment';
 import AnyGuest from '../component/AnyGuest'
@@ -121,6 +121,10 @@ class Communication extends Component {
 
         } else if (contact.name === 'Table') {
             this.openOption('Table', 'Guest on table:')
+        } else if (contact.name === 'Reply Poll') {
+            this.openOption('Reply Poll', 'Guest that responsed to a poll below:')
+        } else if (contact.name === 'Ignore Poll') {
+            this.openOption('Ignore Poll', 'Guest that have not responsed to a poll below:')
         }
     }
 
@@ -129,6 +133,14 @@ class Communication extends Component {
     }
 
     findByTable = table => {
+        this.closeOption();
+    }
+
+    findByReplyPoll = poll => {
+        this.closeOption();
+    }
+
+    findByIgnorePoll = poll => {
         this.closeOption();
     }
 
@@ -181,7 +193,7 @@ class Communication extends Component {
     }
 
     render() {
-        const { navigation, tables, organizers } = this.props;
+        const { navigation, tables, organizers, polls } = this.props;
         const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput, 
             message, loading, messages, refreshing, subtitle } = this.state;
         
@@ -366,14 +378,24 @@ class Communication extends Component {
                 </ScrollView>)}
 
                 <Option title="Message To" subtitle={subtitle} openModal={optionOpen} closeModal={() => this.closeOption()}>
-                    {(optionType === 'contact') && guestFilter.map((contact) => (
-                    <TouchableOpacity key={contact.name} 
-                        style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} 
-                        onPress={() => this.selectFilter(contact)}
-                    >
-                        <Text style={styles.optionText}>{contact.name}</Text>
-                    </TouchableOpacity>
-                    ))}
+                    {(optionType === 'contact') && (
+                        <View>
+                            <TouchableOpacity
+                                style={[styles.optionBody, { borderBottomColor: filterParams === 'Any'? '#2DF19C': '#707070'} ]} 
+                                onPress={() => this.selectFilter({ name: 'Any', options: true })}
+                            >
+                                <Text style={styles.optionText}>Any</Text>
+                            </TouchableOpacity>
+                            {contactFilter.map((contact) => (
+                                <TouchableOpacity key={contact.name} 
+                                    style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} 
+                                    onPress={() => this.selectFilter(contact)}
+                                >
+                                    <Text style={styles.optionText}>{contact.name}</Text>
+                                </TouchableOpacity>
+                                ))}
+                        </View>
+                    )}
 
                     {(optionType === 'Invited By') && (<View>
                         {organizers.map((organizer) => (
@@ -397,6 +419,28 @@ class Communication extends Component {
                             </TouchableOpacity>
                         ))}
                     </View>)}
+
+                    {(optionType === 'Reply Poll') && (<View>
+                        {polls.map((poll) => (
+                            <TouchableOpacity key={poll.title} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByReplyPoll(poll)}
+                            >
+                                <Text style={styles.optionText}>{poll.title}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>)}
+
+                    {(optionType === 'Ignore Poll') && (<View>
+                        {polls.map((poll) => (
+                            <TouchableOpacity key={poll.title} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByIgnorePoll(poll)}
+                            >
+                                <Text style={styles.optionText}>{poll.title}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>)}
                 </Option>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
@@ -414,7 +458,8 @@ class Communication extends Component {
 const mapStateToprops = (state) => ({
     event: state.eventReducer,
     tables: state.tablesReducer,
-    organizers: state.organizersReducer
+    organizers: state.organizersReducer,
+    polls: state.pollsReducer
 })
 
 const mapDisptachToprops = {

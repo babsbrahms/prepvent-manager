@@ -3,17 +3,15 @@
 [!] addGuest via: guest from previous events
 [!] search for guest by qrcode (contactSearch)
 [!] password Registration link with a general password
+[!] order message component
 
 
 [] allow multiple pictures in communication
 [] small note attached to pictures in communication
-[] order message component
 [] convert phoneNumber to international format
 [] do notification page
 [] Invitation link tracking
 [] make sure selected contact contains phoneNumber or email
 [] padding and width problem
-[] Auth page
 [] add table services to table chart
-[] anyGuest select contact
-[] filyer by guest who response to poll or not
+[] make sure poll title is unique by verifing with previous polls

@@ -181,7 +181,7 @@ export default class AnyGuest extends PureComponent {
         const { contacts } = this.state;
         
 
-        let index = contacts.findIndex(x => x.recordID === contact.recordID);
+        let index = contacts.findIndex(x => x.uid === contact.uid);
         
         if (!!contact.selected) {
             contacts[index] = {...contact, selected: false }

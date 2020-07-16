@@ -85,27 +85,6 @@ export default class AddContact extends PureComponent {
         })
     }
 
-    // searchGuest = (text) => {
-    //     this.setState({ refreshing: true }, () => {
-    //         const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
-    //         if (text === "" || text === null) {
-    //             return
-    //         } else if (phoneNumberRegex.test(text)) {
-    //             Contacts.getContactsByPhoneNumber(text, (err, contacts) => {
-    //                 contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-    //                 this.setState({ contacts: contacts, refreshing: false })
-    //                 // console.log('contacts', contacts);
-    //             });
-    //         } else {
-    //             Contacts.getContactsMatchingString(text, (err, contacts) => {
-    //                 contacts.sort((a, b) => a.givenName.toLowerCase() > b.givenName.toLowerCase());
-    //                 this.setState({ contacts: contacts, refreshing: false })
-    //                 // console.log('contacts', contacts);
-    //             });
-    //         }
-    //     })  
-    // }
-
     select = (contact, index) => {
         const { addContact, selection } = this.props;
         

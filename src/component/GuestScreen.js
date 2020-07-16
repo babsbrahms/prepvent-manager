@@ -213,6 +213,10 @@ export default class Guest extends Component {
 
         } else if (contact.name === 'Table') {
             this.openOption('Table', 'Guest on table:')
+        } else if (contact.name === 'Reply Poll') {
+            this.openOption('Reply Poll', 'Guest that responsed to a poll below:')
+        } else if (contact.name === 'Ignore Poll') {
+            this.openOption('Ignore Poll', 'Guest that have not responsed to a poll below:')
         }
     }
 
@@ -221,6 +225,14 @@ export default class Guest extends Component {
     }
 
     findByTable = table => {
+        this.closeOption();
+    }
+
+    findByReplyPoll = poll => {
+        this.closeOption();
+    }
+
+    findByIgnorePoll = poll => {
         this.closeOption();
     }
 
@@ -435,6 +447,28 @@ export default class Guest extends Component {
                                 onPress={() => this.findByTable(table)}
                             >
                                 <Text style={styles.optionText}>{table.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>)}
+
+                    {(option === 'Reply Poll') && (<View>
+                        {polls.map((poll) => (
+                            <TouchableOpacity key={poll.title} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByReplyPoll(poll)}
+                            >
+                                <Text style={styles.optionText}>{poll.title}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>)}
+
+                    {(option === 'Ignore Poll') && (<View>
+                        {polls.map((poll) => (
+                            <TouchableOpacity key={poll.title} 
+                                style={styles.optionBody} 
+                                onPress={() => this.findByIgnorePoll(poll)}
+                            >
+                                <Text style={styles.optionText}>{poll.title}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>)}
