@@ -3,6 +3,7 @@ import { } from '../types';
 
 let init = [
     {
+        uid: '123',
         title: "food",
         question: "Choose a food",
         options: {
@@ -12,6 +13,7 @@ let init = [
         }
     },
     {
+        uid: '233',
         title: "color",
         question: "Choose a color",
         options: {

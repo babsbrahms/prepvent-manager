@@ -133,6 +133,8 @@ export default class ContactForm extends PureComponent {
             selected: {},
             errors: {}
         }
+
+        this.input = React.createRef()
     }
 
     componentDidMount() {

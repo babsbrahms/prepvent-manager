@@ -15,3 +15,32 @@
 [] padding and width problem
 [] add table services to table chart
 [] make sure poll title is unique by verifing with previous polls
+[] Add unassigned to poll
+
+//camera
+ImagePicker.openCamera({
+  width: 300,
+  height: 400,
+  cropping: true,
+  mediaType: 'photo'
+}).then(image => {
+  console.log(image);
+});
+
+//multiple image
+ImagePicker.openPicker({
+  multiple: true,
+  mediaType: 'photo'
+}).then(images => {
+  console.log(images);
+});
+
+//single with cropping
+ImagePicker.openPicker({
+  width: 300,
+  height: 400,
+  cropping: true,
+  mediaType: 'photo'
+}).then(image => {
+  console.log(image);
+});

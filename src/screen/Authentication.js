@@ -121,67 +121,74 @@ const style = StyleSheet.create({
 });
 
 class Authenication extends Component {
-    state = {
-        loading: false,
-        register: [
-            {
-                name: "Name",
-                type: "String",
-                required: false,
-                value: "name",
-            },
-            {
-                name: "Email",
-                type: "String",
-                required: false,
-                value: "email",
-            },
-            {
-                name: "Phone Number",
-                type: "Number",
-                required: false,
-                value: "phoneNumber",
-            },
-            {
-                name: "Password",
-                type: "Password",
-                required: false,
-                value: "password",
-            },
-        ],
-        login: [
-            {
-                name: "Email",
-                type: "String",
-                required: false,
-                value: "email",
-            },
-            {
-                name: "Password",
-                type: "Password",
-                required: false,
-                value: "password",
-            },
-        ],
-        reset: [
-            {
-                name: "Email",
-                type: "String",
-                required: false,
-                value: "email",
-            },
-        ],
-        mode: 'register',
-        data: {
-            name: "",
-            email: "",
-            phoneNumber: "",
-            password: ''
-        },
-        selected: {},
-        errors: {}
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            loading: false,
+            register: [
+                {
+                    name: "Name",
+                    type: "String",
+                    required: false,
+                    value: "name",
+                },
+                {
+                    name: "Email",
+                    type: "String",
+                    required: false,
+                    value: "email",
+                },
+                {
+                    name: "Phone Number",
+                    type: "Number",
+                    required: false,
+                    value: "phoneNumber",
+                },
+                {
+                    name: "Password",
+                    type: "Password",
+                    required: false,
+                    value: "password",
+                },
+            ],
+            login: [
+                {
+                    name: "Email",
+                    type: "String",
+                    required: false,
+                    value: "email",
+                },
+                {
+                    name: "Password",
+                    type: "Password",
+                    required: false,
+                    value: "password",
+                },
+            ],
+            reset: [
+                {
+                    name: "Email",
+                    type: "String",
+                    required: false,
+                    value: "email",
+                },
+            ],
+            mode: 'register',
+            data: {
+                name: "",
+                email: "",
+                phoneNumber: "",
+                password: ''
+            },
+            selected: {},
+            errors: {}
+    
+        }
+
+        this.input = React.createRef()
     }
+    
 
     selectedDetail = (key) => this.setState({ selected: key }, () => {
         if (['String', "Number"].includes(key.type)) {
