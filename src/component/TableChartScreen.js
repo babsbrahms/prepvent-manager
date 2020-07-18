@@ -8,7 +8,6 @@ import Segment from '../component/Segment';
 import SideBar from './SideBar';
 import Option from './Option';
 import styles from '../styles';
-import Message from "./Message";
 import { contactFilter, contactSearch } from "../utils/filter";
 
 
@@ -92,6 +91,7 @@ export default class TableChart extends Component {
         selectedTable: null,
         newTableName: "",
         search: "",
+        mode: 'meal',
         guests: [
             {
                 name: 'biola',
@@ -340,19 +340,8 @@ export default class TableChart extends Component {
             
 
         return (
-        <View style={{ width: '100%', height: "100%", flex: 1 }}>
-            <View style={styles.container}>
-                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
-                <View style={styles.between}>
-                    <TouchableOpacity style={styles.icon} onPress={() => close()}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
-                    </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icon}>
-                        <Ionicons name={'ios-checkmark'} color={'white'} size={40}/>
-                    </TouchableOpacity>
-                </View>
-
+            <View style={{ width: '100%', height: "100%", flex: 1 }}>
                 <Text style={styles.Header}>TABLE CHART</Text>
 
                 {(!!selectedTable) && (
@@ -375,7 +364,7 @@ export default class TableChart extends Component {
                                 <View style={[styles.between, { alignItems: "center"}]}>
                                 <Text style={style.todo}>{item.name}</Text>  
                                 </View>
-                                                       
+                                                    
                                 <View style={styles.between}>
                                 
                                     <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
@@ -585,7 +574,7 @@ export default class TableChart extends Component {
                                 (<TouchableOpacity> 
                                     <Text style={style.todo}>{item.name}</Text>                       
                                     <View style={[styles.row, { justifyContent: 'flex-end' }]}>
-                                    <Text style={[style.todoTable, { color: item.table? '#0E0C20' : '#EC3636'}]}>{item.table || "no table"}</Text>
+                                    <Text style={[style.todoTable, { color: item.table? '#0E0C20' : '#EC3636'}]}>{item.table.name || "no table"}</Text>
                                     </View>
 
                                     <View style={styles.hairLine} />
@@ -609,7 +598,7 @@ export default class TableChart extends Component {
 
                             {(option === 'search') && (
                             <View>
-                           
+                        
                                 {contactSearch.map((contact) => (
                                 <TouchableOpacity key={contact.name} style={[styles.optionBody, { borderBottomColor: searchParams === contact.name? '#2DF19C': '#707070'} ]} onPress={() => this.selectSearch(contact)}>
                                     <Text style={styles.optionText}>{contact.name}</Text>
@@ -666,8 +655,6 @@ export default class TableChart extends Component {
                     </View>
                 </SideBar>
             </View>
-            <Message />
-        </View>
         )
     }
 }

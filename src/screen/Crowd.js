@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
 import { addMessageReducer } from '../action/message';
 import Segment from '../component/Segment';
-import TableChart from '../component/TableChartScreen';
+import Table from '../component/Table';
 import Guest from '../component/GuestScreen';
 import AddGuest from '../component/AddGuestScreen';
 import EditGuest from '../component/EditGuestScreen';
@@ -96,8 +96,8 @@ class Crowd extends Component {
                         <Text style={style.action}>Guest</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={style.table} onPress={() => this.openModal('TableChart')}>
-                    <Text style={style.action}>Table Chart</Text>
+                <TouchableOpacity style={style.table} onPress={() => this.openModal('Table')}>
+                    <Text style={style.action}>Table Service</Text>
                 </TouchableOpacity>
 
                 <Segment>
@@ -108,7 +108,7 @@ class Crowd extends Component {
                     {(modalType === "CheckIn") && (<CheckIn polls={polls} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === "Guest") && (<AddGuest user={user} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                     {(modalType === 'EditGuest') && (<EditGuest polls={polls} tables={tables} organizers={organizers} guest={guest} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
-                    {(modalType === "TableChart") && (<TableChart polls={polls} tables={tables} organizers={organizers} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
+                    {(modalType === "Table") && (<Table polls={polls} tables={tables} organizers={organizers} editGuest={(user) => this.setState({ guest: user }, () => this.openModal('EditGuest'))} close={() => this.closeModal()} addMessage={(msg) => addMessage(msg)} />)}
                 </Modal>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >

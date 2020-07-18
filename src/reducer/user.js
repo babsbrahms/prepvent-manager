@@ -6,7 +6,7 @@ let init = {
     countryCode: '+234',
     phoneNumber: '+2348142319913',
     email: 'yeancahbrahms7@gmail.com',
-    image: ''
+    image: null
 };
 
 function userReducer (state = init, action) {
