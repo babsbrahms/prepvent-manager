@@ -6,6 +6,133 @@ import Segment from './Segment';
 import Option from './Option';
 import styles from '../styles';
 
+let sampleGuest = [
+    {
+        uid: "11212",
+        name: 'biola',
+        email: 'yeancahBrahms7@gmail.com',
+        phoneNumber: "+3248142319913",
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+        food: 'Fried Rice'  
+    },
+    {
+        uid: "11212qwqwe",
+        name: 'Olayinka',
+        email: 'yeancahBrahms7@gmail.com',
+        phoneNumber: "+3248142319913",
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+        food: 'Fried Rice'  
+    },
+    {
+        uid: "11212popi",
+        name: 'Zharadeen',
+        email: 'yeancahBrahms7@gmail.com',
+        phoneNumber: "+3248142319913",
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+       // food: 'Fried Rice'  
+    },
+    {
+        uid: "11212mnbnmb",
+        name: 'Najeeb',
+        email: 'yeancahBrahms7@gmail.com',
+        phoneNumber: "+3248142319913",
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+        food: "Beans" 
+    },            
+    {
+        uid: "11212zcxzcx",
+        name: 'Teslim',
+        email: 'tessy@gmail.com',
+        phoneNumber: "+3248142319913",
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+        food: 'Amala' 
+    },
+    {
+        uid: "11212sdf",
+        name: 'Rukayat',
+        email: 'ruka@gmail.com',
+        invited: 12343454555,
+        invitedBy: {
+            uid: '233',
+            name: "olayinka",
+            phoneNumber: "+2348142319913"
+        },
+        accepted: 12343454555,
+        checkedIn: 12343454555,
+        vip: {},
+        table: {
+            uid: 1,
+            name: "Bride's Table"
+        },
+        color: "Red",
+        food: 'Amala'  
+    }
+]
 
 const style = StyleSheet.create({
     title: {
@@ -109,156 +236,29 @@ const style = StyleSheet.create({
 });
 
 export default class MealServices extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state ={ 
-            optionOpen: false,
-            optionType: '',
-            table: {},
-            loading: false,
-            refreshing: false,
-            meal: {
-                title: "",
-                question: "",
-                options: {
-    
-                },
-            },
-            total: 0,
-            polls: props.polls,
-            meals: [],
-            guests: [
-                {
-                    uid: "11212",
-                    name: 'biola',
-                    email: 'yeancahBrahms7@gmail.com',
-                    phoneNumber: "+3248142319913",
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                    food: 'Fried Rice'  
-                },
-                {
-                    uid: "11212qwqwe",
-                    name: 'Olayinka',
-                    email: 'yeancahBrahms7@gmail.com',
-                    phoneNumber: "+3248142319913",
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                    food: 'Fried Rice'  
-                },
-                {
-                    uid: "11212popi",
-                    name: 'Zharadeen',
-                    email: 'yeancahBrahms7@gmail.com',
-                    phoneNumber: "+3248142319913",
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                   // food: 'Fried Rice'  
-                },
-                {
-                    uid: "11212mnbnmb",
-                    name: 'Najeeb',
-                    email: 'yeancahBrahms7@gmail.com',
-                    phoneNumber: "+3248142319913",
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                    food: "Beans" 
-                },            
-                {
-                    uid: "11212zcxzcx",
-                    name: 'Teslim',
-                    email: 'tessy@gmail.com',
-                    phoneNumber: "+3248142319913",
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                    food: 'Amala' 
-                },
-                {
-                    uid: "11212sdf",
-                    name: 'Rukayat',
-                    email: 'ruka@gmail.com',
-                    invited: 12343454555,
-                    invitedBy: {
-                        uid: '233',
-                        name: "olayinka",
-                        phoneNumber: "+2348142319913"
-                    },
-                    accepted: 12343454555,
-                    checkedIn: 12343454555,
-                    vip: {},
-                    table: {
-                        uid: 1,
-                        name: "Bride's Table"
-                    },
-                    color: "Red",
-                    food: 'Amala'  
-                }
-            ],
-        }
+    state ={ 
+        optionOpen: false,
+        optionType: '',
+        table: {},
+        loading: false,
+        refreshing: false,
+        meal: {
+            title: "",
+            question: "",
+            options: { },
+        },
+        total: 0,
+        polls: [],
+        meals: [],
+        guests: [],
     }
 
+    componentDidMount() {
+        const { polls } = this.props;
+
+        this.setState({ polls: [...polls] })
+    }
+    
     openOption = (option) => this.setState({ optionOpen: true, optionType: option })
 
     closeOption = () => this.setState({ optionOpen: false, optionType: '' })
@@ -292,10 +292,9 @@ export default class MealServices extends Component {
             meal: {
                 title: "",
                 question: "",
-                options: {
-
-                },
-            } 
+                options: { },
+            },
+            guests: sampleGuest
         }, () => this.closeOption())
     }
 
@@ -320,9 +319,9 @@ export default class MealServices extends Component {
     }
     
     render() {
-        const { close, tables } = this.props;
+        const { tables } = this.props;
         const { optionOpen, table, optionType, loading, meal, total, guests, refreshing, polls, meals } = this.state;
-        console.log(table);
+
         return (
         <View style={{ width: '100%', height: "100%", flex: 1 }}>
 
@@ -340,10 +339,10 @@ export default class MealServices extends Component {
                 <View style={[styles.between, { alignItems: 'center'}]}>
                     <Text style={styles.title}>Food</Text>
 
-                    <TouchableOpacity onPress={() => this.openOption('Meal')} style={style.action}>
+                    {(!!table.name) && (<TouchableOpacity onPress={() => this.openOption('Meal')} style={style.action}>
                         <Text style={style.optionValue}>select food</Text>
                         <Ionicons name={'ios-arrow-forward'} color={'#FFFFFF'} size={30}/>
-                    </TouchableOpacity> 
+                    </TouchableOpacity> )}
                 </View>
 
                 <Segment color="#E4E4E4" loading={loading}>
@@ -359,7 +358,7 @@ export default class MealServices extends Component {
                                     <View key={key.title} style={style.todoDetailIndex}>
                                         <Text style={style.todoDetailKey}>{key.title}</Text>
 
-                                        <Text style={style.todoDetailValue}>{!!item[key.title]? item[key.title] : "no food"}</Text>
+                                        <Text style={style.todoDetailValue}>{!!item[key.title]? item[key.title] : "-"}</Text>
                                     </View>
                                 ))}
                     
@@ -401,7 +400,7 @@ export default class MealServices extends Component {
                         ))}
                         {(guests.length !== total) && (<View>
                             <View style={styles.between}>
-                                <Text style={style.to}>No Meal</Text>
+                                <Text style={style.to}>No Food Selected</Text>
                                 <Text style={style.to}>{(guests.length) - total} guests</Text>
                             </View>
 
@@ -445,7 +444,7 @@ export default class MealServices extends Component {
                         ))}
 
                         <TouchableOpacity style={style.button} onPress={() => this.closeOption()}>
-                            <Text style={style.btnText}>SELECT</Text>
+                            <Text style={style.btnText}>DONE</Text>
                         </TouchableOpacity>
                     </View>)}
                 </Option>

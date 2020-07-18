@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, ScrollView, TextInput, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import styles from '../styles';
 import Message from "./Message";
-import MealServices from './MealServices';
+import Catering from './Catering';
 import TableChart from './TableChartScreen'
 
 
@@ -73,41 +73,53 @@ const style = StyleSheet.create({
 
 });
 
-export default class Table extends Component {
-    state = {
-        mode: 'table',
-    }
 
-    render() {
-        const { close, editGuest, polls, tables, organizers } = this.props;
-        const { mode } = this.state;
+
+const Table = ({ close, editGuest, polls, tables, organizers, addMessage }) => { 
+        const [mode, setMode] = useState('table')
             
 
-        return (
-        <View style={{ width: '100%', height: "100%", flex: 1,  }}>
-            <View style={styles.container}>
-                <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
-                <View style={styles.between}>
-                    <TouchableOpacity style={styles.icon} onPress={() => close()}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
-                    </TouchableOpacity>
+    return (
+    <View style={{ width: '100%', height: "100%", flex: 1,  }}>
+        <View style={styles.container}>
+            <View style={{ backgroundColor: "#0E0C20", height: getStatusBarHeight(true)}} />
+            <View style={styles.between}>
+                <TouchableOpacity style={styles.icon} onPress={() => close()}>
+                    <Ionicons name={'ios-arrow-back'} color={'white'} size={30}/>
+                </TouchableOpacity>
 
-                    {(mode === 'table') && (
-                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ mode: 'meal'})}>
-                        <Ionicons name={'ios-pizza'} color={'white'} size={30}/>
-                    </TouchableOpacity>)}
+                {(mode === 'table') && (
+                <TouchableOpacity style={styles.icon} onPress={() => setMode('meal')}>
+                    <Ionicons name={'ios-nutrition'} color={'white'} size={30}/>
+                </TouchableOpacity>)}
 
-                    {(mode === 'meal') && (
-                    <TouchableOpacity style={styles.icon} onPress={() => this.setState({ mode: 'table'})}>
-                        <Ionicons name={'ios-grid'} color={'white'} size={30}/>
-                    </TouchableOpacity>)}
-                </View>
-                {(mode === 'meal') && <MealServices polls={polls} tables={tables} />}
-
-                {(mode === 'table') && (<TableChart polls={polls} tables={tables} organizers={organizers} editGuest={(item) => editGuest(item)}/>)}
+                {(mode === 'meal') && (
+                <TouchableOpacity style={styles.icon} onPress={() => setMode('table')}>
+                    <Ionicons name={'ios-grid'} color={'white'} size={30}/>
+                </TouchableOpacity>)}
             </View>
-            <Message />
+
+            {(mode === 'meal') && (
+            <Catering 
+                polls={polls} 
+                tables={tables} 
+                addMessage={(msg) => addMessage(msg)} 
+            />)}
+
+            {(mode === 'table') && (
+            <TableChart 
+                polls={polls} 
+                tables={tables} 
+                organizers={organizers} 
+                editGuest={(item) => editGuest(item)} 
+                addMessage={(msg) => addMessage(msg)}
+            />)}
         </View>
-        )
-    }
+        <Message />
+    </View>
+    )
 }
+
+
+
+export default Table
