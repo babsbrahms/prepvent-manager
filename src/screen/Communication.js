@@ -222,7 +222,7 @@ class Communication extends Component {
                     <Text style={{ color: '#FFFFFF'}}>{filterParams}</Text>
                 </View>
 
-                <View style={style.container}>
+                <View>
                     <Text style={styles.title}>Message</Text>
 
                     <View style={[styles.row, { marginBottom: 9, width: '100%' }]}>

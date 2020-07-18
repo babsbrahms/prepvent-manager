@@ -315,7 +315,15 @@ export default class MealServices extends Component {
         meals.splice(index, 1);
        // polls.push(poll);
 
-        this.setState({ polls: [ ...polls, meal], meals: [...meals] })
+        this.setState({ 
+            polls: [ ...polls, meal], 
+            meals: [...meals],
+            meal: {
+                title: "",
+                question: "",
+                options: { },
+            },
+        })
     }
     
     render() {
@@ -339,7 +347,7 @@ export default class MealServices extends Component {
                 <View style={[styles.between, { alignItems: 'center'}]}>
                     <Text style={styles.title}>Food</Text>
 
-                    {(!!table.name) && (<TouchableOpacity onPress={() => this.openOption('Meal')} style={style.action}>
+                    {(!!table.name) && (<TouchableOpacity onPress={() => this.openOption('Food')} style={style.action}>
                         <Text style={style.optionValue}>select food</Text>
                         <Ionicons name={'ios-arrow-forward'} color={'#FFFFFF'} size={30}/>
                     </TouchableOpacity> )}
@@ -422,7 +430,7 @@ export default class MealServices extends Component {
                         ))}
                     </View>)}
                     
-                    {(optionType === 'Meal') && (<View>
+                    {(optionType === 'Food') && (<View>
                         <Text style={{ textAlign: 'center', fontSize: 16 }}>Select food(green) from polls(red)</Text>
                         {meals.map((poll, index) => (
                             <TouchableOpacity 

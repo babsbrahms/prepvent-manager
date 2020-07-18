@@ -341,7 +341,7 @@ export default class Event extends Component {
                     
                 </View>
 
-                <View style={[style.container, { marginBottom: 20 }]}>
+                <View style={[style.container, { marginBottom: 50 }]}>
                     {(!!showAdvance) && (
                     <Segment color='#E4E4E4'>
                         <View>

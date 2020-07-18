@@ -5,9 +5,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#0E0C20",
         padding: 8,
-        // width: '100%',
-        // height: '100%',
-        flex: 1
+        width: '100%',
+        height: '100%',
     },
     row: {
         display: "flex",
@@ -16,17 +15,20 @@ const styles = StyleSheet.create({
     between: {
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap'
     },
     around: {
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        flexWrap: 'wrap'
     },
     Header: {
         fontSize: 40,
         color: "#FFFFFF",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        // flexWrap: 'wrap'
     },
     icon: {
         paddingHorizontal: 10,
