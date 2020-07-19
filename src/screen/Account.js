@@ -83,11 +83,12 @@ const style = StyleSheet.create({
 class Account extends Component {
     state = {
         user: this.props.user,
-        transactions: [],
+        transactions: [1, 2, 3, 4, 5],
         refreshing: false,
         sideBarOpen: false,
         loading: false,
-        active: 'Transaction'
+        active: 'Transaction',
+        selectedIndex: -1
     }
 
     fetchTransaction = () => {
@@ -107,7 +108,7 @@ class Account extends Component {
 
     render() {
         const { navigation } = this.props;
-        const  { data, refreshing, transactions, sideBarOpen, loading, active, user } = this.state
+        const  { data, refreshing, transactions, sideBarOpen, loading, active, user, selectedIndex } = this.state
 
         return (
             <View style={styles.container}>
@@ -167,32 +168,82 @@ class Account extends Component {
                     </TouchableOpacity>
                 </View>
 
-                {(active === 'Transaction') && (<Segment>
+                {(active === 'Transaction') && (<Segment color="#E4E4E4">
                     <FlatList 
+                    ListHeaderComponent={() => (
+                        <View>                        
+                            <View style={styles.between}>
+                                <Text style={[styles.title, { color: '#0E0C20'}]}>Availble Balance</Text>
+                                <Text style={[styles.title, { color: '#2DF19C'}]}>$200.00</Text>
+                            </View>
+
+                            <View style={styles.hairLine} />
+                        </View>
+                    )}
                     onRefresh={() => this.fetchTransaction()}
                     refreshing={refreshing}
                     data={transactions}
                     renderItem={({ item, index }) => 
                         (<View> 
-                            <Text style={style.todo}>{item.name}</Text>                       
-                            <View style={styles.between}>
+                            <View>       
+                                <Text style={style.todo}>Send Bulk invitation</Text>
+                                <Text >Deposit</Text>
+
+                                <Text>21-4-2019</Text>
+        
+                                {/* <Text>0002023232</Text> */}
+                            </View>                
+                            <View style={[styles.between, { alignItems: 'center' }]}>
                                 <TouchableOpacity style={styles.icon} onPress={() => this.setState({ selectedIndex: (selectedIndex === index)? -1 : index })}>
                                     <Ionicons name={selectedIndex === index? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} color={'#707070'} size={30}/>
                                 </TouchableOpacity>
 
                                 <View style={styles.row}>
-      
+                                    <Text style={styles.amount}>$500</Text>
                                 </View>
                             </View>
                             {(selectedIndex === index) && (<View style={style.todoDetail}>
                                 <View>
                                     <View style={style.todoDetailIndex}>
-                                        <Text style={style.todoDetailKey}>Settings</Text>
+                                        <Text style={style.todoDetailKey}>Transaction Date</Text>
 
-                                        <Text style={style.todoDetailValue}>{ 'none'}</Text>
+                                        <Text style={style.todoDetailValue}>28-4-2017</Text>
                                     </View>
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Reference</Text>
+
+                                        <Text style={style.todoDetailValue}>020203283</Text>
+                                    </View>
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Transaction Details</Text>
+
+                                        <Text style={style.todoDetailValue}>Create Biola's birthday</Text>
+                                    </View>
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Deposit</Text>
+
+                                        <Text style={style.todoDetailValue}>--</Text>
+                                    </View>
+
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Withdrawal</Text>
+
+                                        <Text style={style.todoDetailValue}>$500.00</Text>
+                                    </View>
+
+
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Balance</Text>
+
+                                        <Text style={style.todoDetailValue}>$200.00</Text>
+                                    </View>
+
+
                                 </View>
-   
                             </View>)}
 
                             <View style={styles.hairLine} />
