@@ -95,32 +95,77 @@ export default class TableChart extends Component {
         guests: [
             {
                 name: 'biola',
-                table: "table 2",
+                table: {
+                    uid: 12,
+                    name: "Bride's Table"
+                },
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                }, 
                 uid: '12weq1e3'  
             },
             {
                 name: 'Olayinka',
-                table: "table 1",
+                table: {
+                    uid: 7,
+                    name: "Bride's Table"
+                },
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
                 uid: '1weqw1e'  
             },
             {
                 name: 'Zharadeen',
-                table: "table 1",
+                table: {
+                    uid: 4,
+                    name: "Bride's Table"
+                },
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
                 uid: '1weq431e3'  
             },
             {
                 name: 'Najeeb',
-                table: "table 2",
+                table: {
+                    uid: 2,
+                    name: "Bride's Table"
+                },
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
                 uid: '12weqw3433'  
             },            
             {
                 name: 'Teslim',
-                table: "table 1",
+                table: {
+                    uid: 1,
+                    name: "Bride's Table"
+                },
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
                 uid: '12eqw431e3'  
             },
             {
                 name: 'Rukayat',
-                uid: '12we3431e3'  
+                uid: '12we3431e3',
+                invitedBy: {
+                    uid: '233',
+                    name: "olayinka",
+                    phoneNumber: "+2348142319913"
+                },
             }
         ],
         data: [
@@ -572,11 +617,11 @@ export default class TableChart extends Component {
                             data={guests}
                             renderItem={({ item, index }) => 
                                 (<TouchableOpacity> 
-                                    <Text style={style.todo}>{item.name}</Text>                       
+                                    <Text style={style.todo}>{item.name}</Text>     
+                                    <Text> invited by {item.invitedBy.name}</Text>                  
                                     <View style={[styles.row, { justifyContent: 'flex-end' }]}>
-                                    <Text style={[style.todoTable, { color: item.table? '#0E0C20' : '#EC3636'}]}>{item.table.name || "no table"}</Text>
+                                        <Text style={[style.todoTable, { color: item.table? '#0E0C20' : '#EC3636'}]}>{item.table? item.table.name : "no table"}</Text>
                                     </View>
-
                                     <View style={styles.hairLine} />
                                 </TouchableOpacity>) 
                             }
@@ -628,6 +673,12 @@ export default class TableChart extends Component {
                                         <Text style={styles.optionText}>{table.name}</Text>
                                     </TouchableOpacity>
                                 ))}
+                                <TouchableOpacity 
+                                    style={[styles.optionBody, { borderBottomColor: '#EC3636'}]} 
+                                    onPress={() => this.findByTable(null)}
+                                    >
+                                    <Text style={styles.optionText}>No Table</Text>
+                                </TouchableOpacity>
                             </View>)}
 
                             {(option === 'Reply Poll') && (<View>

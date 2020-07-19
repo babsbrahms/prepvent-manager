@@ -449,6 +449,12 @@ export default class Guest extends Component {
                                 <Text style={styles.optionText}>{table.name}</Text>
                             </TouchableOpacity>
                         ))}
+                        <TouchableOpacity 
+                            style={[styles.optionBody, { borderBottomColor: '#EC3636'}]} 
+                            onPress={() => this.findByTable(null)}
+                        >
+                            <Text style={styles.optionText}>No Table</Text>
+                        </TouchableOpacity>
                     </View>)}
 
                     {(option === 'Reply Poll') && (<View>
