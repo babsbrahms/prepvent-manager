@@ -1,9 +1,11 @@
-[!] update; [] undone; [x] done; [-] initiated
+[!] update; [] undone; [x] done; [-] discard
 ------------------------------------------------------
 [!] addGuest via: guest from previous events
 [!] search for guest by qrcode (contactSearch)
 [!] password Registration link with a general password
 [!] order message component
+[!] Add items to guest data
+[!] Create guest groups
 
 
 [] allow multiple pictures in communication
@@ -15,7 +17,11 @@
 [] padding and width problem
 [] make sure poll title is unique by verifing with previous polls
 [] add and use image from static resources
-[] add catering to organizer permission
+[-] fiterOrganizer [all, selected, byPermmision]
+[] create document component
+[-] create select Organizer page
+[] assign more Organizers to task and add lead
+[] chat for Organizer (filter who to chat with, sent [text, image, and document])
 
 //camera
 ImagePicker.openCamera({

@@ -17,3 +17,6 @@ export const contactSearch = [
     { name: 'Phone number', options: false },
     { name: 'Email', options: false },
 ];
+
+
+export const fiterOrganizer = ['all', "selected", "byPermmision"]

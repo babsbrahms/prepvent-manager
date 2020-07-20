@@ -122,7 +122,6 @@ export default class AddGuest extends Component {
         this.input = React.createRef()
     }
     
-    
     openSideBar = (type) => this.setState({ sideBarOpen: true, sideBarType: type })
 
     closeSideBar = () => this.setState({ sideBarOpen: false, sideBarType: "" })
@@ -245,20 +244,22 @@ export default class AddGuest extends Component {
             let file = Platform.OS === 'android'? res.uri : res.uri.replace('file://', '')
 
             
-            if (res.size > 2000000) {
-                addMessage("File is too large (2MB LIMIT)")
-            } else if (["application/vnd.ms-excel", "text/csv", "text/comma-separated-values"].indexOf(res.type) > -1 ) {
-               this.setState({ loading:  true }, () => {                         
-                    RNFS.readFile(file, 'utf8')
-                    .then((data) => {
-                        
-                      //  console.log(data)
-                        this.formatList(data)
-                    })
-                    .catch(err => {
-                        console.log(err);  
-                    })
-               })
+            if (["application/vnd.ms-excel", "text/csv", "text/comma-separated-values"].indexOf(res.type) > -1 ) {
+                if (res.size > 2000000) {
+                    addMessage("File is too large (2MB LIMIT)")
+                } else {
+                    this.setState({ loading:  true }, () => {                         
+                        RNFS.readFile(file, 'utf8')
+                        .then((data) => {
+                            
+                          //  console.log(data)
+                            this.formatList(data)
+                        })
+                        .catch(err => {
+                            console.log(err);  
+                        })
+                   })
+                }
                 
             } else {
                 addMessage("Only csv files are acceptable")

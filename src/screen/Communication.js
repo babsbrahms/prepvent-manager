@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ImageBackground, ScrollView, ActivityIndicator, FlatList, Linking, KeyboardAvoidingView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import DocumentPicker from 'react-native-document-picker';
 import { connect } from "react-redux";
 import { addMessageReducer } from '../action/message';
 import Poll from '../component/Poll';
@@ -51,6 +52,7 @@ const style = StyleSheet.create({
 class Communication extends Component {
     state = {
         sideBarOpen: false,
+        sideBarType: '',
         optionOpen: false,
         optionType: "",
         subtitle: '',
@@ -67,7 +69,8 @@ class Communication extends Component {
             host: this.props.event.host,
             contact: this.props.event.contact,
             image: null,
-            polls: []
+            polls: [],
+            documents: []
         },
         messages: []
     }
@@ -93,9 +96,9 @@ class Communication extends Component {
         })
     }
 
-    openSideBar = () => this.setState({ sideBarOpen: true })
+    openSideBar = (type) => this.setState({ sideBarOpen: true, sideBarType: type })
 
-    closeSideBar = () => this.setState({ sideBarOpen: false })
+    closeSideBar = () => this.setState({ sideBarOpen: false, sideBarType: '' })
 
     openOption = (option, subtitle) => this.setState({ optionOpen: true, optionType: option, subtitle: subtitle || '' })
 
@@ -105,8 +108,10 @@ class Communication extends Component {
         this.closeOption();
         this.setState({ filterParams: contact.name })
   
-        if (contact.name === 'Any') {
-            this.openSideBar()
+        if (contact.name === 'Any Guest') {
+            this.openSideBar('Guest')
+        } else if (contact.name === 'Organizers') {
+            this.openSideBar('Organizers')
         } else if (contact.name === 'Invited') {
 
         } else if (contact.name === 'Accepted') {
@@ -192,10 +197,50 @@ class Communication extends Component {
         }
     }
 
+    addDocuent = async () => {
+        const { addMessage } = this.props;
+
+        try {
+            const results = await DocumentPicker.pickMultiple({
+           //  type: [DocumentPicker.types.allFile]
+            });
+            let source = [];
+
+            for (const res of results) {
+                source.push({
+                    uri: Platform.OS === 'android'? res.uri : res.uri.replace('file://', ''),
+                    type: res.type,
+                    name: res.name,
+                    size: res.size
+                })
+            }
+
+            //res.size > 10000000 //10mb
+            
+            if (source.length > 5) {
+                addMessage("Maximium of 5 files per message is allowed")
+            } else {
+                this.setState({
+                    data: {
+                        ...this.state.data,
+                        documents: source
+                    }
+                });
+            }
+ 
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+              // User cancelled the picker, exit any dialogs or menus and move on
+            } else {
+              throw err;
+            }
+        }
+    }
+
     render() {
         const { navigation, tables, organizers, polls } = this.props;
         const { optionOpen, data, showPoll, optionType, filterParams, sideBarOpen, selectedInput, 
-            message, loading, messages, refreshing, subtitle } = this.state;
+            message, loading, messages, refreshing, subtitle, sideBarType } = this.state;
         
         return (
             <View style={styles.container}>
@@ -370,6 +415,19 @@ class Communication extends Component {
                     </View>
 
 
+                    <View style={style.container}>
+                        <View style={styles.between}>
+                            <Text style={style.title}>Document</Text>
+
+                            <TouchableOpacity style={styles.icon} disabled={showPoll} onPress={() => this.addDocuent()}>
+                                <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                            </TouchableOpacity>
+                        </View>
+                
+
+                    </View>
+
+
                     <View style={[styles.row, { justifyContent: "center", marginBottom: 9 }]}>
                         <TouchableOpacity style={styles.icon}>
                             <Text style={style.link}>Preview message</Text>
@@ -381,11 +439,17 @@ class Communication extends Component {
                     {(optionType === 'contact') && (
                         <View>
                             <TouchableOpacity
-                                style={[styles.optionBody, { borderBottomColor: filterParams === 'Any'? '#2DF19C': '#707070'} ]} 
-                                onPress={() => this.selectFilter({ name: 'Any', options: true })}
+                                style={[styles.optionBody, { borderBottomColor: filterParams === 'Any Guest'? '#2DF19C': '#707070'} ]} 
+                                onPress={() => this.selectFilter({ name: 'Any Guest', options: true })}
                             >
-                                <Text style={styles.optionText}>Any</Text>
+                                <Text style={styles.optionText}>Any Guest</Text>
                             </TouchableOpacity>
+                            {/* <TouchableOpacity
+                                style={[styles.optionBody, { borderBottomColor: filterParams === 'Organizers'? '#2DF19C': '#707070'} ]} 
+                                onPress={() => this.selectFilter({ name: 'Organizers', options: true })}
+                            >
+                                <Text style={styles.optionText}>Organizers</Text>
+                            </TouchableOpacity> */}
                             {contactFilter.map((contact) => (
                                 <TouchableOpacity key={contact.name} 
                                     style={[styles.optionBody, { borderBottomColor: filterParams === contact.name? '#2DF19C': '#707070'} ]} 
@@ -450,10 +514,10 @@ class Communication extends Component {
                 </Option>
 
                 <SideBar sideBarOpen={sideBarOpen} close={() => this.closeSideBar()} >
-                    <AnyGuest
+                    {(sideBarType === 'Guest') && (<AnyGuest
                         close={() => this.closeSideBar()} 
                         addContact={(contacts) => this.addGuest(contacts)} 
-                    />
+                    />)}
                 </SideBar>
             </View>
         )
