@@ -6,6 +6,8 @@ import styles from '../styles';
 import Message from "./Message";
 import Catering from './Catering';
 import TableChart from './TableChartScreen'
+import SideBar from './SideBar';
+import AddToTable from './AddToTable';
 
 
 const style = StyleSheet.create({
@@ -77,7 +79,8 @@ const style = StyleSheet.create({
 
 const Table = ({ close, editGuest, polls, tables, organizers, addMessage }) => { 
         const [mode, setMode] = useState('table')
-            
+        const [table, selectTable] = useState(null);
+        const [sideBarOpen, changeSideBar] = useState(false);
 
     return (
     <View style={{ width: '100%', height: "100%", flex: 1,  }}>
@@ -110,10 +113,23 @@ const Table = ({ close, editGuest, polls, tables, organizers, addMessage }) => {
             <TableChart 
                 polls={polls} 
                 tables={tables} 
-                organizers={organizers} 
+                openSideBar={(table) => {
+                    selectTable(table);
+                    changeSideBar(true)
+                }}
                 editGuest={(item) => editGuest(item)} 
                 addMessage={(msg) => addMessage(msg)}
             />)}
+            <SideBar sideBarOpen={sideBarOpen} close={() => changeSideBar(false)} > 
+                <AddToTable
+                    polls={polls} 
+                    tables={tables} 
+                    organizers={organizers} 
+                    table={table}
+                    close={() => changeSideBar(false)}
+                    addMessage={(msg) => addMessage(msg)}
+                />
+            </SideBar>
         </View>
         <Message />
     </View>
