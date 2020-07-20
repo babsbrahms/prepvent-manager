@@ -203,7 +203,7 @@ const style = StyleSheet.create({
         borderRadius: 2,
         width: '100%',
         height: '100%',
-        backgroundColor: '#707070',
+        backgroundColor: '#0E0C20',
     },
     messageText: {
         color: '#0E0C20',

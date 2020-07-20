@@ -609,7 +609,7 @@ export default class TableChart extends Component {
                                 <Text style={style.params}>{searchParams.toLowerCase()}</Text>
                             </TouchableOpacity>
                         </View>
-
+                        <Text style={styles.title}>Add guest to {selectedTable ? selectedTable.name : ''}</Text>
                         <Segment loading={loading} color="#E4E4E4">
                             <FlatList 
                             onRefresh={() => {}}

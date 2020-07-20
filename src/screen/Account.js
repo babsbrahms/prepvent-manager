@@ -168,18 +168,18 @@ class Account extends Component {
                     </TouchableOpacity>
                 </View>
 
-                {(active === 'Transaction') && (<Segment color="#E4E4E4">
-                    <FlatList 
-                    ListHeaderComponent={() => (
-                        <View>                        
-                            <View style={styles.between}>
-                                <Text style={[styles.title, { color: '#0E0C20'}]}>Availble Balance</Text>
-                                <Text style={[styles.title, { color: '#2DF19C'}]}>$200.00</Text>
-                            </View>
-
-                            <View style={styles.hairLine} />
+                {(active === 'Transaction') && (
+                <Segment color="#E4E4E4">
+                    <View>                        
+                        <View style={styles.between}>
+                            <Text style={[styles.title, { color: '#0E0C20'}]}>Available Balance</Text>
+                            <Text style={[styles.title, { color: '#2DF19C'}]}>$200.00</Text>
                         </View>
-                    )}
+
+                        <View style={styles.hairLine} />
+                    </View>
+
+                    <FlatList 
                     onRefresh={() => this.fetchTransaction()}
                     refreshing={refreshing}
                     data={transactions}
