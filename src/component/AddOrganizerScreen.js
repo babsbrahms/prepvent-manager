@@ -58,6 +58,13 @@ export default class AddOrganizer extends Component {
         this.state ={ 
             optionOpen: false,
             schema: { 
+                catering:{
+                    name: "Catering",
+                    type: "Boolean",
+                    required: false,
+                    value: "catering",
+                    role: 'Organizer will be supply food to guest table'
+                },
                 checkIn: {
                     name: "Check In",
                     type: "Boolean",
@@ -118,7 +125,8 @@ export default class AddOrganizer extends Component {
                 invite: 0,
                 checkIn: false,
                 tableChart: false,
-                organizer: false
+                organizer: false,
+                catering: false
             },
             selected: {},
             sideBarOpen: false,
@@ -230,6 +238,15 @@ export default class AddOrganizer extends Component {
                                 </TouchableOpacity>
                             </View>
                             ))} */}
+
+                            <View style={style.todoDetailIndex}>
+                                <Text style={style.todoDetailKey}>Catering</Text>
+
+                                <TouchableOpacity onPress={() => this.changeAccess(schema.catering, data.catering)} style={style.action}>
+                                    <Text style={style.todoDetailValue}>{!!data.catering? 'grant': 'deny'}</Text>
+                                    <Ionicons name={'ios-arrow-forward'} color={'#707070'} size={30}/>
+                                </TouchableOpacity>
+                            </View>
                             
                             <View style={style.todoDetailIndex}>
                                 <Text style={style.todoDetailKey}>Check In</Text>

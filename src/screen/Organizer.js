@@ -63,7 +63,8 @@ class Organizer extends Component {
                 invite: 200,
                 checkIn: false,
                 tableChart: true,
-                organizer: true
+                organizer: true,
+                catering: false
             },
             {
                 name: "biola ibrahim",
@@ -75,7 +76,8 @@ class Organizer extends Component {
                 invite: 200,
                 checkIn: false,
                 tableChart: true,
-                organizer: true
+                organizer: true,
+                catering: false
             },
             {
                 name: "zharadenn ibrahim",
@@ -86,7 +88,8 @@ class Organizer extends Component {
                 invite: 200,
                 checkIn: false,
                 tableChart: true,
-                organizer: true
+                organizer: true,
+                catering: false
             },
             {
                 name: "najeeb ibrahim",
@@ -97,7 +100,8 @@ class Organizer extends Component {
                 invite: 200,
                 checkIn: false,
                 tableChart: true,
-                organizer: true
+                organizer: true,
+                catering: false
             },
             {
                 name: "teslim ibrahim",
@@ -108,7 +112,8 @@ class Organizer extends Component {
                 invite: 200,
                 checkIn: false,
                 tableChart: true,
-                organizer: true
+                organizer: true,
+                catering: false
             },
 
         ]
@@ -170,6 +175,12 @@ class Organizer extends Component {
                             </View>
                             {(selectedIndex === index) && (<View style={style.todoDetail}>
                                 <View>
+                                    <View style={style.todoDetailIndex}>
+                                        <Text style={style.todoDetailKey}>Catering</Text>
+
+                                        <Text style={style.todoDetailValue}>{!!item.catering? 'grant': 'deny'}</Text>
+                                    </View>
+
                                     <View style={style.todoDetailIndex}>
                                         <Text style={style.todoDetailKey}>Settings</Text>
 

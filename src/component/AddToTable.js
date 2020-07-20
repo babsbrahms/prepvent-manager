@@ -305,7 +305,7 @@ export default class AddToTable extends Component {
                         <Text style={style.params}>{searchParams.toLowerCase()}</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.title}>Add guest to {selectedTable ? selectedTable.name : ''}</Text>
+                <Text style={{ color: 'white', fontSize: 18, marginTop: 5 }}>Add guest to {selectedTable ? selectedTable.name : ''}</Text>
                 <Segment loading={loading} color="#E4E4E4">
                     <FlatList 
                     onRefresh={() => {}}
