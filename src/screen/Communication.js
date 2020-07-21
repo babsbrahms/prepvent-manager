@@ -59,7 +59,7 @@ class Communication extends Component {
         showPoll: false,
         filterParams: '',
         selectedInput: '',
-        message: '',
+        message: 'compose',
         loading: false,
         refreshing: false,
         data: {
@@ -255,44 +255,46 @@ class Communication extends Component {
                 </View>
 
                 <Text style={styles.Header}>COMMUNICATION</Text>
-                <View style={style.container}>
-                    <View style={styles.between}>
-                        <Text style={style.title}>To</Text>
-
-                        <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
-                            <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
-                        </TouchableOpacity>
-                        
-                    </View>
-                    <Text style={{ color: '#FFFFFF'}}>{filterParams}</Text>
-                </View>
-
-                <View>
-                    <Text style={styles.title}>Message</Text>
-
-                    <View style={[styles.row, { marginBottom: 9, width: '100%' }]}>
-                        <TouchableOpacity 
-                            disabled={loading}
-                            style={[style.messageLink, { borderBottomColor: message === 'compose'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => this.selectmessage('compose')}
-                        >
-                            <Text style={style.messageText}>Compose Message</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            disabled={loading}
-                            style={[style.messageLink, { borderBottomColor: message === 'previous'? '#2DF19C' : '#E4E4E4'}]}
-                            onPress={() => {
-                                this.selectmessage('previous');
-                                this.fetchMessages();
-                            }}
-                        >
-                            <Text style={style.messageText}>Saved Message(s)</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
                 {(message === 'previous') && (
+                <View style={{ width: '100%', flex: 1 }}>
+                    <View style={style.container}>
+                        <View style={styles.between}>
+                            <Text style={style.title}>To</Text>
+
+                            <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
+                                <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                            </TouchableOpacity>
+                            
+                        </View>
+                        <Text style={{ color: '#FFFFFF'}}>{filterParams}</Text>
+                    </View>
+
+                    <View>
+                        <Text style={styles.title}>Message</Text>
+
+                        <View style={[styles.row, { marginBottom: 9, width: '100%' }]}>
+                            <TouchableOpacity 
+                                disabled={loading}
+                                style={[style.messageLink, { borderBottomColor: message === 'compose'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.selectmessage('compose')}
+                            >
+                                <Text style={style.messageText}>Compose Message</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                disabled={loading}
+                                style={[style.messageLink, { borderBottomColor: message === 'previous'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => {
+                                    this.selectmessage('previous');
+                                    this.fetchMessages();
+                                }}
+                            >
+                                <Text style={style.messageText}>Saved Message(s)</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                     <Segment>
                         <FlatList 
                             onRefresh={() => this.fetchMessages()}
@@ -322,11 +324,49 @@ class Communication extends Component {
                         />
 
                     </Segment>
+                </View>
                 )}
                 
 
                 {(message === 'compose') && (
                 <ScrollView>
+                    <View style={style.container}>
+                        <View style={styles.between}>
+                            <Text style={style.title}>To</Text>
+
+                            <TouchableOpacity style={styles.icon} onPress={() => this.openOption("contact")}>
+                                <Ionicons name={'ios-add'} size={30} color={"#FFFFFF"}/>
+                            </TouchableOpacity>
+                            
+                        </View>
+                        <Text style={{ color: '#FFFFFF'}}>{filterParams}</Text>
+                    </View>
+
+                    <View>
+                        <Text style={styles.title}>Message</Text>
+
+                        <View style={[styles.row, { marginBottom: 9, width: '100%' }]}>
+                            <TouchableOpacity 
+                                disabled={loading}
+                                style={[style.messageLink, { borderBottomColor: message === 'compose'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => this.selectmessage('compose')}
+                            >
+                                <Text style={style.messageText}>Compose Message</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                disabled={loading}
+                                style={[style.messageLink, { borderBottomColor: message === 'previous'? '#2DF19C' : '#E4E4E4'}]}
+                                onPress={() => {
+                                    this.selectmessage('previous');
+                                    this.fetchMessages();
+                                }}
+                            >
+                                <Text style={style.messageText}>Saved Message(s)</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                     <View style={style.container}>
                         <Text style={style.title}>Subject</Text>
                         <TextInput 
@@ -338,7 +378,6 @@ class Communication extends Component {
                             onSubmitEditing={(e) => this.setState({ data: { ...this.state.data, subject: e.nativeEvent.text } })}
                         />
                     </View>
-
 
                     <View style={style.container}>
                         <Text style={style.title}>Body</Text>
@@ -396,7 +435,6 @@ class Communication extends Component {
                         </TouchableOpacity>
                     </ImageBackground>)}
                     </View>
-
 
                     
                     <View style={style.container}>

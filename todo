@@ -21,7 +21,7 @@
 [] create document component
 [-] create select Organizer page
 [] assign more Organizers to task and add lead
-[] chat for Organizer (filter who to chat with, sent [text, image, and document])
+[] chat for Organizer (filter who to chat with, sent [text, image, and document, voiceRecording])
 
 //camera
 ImagePicker.openCamera({
