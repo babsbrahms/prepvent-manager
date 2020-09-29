@@ -16,19 +16,16 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'space-between',
-        flexWrap: 'wrap'
     },
     around: {
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'space-around',
-        flexWrap: 'wrap'
     },
     Header: {
         fontSize: 40,
         color: "#FFFFFF",
         fontWeight: "bold",
-        // flexWrap: 'wrap'
     },
     icon: {
         paddingHorizontal: 10,

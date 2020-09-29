@@ -261,9 +261,9 @@ class Authenication extends Component {
 
                 <View style={style.top}>
                     <View style={styles.between}>
-                    <Text style={[styles.Header, { color: '#0E0C20'}]}>{title}</Text>
+                    <Text style={[styles.Header, { color: '#0E0C20' }]}>{title}</Text>
 
-                        <TouchableOpacity style={{ alignSelf: 'flex-end'}} onPress={() => navigation.navigate('Home')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                             <Ionicons name={'ios-checkmark'} color={'#2DF19C'} size={70}/>
                         </TouchableOpacity>
                     </View>
