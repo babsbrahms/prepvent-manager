@@ -10,6 +10,9 @@ React Native app for event management on Android (only frontend)
 - contact
 - file system
 
+## TO RUN THE APP
+
+> npx react-native run-android
 
 [Video Demo](https://drive.google.com/file/d/1-VN4Y7xM-mYe8m4XQVxzD4h4A37QVIbn/view?usp=sharing)
 
